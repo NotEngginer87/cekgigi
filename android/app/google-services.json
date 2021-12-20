@@ -1,0 +1,286 @@
+{
+  "project_info": {
+    "project_number": "210316461543",
+    "firebase_url": "https://teledentistry-70122-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "teledentistry-70122",
+    "storage_bucket": "teledentistry-70122.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210316461543:android:7d1ee0c7c1a15551212942",
+        "android_client_info": {
+          "package_name": "admin.ident.admin_ident2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "210316461543-85ga88777fh5i1cpd5ruf1j8ma3t9dqt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "admin.ident.admin_ident2",
+            "certificate_hash": "8869507acbad309af87bf2e41579e0fb1404936f"
+          }
+        },
+        {
+          "client_id": "210316461543-brq0ttdd6pp6vv23er2avf17jf3qafh7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJYjN_Vev3BfRjLacno9eOw4SQwiCLjn0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "210316461543-brq0ttdd6pp6vv23er2avf17jf3qafh7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210316461543:android:ab03f49585d88a4d212942",
+        "android_client_info": {
+          "package_name": "com.example.administrator_teledentistry"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "210316461543-chn3nmejp7dkknte36oht6gd5ks3uab8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.administrator_teledentistry",
+            "certificate_hash": "8869507acbad309af87bf2e41579e0fb1404936f"
+          }
+        },
+        {
+          "client_id": "210316461543-brq0ttdd6pp6vv23er2avf17jf3qafh7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJYjN_Vev3BfRjLacno9eOw4SQwiCLjn0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "210316461543-brq0ttdd6pp6vv23er2avf17jf3qafh7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210316461543:android:cf0d4be37a8ebcd1212942",
+        "android_client_info": {
+          "package_name": "com.jitsivideocall"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "210316461543-kgsh466e2bl14g1h9pt8lt143n954qkk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jitsivideocall",
+            "certificate_hash": "8869507acbad309af87bf2e41579e0fb1404936f"
+          }
+        },
+        {
+          "client_id": "210316461543-brq0ttdd6pp6vv23er2avf17jf3qafh7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJYjN_Vev3BfRjLacno9eOw4SQwiCLjn0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "210316461543-brq0ttdd6pp6vv23er2avf17jf3qafh7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210316461543:android:7e139af9adf1f34e212942",
+        "android_client_info": {
+          "package_name": "com.rilis.dokter_ident.ident_dokter2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "210316461543-cbtsdl0q8l95kvk9804k97etl5j67ldc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rilis.dokter_ident.ident_dokter2",
+            "certificate_hash": "8869507acbad309af87bf2e41579e0fb1404936f"
+          }
+        },
+        {
+          "client_id": "210316461543-brq0ttdd6pp6vv23er2avf17jf3qafh7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJYjN_Vev3BfRjLacno9eOw4SQwiCLjn0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "210316461543-brq0ttdd6pp6vv23er2avf17jf3qafh7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210316461543:android:106bca47594fb703212942",
+        "android_client_info": {
+          "package_name": "com.rilis.ident.ident"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "210316461543-6paji9lh0caq6ic7b4mvsherideju9c8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rilis.ident.ident",
+            "certificate_hash": "dc3acc153eaf843e2bd3abc81b9627fc5c633bef"
+          }
+        },
+        {
+          "client_id": "210316461543-edlf58jfgpfeiqr6agbg2mqrhdkce9t4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rilis.ident.ident",
+            "certificate_hash": "8869507acbad309af87bf2e41579e0fb1404936f"
+          }
+        },
+        {
+          "client_id": "210316461543-subomo5pn0aredvccbrm546jov8co5nn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rilis.ident.ident",
+            "certificate_hash": "13f9b9239f801a80b4e61f4d5d8d34349caa63a6"
+          }
+        },
+        {
+          "client_id": "210316461543-brq0ttdd6pp6vv23er2avf17jf3qafh7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJYjN_Vev3BfRjLacno9eOw4SQwiCLjn0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "210316461543-brq0ttdd6pp6vv23er2avf17jf3qafh7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210316461543:android:d256154af1164259212942",
+        "android_client_info": {
+          "package_name": "ident.dokter.dokter_ident"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "210316461543-k0s7cdhhsljko59ucemr3rp090p6atd6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ident.dokter.dokter_ident",
+            "certificate_hash": "8869507acbad309af87bf2e41579e0fb1404936f"
+          }
+        },
+        {
+          "client_id": "210316461543-brq0ttdd6pp6vv23er2avf17jf3qafh7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJYjN_Vev3BfRjLacno9eOw4SQwiCLjn0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "210316461543-brq0ttdd6pp6vv23er2avf17jf3qafh7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210316461543:android:adaf00531a3f2d1e212942",
+        "android_client_info": {
+          "package_name": "zanak.project.cekgigi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "210316461543-ne7fk9mg8avl2oug0t0u1jb2n3hon859.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "zanak.project.cekgigi",
+            "certificate_hash": "51f456b9a30bf54fefb86d9bd40c661d2e7ed539"
+          }
+        },
+        {
+          "client_id": "210316461543-brq0ttdd6pp6vv23er2avf17jf3qafh7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJYjN_Vev3BfRjLacno9eOw4SQwiCLjn0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "210316461543-brq0ttdd6pp6vv23er2avf17jf3qafh7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
