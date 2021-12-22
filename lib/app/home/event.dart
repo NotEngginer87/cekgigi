@@ -218,14 +218,10 @@ class _eventState extends State<event> {
   @override
   Widget build(BuildContext context) {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
-    CollectionReference blog = firestore.collection('blog');
     CollectionReference tevent = firestore.collection('tanggal_event');
-    CollectionReference csupport = firestore.collection('customersupport');
-    CollectionReference cardimg = firestore.collection('card');
 
     int? dbak, mbak, ybak, cbak;
     String? mmbak;
-    int? hitungterbaca = 0;
     return Padding(
         padding: EdgeInsets.only(left: 20, right: 20),
         child: Column(
