@@ -1,6 +1,6 @@
 # cekgigi
 
-A new Flutter project.
+next generation of iDent
 
 ## Getting Started
 
