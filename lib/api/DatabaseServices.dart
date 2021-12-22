@@ -10,12 +10,16 @@ class DatabaseServices {
   static CollectionReference count = firestore.collection('count');
   static CollectionReference blog = firestore.collection('soal');
 
-  static Future<void> updateakun(
-      String akungoogle, String nama, String nomorHP) async {
-    await userdata.doc(akungoogle).update(
+  static Future<void> updateakun(String? email, String nama, String? tanggal,
+      String? bulan, String? tahun, String alamat, String nomorHP) async {
+    await userdata.doc(email).set(
       {
-        'akungoogle': akungoogle,
+        'email': email,
         'nama': nama,
+        'tanggal': tanggal,
+        'bulan': bulan,
+        'tahun': tahun,
+        'alamat': alamat,
         'nomorhp': nomorHP,
       },
     );
@@ -52,13 +56,12 @@ class DatabaseServices {
       },
     );
   }
+
   static Future<void> initprogresspengerjaan(
-      String akungoogle, String id,) async {
-    await userdataTO
-        .doc(akungoogle)
-        .collection('dataTO')
-        .doc(id)
-        .update(
+    String akungoogle,
+    String id,
+  ) async {
+    await userdataTO.doc(akungoogle).collection('dataTO').doc(id).update(
       {
         'progresspengerjaanPU': true,
         'progresspengerjaanPPU': false,
@@ -75,101 +78,75 @@ class DatabaseServices {
 
   static Future<void> updateprogresspengerjaanPPU(
       String akungoogle, String id, bool progresspengerjaan) async {
-    await userdataTO
-        .doc(akungoogle)
-        .collection('dataTO')
-        .doc(id)
-        .update(
+    await userdataTO.doc(akungoogle).collection('dataTO').doc(id).update(
       {
         'progresspengerjaanPPU': !progresspengerjaan,
       },
     );
   }
+
   static Future<void> updateprogresspengerjaanPBM(
       String akungoogle, String id, bool progresspengerjaan) async {
-    await userdataTO
-        .doc(akungoogle)
-        .collection('dataTO')
-        .doc(id)
-        .update(
+    await userdataTO.doc(akungoogle).collection('dataTO').doc(id).update(
       {
         'progresspengerjaanPBM': !progresspengerjaan,
       },
     );
   }
+
   static Future<void> updateprogresspengerjaanPK(
       String akungoogle, String id, bool progresspengerjaan) async {
-    await userdataTO
-        .doc(akungoogle)
-        .collection('dataTO')
-        .doc(id)
-        .update(
+    await userdataTO.doc(akungoogle).collection('dataTO').doc(id).update(
       {
         'progresspengerjaanPK': !progresspengerjaan,
       },
     );
   }
+
   static Future<void> updateprogresspengerjaanINGG(
       String akungoogle, String id, bool progresspengerjaan) async {
-    await userdataTO
-        .doc(akungoogle)
-        .collection('dataTO')
-        .doc(id)
-        .update(
+    await userdataTO.doc(akungoogle).collection('dataTO').doc(id).update(
       {
         'progresspengerjaanINGG': !progresspengerjaan,
       },
     );
   }
+
   static Future<void> updateprogresspengerjaanMTK(
       String akungoogle, String id, bool progresspengerjaan) async {
-    await userdataTO
-        .doc(akungoogle)
-        .collection('dataTO')
-        .doc(id)
-        .update(
+    await userdataTO.doc(akungoogle).collection('dataTO').doc(id).update(
       {
         'progresspengerjaanMTK': !progresspengerjaan,
       },
     );
   }
+
   static Future<void> updateprogresspengerjaanFIS(
       String akungoogle, String id, bool progresspengerjaan) async {
-    await userdataTO
-        .doc(akungoogle)
-        .collection('dataTO')
-        .doc(id)
-        .update(
+    await userdataTO.doc(akungoogle).collection('dataTO').doc(id).update(
       {
         'progresspengerjaanFIS': !progresspengerjaan,
       },
     );
   }
+
   static Future<void> updateprogresspengerjaanKIM(
       String akungoogle, String id, bool progresspengerjaan) async {
-    await userdataTO
-        .doc(akungoogle)
-        .collection('dataTO')
-        .doc(id)
-        .update(
+    await userdataTO.doc(akungoogle).collection('dataTO').doc(id).update(
       {
         'progresspengerjaanKIM': !progresspengerjaan,
       },
     );
   }
+
   static Future<void> updateprogresspengerjaanBIO(
       String akungoogle, String id, bool progresspengerjaan) async {
-    await userdataTO
-        .doc(akungoogle)
-        .collection('dataTO')
-        .doc(id)
-        .update(
+    await userdataTO.doc(akungoogle).collection('dataTO').doc(id).update(
       {
         'progresspengerjaanBIO': !progresspengerjaan,
       },
     );
   }
-
 
   static Future<void> updatepembelianTO2TFGOPAY(
       String akungoogle, int id, String metodepembayaran, String GOPAY) async {

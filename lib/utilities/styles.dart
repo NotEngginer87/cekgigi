@@ -1,0 +1,16 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:flutter/material.dart';
+
+final kTitleStyle = TextStyle(
+  color: Colors.white,
+  fontFamily: 'CM Sans Serif',
+  fontSize: 24.0,
+  height: 1.5,
+);
+
+final kSubtitleStyle = TextStyle(
+  color: Colors.white,
+  fontSize: 18.0,
+  height: 1.2,
+);
