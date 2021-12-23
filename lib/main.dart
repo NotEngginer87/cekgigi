@@ -1,12 +1,19 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:io';
+import 'dart:ui';
+import 'package:path/path.dart';
+
 import 'package:cekgigi/api/DatabaseServices.dart';
 import 'package:cekgigi/onboarding_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:date_time_picker/date_time_picker.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'app/HomePage.dart';
 
@@ -65,6 +72,29 @@ class _RegistrasiState extends State<Registrasi> {
   TextEditingController noHP = TextEditingController();
   TextEditingController alamat = TextEditingController();
   String? tanggal, bulan, tahun;
+
+  Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(
+        stream: task.snapshotEvents,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final snap = snapshot.data!;
+            final progress = snap.bytesTransferred / snap.totalBytes;
+            final percentage = (progress * 100).toStringAsFixed(2);
+
+            return Text(
+              'upload : $percentage %',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            );
+          } else {
+            return Container(
+              width: 0,
+              height: 0,
+            );
+          }
+        },
+      );
+
+  String? imageUrl;
   @override
   Widget build(BuildContext context) {
     final FirebaseAuth auth = FirebaseAuth.instance;
@@ -90,8 +120,74 @@ class _RegistrasiState extends State<Registrasi> {
               ),
               subtitle: Text('nama lengkapmu')),
           Step(
-              state: currentstep > 2 ? StepState.complete : StepState.indexed,
-              isActive: currentstep >= 2,
+            state: currentstep > 2 ? StepState.complete : StepState.indexed,
+            isActive: currentstep >= 2,
+            title: Text('Date'),
+            content: Column(
+              children: <Widget>[
+                (imageUrl != null)
+                    ? Card(
+                        elevation: 4,
+                        clipBehavior: Clip.antiAlias,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Column(
+                          children: [
+                            Stack(
+                              children: [
+                                Ink.image(
+                                  image: NetworkImage(imageUrl!),
+                                  height: MediaQuery.of(context).size.width,
+                                  width: MediaQuery.of(context).size.width,
+                                  fit: BoxFit.cover,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
+                    : Container(
+                        decoration: BoxDecoration(
+                          color: Colors.black12,
+                          borderRadius: BorderRadius.all(Radius.circular(16)),
+                        ),
+                        width: MediaQuery.of(context).size.width - 100,
+                        height: MediaQuery.of(context).size.width - 100,
+                        child: InkWell(
+                          child: Padding(
+                              padding:
+                                  EdgeInsets.only(left: 20, right: 10, top: 32),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Upload Foto',
+                                    style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black),
+                                  ),
+                                  Text(
+                                    'Tap Here',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black87),
+                                  ),
+                                ],
+                              )),
+                          onTap: () {
+                            uploadImage();
+                          },
+                        ),
+                      ),
+              ],
+            ),
+          ),
+          Step(
+              state: currentstep > 3 ? StepState.complete : StepState.indexed,
+              isActive: currentstep >= 3,
               title: Text('Date'),
               content: DateTimePicker(
                 type: DateTimePickerType.date,
@@ -120,8 +216,8 @@ class _RegistrasiState extends State<Registrasi> {
                 onSaved: (val) => print(val),
               )),
           Step(
-            state: currentstep > 3 ? StepState.complete : StepState.indexed,
-            isActive: currentstep >= 3,
+            state: currentstep > 4 ? StepState.complete : StepState.indexed,
+            isActive: currentstep >= 4,
             title: Text('Nomor HP'),
             content: TextFormField(
               controller: noHP,
@@ -129,8 +225,8 @@ class _RegistrasiState extends State<Registrasi> {
             ),
           ),
           Step(
-              state: currentstep > 4 ? StepState.complete : StepState.indexed,
-              isActive: currentstep >= 4,
+              state: currentstep > 5 ? StepState.complete : StepState.indexed,
+              isActive: currentstep >= 5,
               title: Text('Alamat'),
               content: TextFormField(
                 controller: alamat,
@@ -184,7 +280,8 @@ class _RegistrasiState extends State<Registrasi> {
                                   bulan,
                                   tahun,
                                   alamat.text,
-                                  noHP.text);
+                                  noHP.text,
+                              imageUrl,);
 
                               Navigator.push(
                                 context,
@@ -216,5 +313,45 @@ class _RegistrasiState extends State<Registrasi> {
             );
           }),
     );
+  }
+
+  uploadImage() async {
+    final _storage = FirebaseStorage.instance;
+    final _picker = ImagePicker();
+    PickedFile? image;
+
+    //Check Permissions
+    await Permission.photos.request();
+
+    var permissionStatus = await Permission.photos.status;
+
+    if (permissionStatus.isGranted) {
+      //Select Image
+      image = await _picker.getImage(source: ImageSource.gallery);
+
+      var file = File(image!.path);
+
+      final fileName = basename(file.path);
+      final destination = 'userprofile/$fileName';
+
+      if (image != null) {
+        //Upload to Firebase
+        var snapshot = await _storage
+            .ref()
+            .child(destination)
+            .putFile(file)
+            .whenComplete(() => null);
+
+        var downloadUrl = await snapshot.ref.getDownloadURL();
+
+        setState(() {
+          imageUrl = downloadUrl;
+        });
+      } else {
+        print('No Path Received');
+      }
+    } else {
+      print('Grant Permissions and try again');
+    }
   }
 }

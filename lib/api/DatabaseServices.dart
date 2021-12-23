@@ -11,7 +11,7 @@ class DatabaseServices {
   static CollectionReference blog = firestore.collection('soal');
 
   static Future<void> updateakun(String? email, String nama, String? tanggal,
-      String? bulan, String? tahun, String alamat, String nomorHP) async {
+      String? bulan, String? tahun, String alamat, String nomorHP,String? imageUrl) async {
     await userdata.doc(email).set(
       {
         'email': email,
@@ -21,6 +21,7 @@ class DatabaseServices {
         'tahun': tahun,
         'alamat': alamat,
         'nomorhp': nomorHP,
+        'imageurl' : imageUrl,
       },
     );
   }
