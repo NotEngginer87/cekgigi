@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:cekgigi/api/DatabaseServices.dart';
-import 'package:cekgigi/app/home/tab3.dart';
 import 'package:cekgigi/onboarding_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';

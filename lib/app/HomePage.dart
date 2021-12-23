@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, file_names
+
 import 'package:cekgigi/app/home/infopasien.dart';
 import 'package:cekgigi/app/home/tombol2.dart';
 import 'package:flutter/material.dart';

@@ -7,6 +7,8 @@ import 'main.dart';
 import 'utilities/styles.dart';
 
 class OnboardingScreen extends StatefulWidget {
+  const OnboardingScreen({Key? key}) : super(key: key);
+
   @override
   _OnboardingScreenState createState() => _OnboardingScreenState();
 }
@@ -62,7 +64,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 SizedBox(height: 20.0),
-                Container(
+                SizedBox(
                   height: MediaQuery.of(context).size.height - 200,
                   width: MediaQuery.of(context).size.width,
                   child: PageView(
@@ -181,7 +183,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         flex: 1,
                         child: Align(
                           alignment: FractionalOffset.bottomRight,
-                          child: FlatButton(
+                          child: TextButton(
                             onPressed: () {
                               _pageController.nextPage(
                                 duration: Duration(milliseconds: 500),
