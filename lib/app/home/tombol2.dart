@@ -50,9 +50,13 @@ class _tomboltombolState extends State<tomboltombol> {
                       ),
                       width: MediaQuery.of(context).size.width / 7,
                       height: MediaQuery.of(context).size.width / 7,
-                      child: Icon(
-                        LineIcons.stethoscope,size: 32,
-                      ),
+                      child: IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            LineIcons.stethoscope,
+                            size: 32,
+                            color: Colors.black,
+                          )),
                     ),
                     SizedBox(
                       height: 8,
@@ -76,9 +80,13 @@ class _tomboltombolState extends State<tomboltombol> {
                       ),
                       width: MediaQuery.of(context).size.width / 7,
                       height: MediaQuery.of(context).size.width / 7,
-                      child: Icon(
-                        LineIcons.medicalNotes,size: 32,
-                      ),
+                      child: IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            LineIcons.medicalNotes,
+                            size: 32,
+                            color: Colors.black,
+                          )),
                     ),
                     SizedBox(
                       height: 8,
@@ -102,9 +110,13 @@ class _tomboltombolState extends State<tomboltombol> {
                       ),
                       width: MediaQuery.of(context).size.width / 7,
                       height: MediaQuery.of(context).size.width / 7,
-                      child: Icon(
-                        LineIcons.calendarAlt,size: 32,
-                      ),
+                      child: IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            LineIcons.calendarAlt,
+                            size: 32,
+                            color: Colors.black,
+                          )),
                     ),
                     SizedBox(
                       height: 8,
@@ -128,9 +140,13 @@ class _tomboltombolState extends State<tomboltombol> {
                       ),
                       width: MediaQuery.of(context).size.width / 7,
                       height: MediaQuery.of(context).size.width / 7,
-                      child: Icon(
-                        LineIcons.horizontalEllipsis,size: 32,
-                      ),
+                      child: IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            LineIcons.horizontalEllipsis,
+                            size: 32,
+                            color: Colors.black,
+                          )),
                     ),
                     SizedBox(
                       height: 8,
