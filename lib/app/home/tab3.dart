@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, non_constant_identifier_names
 
+import 'package:cekgigi/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

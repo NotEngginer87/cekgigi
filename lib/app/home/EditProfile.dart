@@ -3,14 +3,14 @@
 import 'package:flutter/material.dart';
 import 'tab3.dart';
 
-class Registrasi extends StatefulWidget {
-  const Registrasi({Key? key}) : super(key: key);
+class editprofil extends StatefulWidget {
+  const editprofil({Key? key}) : super(key: key);
 
   @override
-  _RegistrasiState createState() => _RegistrasiState();
+  _editprofilState createState() => _editprofilState();
 }
 
-class _RegistrasiState extends State<Registrasi> {
+class _editprofilState extends State<editprofil> {
   TextEditingController controllernama = TextEditingController();
   TextEditingController controllertelepon = TextEditingController();
 

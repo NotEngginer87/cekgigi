@@ -1,10 +1,13 @@
 // ignore_for_file: camel_case_types, prefer_const_constructors
 
+import 'package:cekgigi/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
+
+import 'EditProfile.dart';
 
 class infopasien extends StatefulWidget {
   const infopasien({Key? key}) : super(key: key);
@@ -65,11 +68,18 @@ class _infopasienState extends State<infopasien> {
                 ),
               ],
             ),
-            Icon(
-              LineIcons.cog,
-              size: 32,
-              color: Colors.white,
-            )
+            IconButton(
+                onPressed: () {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) {
+                    return Registrasi();
+                  }));
+                },
+                icon: Icon(
+                  LineIcons.cog,
+                  size: 32,
+                  color: Colors.white,
+                )),
           ],
         ),
       ),
