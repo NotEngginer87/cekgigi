@@ -28,7 +28,7 @@ class _tomboltombolState extends State<tomboltombol> {
             ],
           ),
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.width / 3,
+          height: MediaQuery.of(context).size.width / 4,
           child: Padding(
             padding: EdgeInsets.only(left: 2, right: 2, top: 20, bottom: 10),
             child: Row(
@@ -48,13 +48,13 @@ class _tomboltombolState extends State<tomboltombol> {
                           )
                         ],
                       ),
-                      width: MediaQuery.of(context).size.width / 7,
-                      height: MediaQuery.of(context).size.width / 7,
+                      width: MediaQuery.of(context).size.width / 9,
+                      height: MediaQuery.of(context).size.width / 9,
                       child: IconButton(
                           onPressed: () {},
                           icon: Icon(
                             LineIcons.stethoscope,
-                            size: 32,
+                            size: 24,
                             color: Colors.black,
                           )),
                     ),
@@ -78,13 +78,13 @@ class _tomboltombolState extends State<tomboltombol> {
                           )
                         ],
                       ),
-                      width: MediaQuery.of(context).size.width / 7,
-                      height: MediaQuery.of(context).size.width / 7,
+                      width: MediaQuery.of(context).size.width / 9,
+                      height: MediaQuery.of(context).size.width / 9,
                       child: IconButton(
                           onPressed: () {},
                           icon: Icon(
                             LineIcons.medicalNotes,
-                            size: 32,
+                            size: 24,
                             color: Colors.black,
                           )),
                     ),
@@ -108,13 +108,13 @@ class _tomboltombolState extends State<tomboltombol> {
                           )
                         ],
                       ),
-                      width: MediaQuery.of(context).size.width / 7,
-                      height: MediaQuery.of(context).size.width / 7,
+                      width: MediaQuery.of(context).size.width / 9,
+                      height: MediaQuery.of(context).size.width / 9,
                       child: IconButton(
                           onPressed: () {},
                           icon: Icon(
                             LineIcons.calendarAlt,
-                            size: 32,
+                            size: 24,
                             color: Colors.black,
                           )),
                     ),
@@ -138,13 +138,13 @@ class _tomboltombolState extends State<tomboltombol> {
                           )
                         ],
                       ),
-                      width: MediaQuery.of(context).size.width / 7,
-                      height: MediaQuery.of(context).size.width / 7,
+                      width: MediaQuery.of(context).size.width / 9,
+                      height: MediaQuery.of(context).size.width / 9,
                       child: IconButton(
                           onPressed: () {},
                           icon: Icon(
                             LineIcons.horizontalEllipsis,
-                            size: 32,
+                            size: 24,
                             color: Colors.black,
                           )),
                     ),

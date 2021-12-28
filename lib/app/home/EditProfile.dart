@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'tab3.dart';
 
-class editprofil extends StatefulWidget {
+class  editprofil extends StatefulWidget {
   const editprofil({Key? key}) : super(key: key);
 
   @override
