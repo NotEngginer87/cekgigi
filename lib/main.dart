@@ -1,7 +1,9 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, avoid_print
 
 import 'dart:io';
-import 'dart:ui';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gender_picker/source/enums.dart';
+import 'package:gender_picker/source/gender_picker.dart';
 import 'package:path/path.dart';
 
 import 'package:cekgigi/api/DatabaseServices.dart';
@@ -16,6 +18,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'app/HomePage.dart';
+import 'onboard2.0/introduction_animation_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,11 +49,34 @@ class ControllerAuth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference usera = firestore.collection('user');
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? user = auth.currentUser;
+    final emaila = user?.email;
     return StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
-            return Registrasi();
+            return StreamBuilder<DocumentSnapshot>(
+              stream: usera.doc(emaila.toString()).snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  Map<String, dynamic> data =
+                      snapshot.data!.data() as Map<String, dynamic>;
+                  var emailk = data['email'];
+
+                  if (emaila == emailk) {
+                    return HalamanRumah();
+                  } else {
+                    return OnBoardScreen();
+                  }
+                }
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+            );
           } else {
             return OnboardingScreen();
           }
@@ -72,6 +98,9 @@ class _RegistrasiState extends State<Registrasi> {
   TextEditingController noHP = TextEditingController();
   TextEditingController alamat = TextEditingController();
   String? tanggal, bulan, tahun;
+  String? gender;
+
+  String? genderr;
 
   Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(
         stream: task.snapshotEvents,
@@ -86,7 +115,7 @@ class _RegistrasiState extends State<Registrasi> {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             );
           } else {
-            return Container(
+            return SizedBox(
               width: 0,
               height: 0,
             );
@@ -120,9 +149,45 @@ class _RegistrasiState extends State<Registrasi> {
               ),
               subtitle: Text('nama lengkapmu')),
           Step(
-            state: currentstep > 2 ? StepState.complete : StepState.indexed,
-            isActive: currentstep >= 2,
-            title: Text('Date'),
+              state: currentstep > 2 ? StepState.complete : StepState.indexed,
+              isActive: currentstep >= 2,
+              title: Text('Jenis Kelamin'),
+              content: GenderPickerWithImage(
+                showOtherGender: false,
+                verticalAlignedText: true,
+                selectedGender: Gender.Male,
+                selectedGenderTextStyle: TextStyle(
+                    color: Color(0xFF8b32a8), fontWeight: FontWeight.bold),
+                unSelectedGenderTextStyle: TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.normal),
+                onChanged: (gender) async {
+                  print(gender);
+                  print(gender?.index);
+                  if (gender?.index == 0)
+                    {
+                      genderr = 'Laki-Laki';
+
+                    }
+                  else
+                    {
+                      genderr = 'perempuan';
+                    }
+                },
+                equallyAligned: true,
+                animationDuration: Duration(milliseconds: 300),
+                isCircular: true,
+                maleText: 'Laki-Laki',
+                femaleText: 'Perempuan',
+                // default : true,
+                opacityOfGradient: 0.4,
+                padding: const EdgeInsets.all(3),
+                size: 120, //default : 40
+              ),
+              subtitle: Text('jenis kelaminmu')),
+          Step(
+            state: currentstep > 3 ? StepState.complete : StepState.indexed,
+            isActive: currentstep >= 3,
+            title: Text('Upload Foto'),
             content: Column(
               children: <Widget>[
                 (imageUrl != null)
@@ -160,7 +225,7 @@ class _RegistrasiState extends State<Registrasi> {
                                   EdgeInsets.only(left: 20, right: 10, top: 32),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
+                                children: const [
                                   Text(
                                     'Upload Foto',
                                     style: TextStyle(
@@ -186,8 +251,8 @@ class _RegistrasiState extends State<Registrasi> {
             ),
           ),
           Step(
-              state: currentstep > 3 ? StepState.complete : StepState.indexed,
-              isActive: currentstep >= 3,
+              state: currentstep > 4 ? StepState.complete : StepState.indexed,
+              isActive: currentstep >= 4,
               title: Text('Date'),
               content: DateTimePicker(
                 type: DateTimePickerType.date,
@@ -199,9 +264,7 @@ class _RegistrasiState extends State<Registrasi> {
                 dateLabelText: 'Date',
                 selectableDayPredicate: (date) {
                   // Disable weekend days to select from the calendar
-                  if (date.weekday == 6 || date.weekday == 7) {
-                    return false;
-                  }
+
                   tanggal = date.day.toString();
                   bulan = date.month.toString();
                   tahun = date.year.toString();
@@ -216,8 +279,8 @@ class _RegistrasiState extends State<Registrasi> {
                 onSaved: (val) => print(val),
               )),
           Step(
-            state: currentstep > 4 ? StepState.complete : StepState.indexed,
-            isActive: currentstep >= 4,
+            state: currentstep > 5 ? StepState.complete : StepState.indexed,
+            isActive: currentstep >= 5,
             title: Text('Nomor HP'),
             content: TextFormField(
               controller: noHP,
@@ -225,8 +288,8 @@ class _RegistrasiState extends State<Registrasi> {
             ),
           ),
           Step(
-              state: currentstep > 5 ? StepState.complete : StepState.indexed,
-              isActive: currentstep >= 5,
+              state: currentstep > 6 ? StepState.complete : StepState.indexed,
+              isActive: currentstep >= 6,
               title: Text('Alamat'),
               content: TextFormField(
                 controller: alamat,
@@ -274,14 +337,16 @@ class _RegistrasiState extends State<Registrasi> {
                           child: ElevatedButton(
                             onPressed: () {
                               DatabaseServices.updateakun(
-                                  email,
-                                  nama.text,
-                                  tanggal,
-                                  bulan,
-                                  tahun,
-                                  alamat.text,
-                                  noHP.text,
-                              imageUrl,);
+                                email,
+                                nama.text,
+                                genderr!,
+                                tanggal,
+                                bulan,
+                                tahun,
+                                alamat.text,
+                                noHP.text,
+                                imageUrl,
+                              );
 
                               Navigator.push(
                                 context,

@@ -1,8 +1,11 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_const_constructors_in_immutables
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../api/DatabaseServices.dart';
+import '../blog/Blog.dart';
 
 class FavBlog extends StatefulWidget {
   const FavBlog({Key? key}) : super(key: key);
@@ -29,61 +32,60 @@ class _FavBlogState extends State<FavBlog> {
                     fontSize: 20,
                   )),
             ),
-            Container(
-              child: StreamBuilder<QuerySnapshot>(
-                stream: blog
-                    .orderBy('terbaca', descending: true)
-                    .limit(5)
-                    .snapshots(),
-                builder: (_, AsyncSnapshot snapshot) {
-                  if (snapshot.hasData) {
-                    return SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                          children: snapshot.data.docs
-                              .map<Widget>((e) => BlogPopulerCard(
-                                    e.data()['bab'],
-                                    e.data()['judul'],
-                                    e.data()['posting'],
-                                    e.data()['text1'],
-                                    e.data()['text2'],
-                                    e.data()['text3'],
-                                    e.data()['text4'],
-                                    e.data()['text5'],
-                                    e.data()['text6'],
-                                    e.data()['text7'],
-                                    e.data()['text8'],
-                                    e.data()['text9'],
-                                    e.data()['text10'],
-                                    e.data()['sumber1'],
-                                    e.data()['sumber2'],
-                                    e.data()['sumber3'],
-                                    e.data()['urlgambar1'],
-                                    e.data()['urlgambar2'],
-                                    e.data()['penulis'],
-                                    e.data()['id'],
-                                    onUpdate: () {
-                                      blog.doc(e.data()['id']).update(
-                                          {'terbaca': e.data()['terbaca'] + 1});
-                                    },
-                                  ))
-                              .toList()),
-                    );
-                  } else {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Center(
-                          child: Center(
-                            child: CircularProgressIndicator(),
-                          ),
+            StreamBuilder<QuerySnapshot>(
+              stream: blog
+                  .orderBy('terbaca', descending: true)
+                  .limit(5)
+                  .snapshots(),
+              builder: (_, AsyncSnapshot snapshot) {
+                if (snapshot.hasData) {
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                        children: snapshot.data.docs
+                            .map<Widget>((e) => BlogPopulerCard(
+                                  e.data()['bab'],
+                                  e.data()['judul'],
+                                  e.data()['posting'],
+                                  e.data()['text1'],
+                                  e.data()['text2'],
+                                  e.data()['text3'],
+                                  e.data()['text4'],
+                                  e.data()['text5'],
+                                  e.data()['text6'],
+                                  e.data()['text7'],
+                                  e.data()['text8'],
+                                  e.data()['text9'],
+                                  e.data()['text10'],
+                                  e.data()['sumber1'],
+                                  e.data()['sumber2'],
+                                  e.data()['sumber3'],
+                                  e.data()['urlgambar1'],
+                                  e.data()['urlgambar2'],
+                                  e.data()['penulis'],
+                                  e.data()['id'],
+                                  e.data()['terbaca'],
+                                  onUpdate: () {
+                                    blog.doc(e.data()['id']).update(
+                                        {'terbaca': e.data()['terbaca'] + 1});
+                                  },
+                                ))
+                            .toList()),
+                  );
+                } else {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Center(
+                        child: Center(
+                          child: CircularProgressIndicator(),
                         ),
-                      ],
-                    );
-                  }
-                },
-              ),
+                      ),
+                    ],
+                  );
+                }
+              },
             )
           ],
         ));
@@ -111,7 +113,7 @@ class BlogPopulerCard extends StatelessWidget {
   final String? urlgambar2;
   final bool? posting;
   final String? id;
-
+  final int? terbaca;
   //// Pointer to Update Function
   final Function? onUpdate;
   //// Pointer to Delete Function
@@ -138,62 +140,88 @@ class BlogPopulerCard extends StatelessWidget {
       this.urlgambar2,
       this.penulis,
       this.id,
-      {this.onUpdate,
-      this.onDelete});
+      this.terbaca,
+      {Key? key, this.onUpdate,
+      this.onDelete}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          (posting == true)
-              ? Padding(
-                  padding: EdgeInsets.only(
-                    left: 2,
-                    right: 2,
-                  ),
-                  child: SizedBox(
-                      height: MediaQuery.of(context).size.width * 0.4,
-                      width: MediaQuery.of(context).size.width * 0.4 ,
-                      child: Card(
-                          clipBehavior: Clip.antiAlias,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          elevation: 4,
-                          child: InkWell(
-                              child: Stack(
-                                alignment: Alignment.topCenter,
-                                children: [
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: MediaQuery.of(context).size.width,
-                                    child: Column(
-                                      children: [
-                                        Expanded(
-                                          child: Ink.image(
-                                            image: NetworkImage(
-                                              '$urlgambar1',
-                                            ),
-                                            colorFilter: ColorFilter.mode(
-                                                Colors.grey,
-                                                BlendMode.softLight),
-                                            fit: BoxFit.cover,
+    return Column(
+      children: [
+        (posting == true)
+            ? Padding(
+                padding: EdgeInsets.only(
+                  left: 2,
+                  right: 2,
+                ),
+                child: SizedBox(
+                    height: MediaQuery.of(context).size.width * 0.4,
+                    width: MediaQuery.of(context).size.width * 0.4 ,
+                    child: Card(
+                        clipBehavior: Clip.antiAlias,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        elevation: 4,
+                        child: InkWell(
+                            child: Stack(
+                              alignment: Alignment.topCenter,
+                              children: [
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: MediaQuery.of(context).size.width,
+                                  child: Column(
+                                    children: [
+                                      Expanded(
+                                        child: Ink.image(
+                                          image: NetworkImage(
+                                            '$urlgambar1',
                                           ),
+                                          colorFilter: ColorFilter.mode(
+                                              Colors.grey,
+                                              BlendMode.softLight),
+                                          fit: BoxFit.cover,
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                              onTap: () {
-                                if (onUpdate != null) onUpdate!();
-                                DatabaseServices.terbacaBlog(id);
-                              }))),
-                )
-              : Container(),
-        ],
-      ),
+                                ),
+                              ],
+                            ),
+                            onTap: () {
+                              if (onUpdate != null) onUpdate!();
+                              DatabaseServices.terbacaBlog(id);
+                              Navigator.push(context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return blogstl(
+                                        bab: '$bab',
+                                        judul: '$judul',
+                                        text1: '$text1',
+                                        text2: '$text2',
+                                        text3: '$text3',
+                                        text4: '$text4',
+                                        text5: '$text5',
+                                        text6: '$text6',
+                                        text7: '$text7',
+                                        text8: '$text8',
+                                        text9: '$text9',
+                                        text10: '$text10',
+                                        sumber1: '$sumber1',
+                                        sumber2: '$sumber2',
+                                        sumber3: '$sumber3',
+                                        urlgambar1: '$urlgambar1',
+                                        urlgambar2: '$urlgambar2',
+                                        penulis: '$penulis',
+                                        terbaca: terbaca,
+
+                                      );
+                                    },
+                                  ));
+                            }))),
+              )
+            : Container(),
+      ],
     );
   }
 }

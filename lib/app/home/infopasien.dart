@@ -1,11 +1,11 @@
 // ignore_for_file: camel_case_types, prefer_const_constructors
 
-import 'package:cekgigi/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:line_icons/line_icons.dart';
+
+import 'EditProfil.dart';
 
 class infopasien extends StatefulWidget {
   const infopasien({Key? key}) : super(key: key);
@@ -37,10 +37,8 @@ class _infopasienState extends State<infopasien> {
             Map<String, dynamic> data =
                 snapshot.data!.data() as Map<String, dynamic>;
 
-            String nama;
-            nama = data['nama'];
-            String imageUrl;
-            imageUrl = data['imageurl'];
+            String nama = data['nama'];
+            String? imageUrl = data['imageurl'];
 
             return Padding(
               padding: EdgeInsets.only(top: 10, left: 20, right: 20,bottom: 10),
@@ -55,6 +53,8 @@ class _infopasienState extends State<infopasien> {
                         Text(
                           'hello',
                           style: TextStyle(color: Colors.white),
+                        ),SizedBox(
+                          height: 4,
                         ),
                         Text(
                           nama,
@@ -76,7 +76,12 @@ class _infopasienState extends State<infopasien> {
                             borderRadius: BorderRadius.circular(25),
                           ),
                           child: Container(
-                            child: Image(
+                            child: (imageUrl == null) ? Image(
+                              image: NetworkImage('https://firebasestorage.googleapis.com/v0/b/teledentistry-70122.appspot.com/o/foto_blog%2Fkosong.png?alt=media&token=652482ea-7fa4-451f-913a-912c83d3ebd1'),
+                              height: 48,
+                              width: 48,
+                              fit: BoxFit.cover,
+                            ) : Image(
                               image: NetworkImage(imageUrl),
                               height: 48,
                               width: 48,
@@ -84,9 +89,9 @@ class _infopasienState extends State<infopasien> {
                             ),
                           )),
                       onTap: () {
-                        Navigator.pushReplacement(context,
+                        Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return Registrasi();
+                          return EditProfil();
                         }));
                       },
                     ),

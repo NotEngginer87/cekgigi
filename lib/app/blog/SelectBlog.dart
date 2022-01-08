@@ -1,10 +1,11 @@
-// ignore_for_file: prefer_const_constructors, file_names
+// ignore_for_file: prefer_const_constructors, file_names, prefer_const_literals_to_create_immutables, prefer_const_constructors_in_immutables, duplicate_ignore, avoid_unnecessary_containers
 
+import 'package:cekgigi/app/blog/Blog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../api/DatabaseServices.dart';
+import '../../api/DatabaseServices.dart';
 
 class SelectBlog extends StatefulWidget {
   const SelectBlog({Key? key}) : super(key: key);
@@ -222,6 +223,7 @@ class BlogPopulerCard extends StatelessWidget {
   //// Pointer to Delete Function
   final Function? onDelete;
 
+  // ignore: prefer_const_constructors_in_immutables
   BlogPopulerCard(
       this.bab,
       this.judul,
@@ -243,62 +245,84 @@ class BlogPopulerCard extends StatelessWidget {
       this.urlgambar2,
       this.penulis,
       this.id,
-      {this.onUpdate,
-      this.onDelete});
+      {Key? key, this.onUpdate,
+      this.onDelete}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          (posting == true)
-              ? Padding(
-                  padding: EdgeInsets.only(
-                    left: 2,
-                    right: 2,
-                  ),
-                  child: SizedBox(
-                      height: MediaQuery.of(context).size.width * 0.6,
-                      width: MediaQuery.of(context).size.width * 0.6,
-                      child: Card(
-                          clipBehavior: Clip.antiAlias,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          elevation: 4,
-                          child: InkWell(
-                              child: Stack(
-                                alignment: Alignment.topCenter,
-                                children: [
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: MediaQuery.of(context).size.width,
-                                    child: Column(
-                                      children: [
-                                        Expanded(
-                                          child: Ink.image(
-                                            image: NetworkImage(
-                                              '$urlgambar1',
-                                            ),
-                                            colorFilter: ColorFilter.mode(
-                                                Colors.grey,
-                                                BlendMode.softLight),
-                                            fit: BoxFit.cover,
+    return Column(
+      children: [
+        (posting == true)
+            ? Padding(
+                padding: EdgeInsets.only(
+                  left: 2,
+                  right: 2,
+                ),
+                child: SizedBox(
+                    height: MediaQuery.of(context).size.width * 0.6,
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    child: Card(
+                        clipBehavior: Clip.antiAlias,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        elevation: 4,
+                        child: InkWell(
+                            child: Stack(
+                              alignment: Alignment.topCenter,
+                              children: [
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: MediaQuery.of(context).size.width,
+                                  child: Column(
+                                    children: [
+                                      Expanded(
+                                        child: Ink.image(
+                                          image: NetworkImage(
+                                            '$urlgambar1',
                                           ),
+                                          colorFilter: ColorFilter.mode(
+                                              Colors.grey,
+                                              BlendMode.softLight),
+                                          fit: BoxFit.cover,
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                              onTap: () {
-                                if (onUpdate != null) onUpdate!();
-                                DatabaseServices.terbacaBlog(id);
-                              }))),
-                )
-              : Container(),
-        ],
-      ),
+                                ),
+                              ],
+                            ),
+                            onTap: () {
+                              if (onUpdate != null) onUpdate!();
+                              DatabaseServices.terbacaBlog(id);
+                              Navigator.push(context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return blogstl(
+                                          bab: '$bab',
+                                          judul: '$judul',
+                                          text1: '$text1',
+                                          text2: '$text2',
+                                          text3: '$text3',
+                                          text4: '$text4',
+                                          text5: '$text5',
+                                          text6: '$text6',
+                                          text7: '$text7',
+                                          text8: '$text8',
+                                          text9: '$text9',
+                                          text10: '$text10',
+                                          sumber1: '$sumber1',
+                                          sumber2: '$sumber2',
+                                          sumber3: '$sumber3',
+                                          urlgambar1: '$urlgambar1',
+                                          urlgambar2: '$urlgambar2',
+                                          penulis: '$penulis');
+                                    },
+                                  ));
+                            }))),
+              )
+            : Container(),
+      ],
     );
   }
 }
@@ -353,12 +377,12 @@ class BlogCard extends StatelessWidget {
       this.penulis,
       this.id,
       this.terbaca,
-      {this.onUpdate,
-      this.onDelete});
+      {Key? key, this.onUpdate,
+      this.onDelete}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return InkWell(
       child: Row(
         children: [
           (posting == true)
@@ -368,31 +392,35 @@ class BlogCard extends StatelessWidget {
                     right: 8,
                   ),
                   child: SizedBox(
-                      height: MediaQuery.of(context).size.width * 0.3,
-                      width: MediaQuery.of(context).size.width * 0.3,
-                      child: Card(
-                        clipBehavior: Clip.antiAlias,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        elevation: 10,
-                        child: SizedBox(
-                          child: Column(
-                            children: [
-                              Expanded(
-                                child: Ink.image(
-                                  image: NetworkImage(
-                                    '$urlgambar1',
-                                  ),
-                                  height: 120,
-                                  width: 200,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ],
+                        height: MediaQuery.of(context).size.width * 0.3,
+                        width: MediaQuery.of(context).size.width * 0.3,
+                        child: Card(
+                          clipBehavior: Clip.antiAlias,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
                           ),
-                        ),
-                      )),
+                          elevation: 10,
+                          child: SizedBox(
+                            child: Column(
+                              children: [
+                                Expanded(
+                                  child: Ink.image(
+
+                                    image: NetworkImage(
+                                      '$urlgambar1',
+                                    ),
+                                    height: 120,
+                                    width: 200,
+                                    fit: BoxFit.cover,
+
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )),
+
+
                 )
               : Container(),
           SizedBox(
@@ -435,6 +463,36 @@ class BlogCard extends StatelessWidget {
           ),
         ],
       ),
+      onTap: (){
+        DatabaseServices.terbacaBlog(id);
+        Navigator.push(context,
+            MaterialPageRoute(
+              builder: (context) {
+                return blogstl(
+                    bab: '$bab',
+                    judul: '$judul',
+                    text1: '$text1',
+                    text2: '$text2',
+                    text3: '$text3',
+                    text4: '$text4',
+                    text5: '$text5',
+                    text6: '$text6',
+                    text7: '$text7',
+                    text8: '$text8',
+                    text9: '$text9',
+                    text10: '$text10',
+                    sumber1: '$sumber1',
+                    sumber2: '$sumber2',
+                    sumber3: '$sumber3',
+                    urlgambar1: '$urlgambar1',
+                    urlgambar2: '$urlgambar2',
+                    penulis: '$penulis',
+                  terbaca: terbaca,
+
+                );
+              },
+            ));
+      },
     );
   }
 }
@@ -487,8 +545,8 @@ class BlogCarda extends StatelessWidget {
       this.urlgambar2,
       this.penulis,
       this.id,
-      {this.onUpdate,
-      this.onDelete});
+      {Key? key, this.onUpdate,
+      this.onDelete}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

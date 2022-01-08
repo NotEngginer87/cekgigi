@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, file_names
 
-import 'package:cekgigi/app/SelectBlog.dart';
+import 'package:cekgigi/app/blog/SelectBlog.dart';
 import 'package:cekgigi/app/home/fav_blog.dart';
 import 'package:cekgigi/app/home/infopasien.dart';
 import 'package:cekgigi/app/home/keuntungan.dart';
@@ -10,6 +10,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
 import 'home/event.dart';
+import 'home/tab3.dart';
 
 class HalamanRumah extends StatefulWidget {
   const HalamanRumah({Key? key}) : super(key: key);
@@ -46,7 +47,12 @@ class _HalamanRumahState extends State<HalamanRumah> {
                         SelectBlog(),
                       ],
                     )
-                  : Container(),
+                  : ListView(
+            children: [
+              infopasien(),
+              Tab3(),
+            ],
+          )
         ),
       ),
       bottomNavigationBar: Padding(

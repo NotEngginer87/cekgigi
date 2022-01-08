@@ -225,6 +225,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               color: Colors.white,
               child: GestureDetector(
                 onTap: () => {
+
                   AuthServices.signInWithGoogle(),
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) {

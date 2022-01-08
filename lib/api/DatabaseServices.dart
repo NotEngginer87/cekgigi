@@ -10,12 +10,13 @@ class DatabaseServices {
   static CollectionReference count = firestore.collection('count');
   static CollectionReference blog = firestore.collection('soal');
 
-  static Future<void> updateakun(String? email, String nama, String? tanggal,
+  static Future<void> updateakun(String? email, String nama, String gender, String? tanggal,
       String? bulan, String? tahun, String alamat, String nomorHP,String? imageUrl) async {
     await userdata.doc(email).set(
       {
         'email': email,
         'nama': nama,
+        'gender': gender,
         'tanggal': tanggal,
         'bulan': bulan,
         'tahun': tahun,
