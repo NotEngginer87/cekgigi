@@ -27,7 +27,7 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Dokter Gigi'),centerTitle: true,backgroundColor: Colors.blue,elevation: 0,),
+      appBar: AppBar(title: const Text('Dokter Gigi'),centerTitle: true,backgroundColor: Colors.blue,elevation: 0,),
       body: Column(
         children: [
 
@@ -46,7 +46,7 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                       children: [
                         dokternya(widget.iddokter),
                         komentarnya(widget.iddokter),
-                        SizedBox(
+                        const SizedBox(
                           height: 12,
                         ),
                       ],
@@ -69,7 +69,7 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                         elevation: 4,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
+                          children: const [
                             SizedBox(
                               height: 8,
                             ),
@@ -99,7 +99,7 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                         elevation: 4,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
+                          children: const [
                             SizedBox(
                               height: 8,
                             ),
@@ -145,7 +145,7 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
             height: MediaQuery.of(context).size.height * 0.5,
             child: Padding(
               padding:
-                  EdgeInsets.only(top: 12, bottom: 12, left: 12, right: 12),
+                  const EdgeInsets.only(top: 12, bottom: 12, left: 12, right: 12),
               child: ListView(
                 children: [
                   Container(
@@ -349,14 +349,14 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
+                              const Text(
                                 'Syarat dan Ketentuan : ',
                                 style: TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.w700),
                               ),
                               ElevatedButton(onPressed: (){
                                 _onButtonPressedSyaratdanKetentuan();
-                              }, child: Text('klik'))
+                              }, child: const Text('klik'))
                             ],
                           ),
                         ],
@@ -423,14 +423,14 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           'Syarat dan Ketentuan : ',
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w700),
                         ),
-                        SizedBox(height: 24,),
+                        const SizedBox(height: 24,),
                         Column(
-                          children: [
+                          children: const [
                             Text(
 
                               '        Setelah mengisi formulir, Anda akan diarahkan ke tampilan video call untuk melakukan konsultasi secara langsung bersama dokter gigi. Jika anda memilih untuk keluar aplikasi atau kembali ke halaman sebelumnya, maka data tidak akan terekam, dan Anda diminta untuk mengisi form kembali',
@@ -456,10 +456,10 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                           ],
                         ),
 
-                        SizedBox(
+                        const SizedBox(
                           height: 16,
                         ),
-                        ElevatedButton(child: Text('kembali'),onPressed: (){
+                        ElevatedButton(child: const Text('kembali'),onPressed: (){
                           Navigator.pop(context);
 
                         },)

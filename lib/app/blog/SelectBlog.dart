@@ -50,31 +50,31 @@ class _SelectBlogState extends State<SelectBlog> {
                       child: Row(
                           children: snapshot.data.docs
                               .map<Widget>((e) => BlogPopulerCard(
-                                    e.data()['bab'],
-                                    e.data()['judul'],
-                                    e.data()['posting'],
-                                    e.data()['text1'],
-                                    e.data()['text2'],
-                                    e.data()['text3'],
-                                    e.data()['text4'],
-                                    e.data()['text5'],
-                                    e.data()['text6'],
-                                    e.data()['text7'],
-                                    e.data()['text8'],
-                                    e.data()['text9'],
-                                    e.data()['text10'],
-                                    e.data()['sumber1'],
-                                    e.data()['sumber2'],
-                                    e.data()['sumber3'],
-                                    e.data()['urlgambar1'],
-                                    e.data()['urlgambar2'],
-                                    e.data()['penulis'],
-                                    e.data()['id'],
-                                    onUpdate: () {
-                                      blog.doc(e.data()['id']).update(
-                                          {'terbaca': e.data()['terbaca'] + 1});
-                                    },
-                                  ))
+                            e.data()['bab'],
+                            e.data()['judul'],
+                            e.data()['posting'],
+                            e.data()['text1'],
+                            e.data()['text2'],
+                            e.data()['text3'],
+                            e.data()['text4'],
+                            e.data()['text5'],
+                            e.data()['text6'],
+                            e.data()['text7'],
+                            e.data()['text8'],
+                            e.data()['text9'],
+                            e.data()['text10'],
+                            e.data()['sumber1'],
+                            e.data()['sumber2'],
+                            e.data()['sumber3'],
+                            e.data()['urlgambar1'],
+                            e.data()['urlgambar2'],
+                            e.data()['penulis'],
+                            e.data()['id'],
+                            onUpdate: () {
+                              blog.doc(e.data()['id']).update(
+                                  {'terbaca': e.data()['terbaca'] + 1});
+                            },
+                          ))
                               .toList()),
                     );
                   } else {
@@ -145,32 +145,32 @@ class _SelectBlogState extends State<SelectBlog> {
                     return Column(
                       children: snapshot.data.docs
                           .map<Widget>((e) => BlogCard(
-                                e.data()['bab'],
-                                e.data()['judul'],
-                                e.data()['posting'],
-                                e.data()['text1'],
-                                e.data()['text2'],
-                                e.data()['text3'],
-                                e.data()['text4'],
-                                e.data()['text5'],
-                                e.data()['text6'],
-                                e.data()['text7'],
-                                e.data()['text8'],
-                                e.data()['text9'],
-                                e.data()['text10'],
-                                e.data()['sumber1'],
-                                e.data()['sumber2'],
-                                e.data()['sumber3'],
-                                e.data()['urlgambar1'],
-                                e.data()['urlgambar2'],
-                                e.data()['penulis'],
-                                e.data()['id'],
-                                e.data()['terbaca'],
-                                onUpdate: () {
-                                  blog.doc(e.data()['id']).update(
-                                      {'terbaca': e.data()['terbaca'] + 1});
-                                },
-                              ))
+                        e.data()['bab'],
+                        e.data()['judul'],
+                        e.data()['posting'],
+                        e.data()['text1'],
+                        e.data()['text2'],
+                        e.data()['text3'],
+                        e.data()['text4'],
+                        e.data()['text5'],
+                        e.data()['text6'],
+                        e.data()['text7'],
+                        e.data()['text8'],
+                        e.data()['text9'],
+                        e.data()['text10'],
+                        e.data()['sumber1'],
+                        e.data()['sumber2'],
+                        e.data()['sumber3'],
+                        e.data()['urlgambar1'],
+                        e.data()['urlgambar2'],
+                        e.data()['penulis'],
+                        e.data()['id'],
+                        e.data()['terbaca'],
+                        onUpdate: () {
+                          blog.doc(e.data()['id']).update(
+                              {'terbaca': e.data()['terbaca'] + 1});
+                        },
+                      ))
                           .toList(),
                     );
                   } else {
@@ -246,7 +246,7 @@ class BlogPopulerCard extends StatelessWidget {
       this.penulis,
       this.id,
       {Key? key, this.onUpdate,
-      this.onDelete}) : super(key: key);
+        this.onDelete}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -254,73 +254,73 @@ class BlogPopulerCard extends StatelessWidget {
       children: [
         (posting == true)
             ? Padding(
-                padding: EdgeInsets.only(
-                  left: 2,
-                  right: 2,
-                ),
-                child: SizedBox(
-                    height: MediaQuery.of(context).size.width * 0.6,
-                    width: MediaQuery.of(context).size.width * 0.6,
-                    child: Card(
-                        clipBehavior: Clip.antiAlias,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        elevation: 4,
-                        child: InkWell(
-                            child: Stack(
-                              alignment: Alignment.topCenter,
+          padding: EdgeInsets.only(
+            left: 2,
+            right: 2,
+          ),
+          child: SizedBox(
+              height: MediaQuery.of(context).size.width * 0.6,
+              width: MediaQuery.of(context).size.width * 0.6,
+              child: Card(
+                  clipBehavior: Clip.antiAlias,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  elevation: 4,
+                  child: InkWell(
+                      child: Stack(
+                        alignment: Alignment.topCenter,
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.width,
+                            child: Column(
                               children: [
-                                SizedBox(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: MediaQuery.of(context).size.width,
-                                  child: Column(
-                                    children: [
-                                      Expanded(
-                                        child: Ink.image(
-                                          image: NetworkImage(
-                                            '$urlgambar1',
-                                          ),
-                                          colorFilter: ColorFilter.mode(
-                                              Colors.grey,
-                                              BlendMode.softLight),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ],
+                                Expanded(
+                                  child: Ink.image(
+                                    image: NetworkImage(
+                                      '$urlgambar1',
+                                    ),
+                                    colorFilter: ColorFilter.mode(
+                                        Colors.grey,
+                                        BlendMode.softLight),
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
                               ],
                             ),
-                            onTap: () {
-                              if (onUpdate != null) onUpdate!();
-                              DatabaseServices.terbacaBlog(id);
-                              Navigator.push(context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return blogstl(
-                                          bab: '$bab',
-                                          judul: '$judul',
-                                          text1: '$text1',
-                                          text2: '$text2',
-                                          text3: '$text3',
-                                          text4: '$text4',
-                                          text5: '$text5',
-                                          text6: '$text6',
-                                          text7: '$text7',
-                                          text8: '$text8',
-                                          text9: '$text9',
-                                          text10: '$text10',
-                                          sumber1: '$sumber1',
-                                          sumber2: '$sumber2',
-                                          sumber3: '$sumber3',
-                                          urlgambar1: '$urlgambar1',
-                                          urlgambar2: '$urlgambar2',
-                                          penulis: '$penulis');
-                                    },
-                                  ));
-                            }))),
-              )
+                          ),
+                        ],
+                      ),
+                      onTap: () {
+                        if (onUpdate != null) onUpdate!();
+                        DatabaseServices.terbacaBlog(id);
+                        Navigator.push(context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return blogstl(
+                                    bab: '$bab',
+                                    judul: '$judul',
+                                    text1: '$text1',
+                                    text2: '$text2',
+                                    text3: '$text3',
+                                    text4: '$text4',
+                                    text5: '$text5',
+                                    text6: '$text6',
+                                    text7: '$text7',
+                                    text8: '$text8',
+                                    text9: '$text9',
+                                    text10: '$text10',
+                                    sumber1: '$sumber1',
+                                    sumber2: '$sumber2',
+                                    sumber3: '$sumber3',
+                                    urlgambar1: '$urlgambar1',
+                                    urlgambar2: '$urlgambar2',
+                                    penulis: '$penulis');
+                              },
+                            ));
+                      }))),
+        )
             : Container(),
       ],
     );
@@ -378,7 +378,7 @@ class BlogCard extends StatelessWidget {
       this.id,
       this.terbaca,
       {Key? key, this.onUpdate,
-      this.onDelete}) : super(key: key);
+        this.onDelete}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -387,41 +387,41 @@ class BlogCard extends StatelessWidget {
         children: [
           (posting == true)
               ? Padding(
-                  padding: EdgeInsets.only(
-                    left: 8,
-                    right: 8,
+            padding: EdgeInsets.only(
+              left: 8,
+              right: 8,
+            ),
+            child: SizedBox(
+                height: MediaQuery.of(context).size.width * 0.3,
+                width: MediaQuery.of(context).size.width * 0.3,
+                child: Card(
+                  clipBehavior: Clip.antiAlias,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
                   ),
+                  elevation: 10,
                   child: SizedBox(
-                        height: MediaQuery.of(context).size.width * 0.3,
-                        width: MediaQuery.of(context).size.width * 0.3,
-                        child: Card(
-                          clipBehavior: Clip.antiAlias,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          elevation: 10,
-                          child: SizedBox(
-                            child: Column(
-                              children: [
-                                Expanded(
-                                  child: Ink.image(
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: Ink.image(
 
-                                    image: NetworkImage(
-                                      '$urlgambar1',
-                                    ),
-                                    height: 120,
-                                    width: 200,
-                                    fit: BoxFit.cover,
-
-                                  ),
-                                ),
-                              ],
+                            image: NetworkImage(
+                              '$urlgambar1',
                             ),
+                            height: 120,
+                            width: 200,
+                            fit: BoxFit.cover,
+
                           ),
-                        )),
+                        ),
+                      ],
+                    ),
+                  ),
+                )),
 
 
-                )
+          )
               : Container(),
           SizedBox(
             child: Column(
@@ -469,24 +469,24 @@ class BlogCard extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) {
                 return blogstl(
-                    bab: '$bab',
-                    judul: '$judul',
-                    text1: '$text1',
-                    text2: '$text2',
-                    text3: '$text3',
-                    text4: '$text4',
-                    text5: '$text5',
-                    text6: '$text6',
-                    text7: '$text7',
-                    text8: '$text8',
-                    text9: '$text9',
-                    text10: '$text10',
-                    sumber1: '$sumber1',
-                    sumber2: '$sumber2',
-                    sumber3: '$sumber3',
-                    urlgambar1: '$urlgambar1',
-                    urlgambar2: '$urlgambar2',
-                    penulis: '$penulis',
+                  bab: '$bab',
+                  judul: '$judul',
+                  text1: '$text1',
+                  text2: '$text2',
+                  text3: '$text3',
+                  text4: '$text4',
+                  text5: '$text5',
+                  text6: '$text6',
+                  text7: '$text7',
+                  text8: '$text8',
+                  text9: '$text9',
+                  text10: '$text10',
+                  sumber1: '$sumber1',
+                  sumber2: '$sumber2',
+                  sumber3: '$sumber3',
+                  urlgambar1: '$urlgambar1',
+                  urlgambar2: '$urlgambar2',
+                  penulis: '$penulis',
                   terbaca: terbaca,
 
                 );
@@ -546,7 +546,7 @@ class BlogCarda extends StatelessWidget {
       this.penulis,
       this.id,
       {Key? key, this.onUpdate,
-      this.onDelete}) : super(key: key);
+        this.onDelete}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -555,102 +555,102 @@ class BlogCarda extends StatelessWidget {
         children: [
           (posting == true)
               ? Padding(
-                  padding: EdgeInsets.only(
-                    left: 8,
-                    right: 8,
-                  ),
-                  child: SizedBox(
-                      height: 120,
-                      width: MediaQuery.of(context).size.width - 8,
-                      child: Card(
-                          clipBehavior: Clip.antiAlias,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          elevation: 10,
-                          child: InkWell(
-                              child: Stack(
-                                alignment: Alignment.topCenter,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+            padding: EdgeInsets.only(
+              left: 8,
+              right: 8,
+            ),
+            child: SizedBox(
+                height: 120,
+                width: MediaQuery.of(context).size.width - 8,
+                child: Card(
+                    clipBehavior: Clip.antiAlias,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    elevation: 10,
+                    child: InkWell(
+                        child: Stack(
+                          alignment: Alignment.topCenter,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment:
+                              CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width:
+                                  MediaQuery.of(context).size.width *
+                                      0.3,
+                                  height:
+                                  MediaQuery.of(context).size.width,
+                                  child: Column(
                                     children: [
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.3,
-                                        height:
-                                            MediaQuery.of(context).size.width,
-                                        child: Column(
-                                          children: [
-                                            Expanded(
-                                              child: Ink.image(
-                                                image: NetworkImage(
-                                                  '$urlgambar1',
-                                                ),
-                                                height: 120,
-                                                width: 200,
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      SizedBox(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: <Widget>[
-                                            SizedBox(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.6,
-                                              child: Text(
-                                                bab!,
-                                                style: GoogleFonts
-                                                    .pathwayGothicOne(
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontSize: 20),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 8,
-                                            ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.6,
-                                              child: Text(
-                                                judul!,
-                                                style: GoogleFonts
-                                                    .pathwayGothicOne(
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontSize: 18),
-                                              ),
-                                            ),
-                                          ],
+                                      Expanded(
+                                        child: Ink.image(
+                                          image: NetworkImage(
+                                            '$urlgambar1',
+                                          ),
+                                          height: 120,
+                                          width: 200,
+                                          fit: BoxFit.cover,
                                         ),
                                       ),
                                     ],
                                   ),
-                                ],
-                              ),
-                              onTap: () {
-                                if (onUpdate != null) onUpdate!();
-                                DatabaseServices.terbacaBlog(id);
-                              }))),
-                )
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                SizedBox(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      SizedBox(
+                                        width: MediaQuery.of(context)
+                                            .size
+                                            .width *
+                                            0.6,
+                                        child: Text(
+                                          bab!,
+                                          style: GoogleFonts
+                                              .pathwayGothicOne(
+                                              fontWeight:
+                                              FontWeight.w500,
+                                              fontSize: 20),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      SizedBox(
+                                        width: MediaQuery.of(context)
+                                            .size
+                                            .width *
+                                            0.6,
+                                        child: Text(
+                                          judul!,
+                                          style: GoogleFonts
+                                              .pathwayGothicOne(
+                                              fontWeight:
+                                              FontWeight.w500,
+                                              fontSize: 18),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        onTap: () {
+                          if (onUpdate != null) onUpdate!();
+                          DatabaseServices.terbacaBlog(id);
+                        }))),
+          )
               : Container(),
         ],
       ),
