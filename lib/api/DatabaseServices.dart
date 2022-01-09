@@ -6,8 +6,8 @@ class DatabaseServices {
   static FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   static CollectionReference userdata = firestore.collection('user');
-  static CollectionReference userdataTO = firestore.collection('user');
   static CollectionReference count = firestore.collection('count');
+  static CollectionReference listpasiencount = firestore.collection('listpasiencount');
   static CollectionReference blog = firestore.collection('soal');
 
   static Future<void> updateakun(String? email, String nama, String gender, String? tanggal,
@@ -27,167 +27,12 @@ class DatabaseServices {
     );
   }
 
-  static Future<void> updatepembelianTO(
-      String akungoogle, String namaTO, String jenis, int id) async {
-    await userdataTO
-        .doc(akungoogle)
-        .collection('dataTO')
-        .doc(id.toString())
-        .set(
-      {
-        'namaTO': namaTO,
-        'jenis': jenis,
-        'id': id,
-        'statuspembayaran': 'belum bayar',
-      },
-    );
-  }
-
-  static Future<void> updatepembelianTO2TFBANK(
-      String akungoogle, int id, String metodepembayaran, String TFBANK) async {
-    await userdataTO
-        .doc(akungoogle)
-        .collection('dataTO')
-        .doc(id.toString())
-        .update(
-      {
-        'id': id,
-        'statuspembayaran': 'tunggu verifikasi',
-        'metodepembayaran': metodepembayaran,
-        'bukti1': TFBANK
-      },
-    );
-  }
-
-  static Future<void> initprogresspengerjaan(
-    String akungoogle,
-    String id,
-  ) async {
-    await userdataTO.doc(akungoogle).collection('dataTO').doc(id).update(
-      {
-        'progresspengerjaanPU': true,
-        'progresspengerjaanPPU': false,
-        'progresspengerjaanPBM': false,
-        'progresspengerjaanPK': false,
-        'progresspengerjaanINGG': false,
-        'progresspengerjaanMTK': false,
-        'progresspengerjaanFIS': false,
-        'progresspengerjaanKIM': false,
-        'progresspengerjaanBIO': false,
-      },
-    );
-  }
-
-  static Future<void> updateprogresspengerjaanPPU(
-      String akungoogle, String id, bool progresspengerjaan) async {
-    await userdataTO.doc(akungoogle).collection('dataTO').doc(id).update(
-      {
-        'progresspengerjaanPPU': !progresspengerjaan,
-      },
-    );
-  }
-
-  static Future<void> updateprogresspengerjaanPBM(
-      String akungoogle, String id, bool progresspengerjaan) async {
-    await userdataTO.doc(akungoogle).collection('dataTO').doc(id).update(
-      {
-        'progresspengerjaanPBM': !progresspengerjaan,
-      },
-    );
-  }
-
-  static Future<void> updateprogresspengerjaanPK(
-      String akungoogle, String id, bool progresspengerjaan) async {
-    await userdataTO.doc(akungoogle).collection('dataTO').doc(id).update(
-      {
-        'progresspengerjaanPK': !progresspengerjaan,
-      },
-    );
-  }
-
-  static Future<void> updateprogresspengerjaanINGG(
-      String akungoogle, String id, bool progresspengerjaan) async {
-    await userdataTO.doc(akungoogle).collection('dataTO').doc(id).update(
-      {
-        'progresspengerjaanINGG': !progresspengerjaan,
-      },
-    );
-  }
-
-  static Future<void> updateprogresspengerjaanMTK(
-      String akungoogle, String id, bool progresspengerjaan) async {
-    await userdataTO.doc(akungoogle).collection('dataTO').doc(id).update(
-      {
-        'progresspengerjaanMTK': !progresspengerjaan,
-      },
-    );
-  }
-
-  static Future<void> updateprogresspengerjaanFIS(
-      String akungoogle, String id, bool progresspengerjaan) async {
-    await userdataTO.doc(akungoogle).collection('dataTO').doc(id).update(
-      {
-        'progresspengerjaanFIS': !progresspengerjaan,
-      },
-    );
-  }
-
-  static Future<void> updateprogresspengerjaanKIM(
-      String akungoogle, String id, bool progresspengerjaan) async {
-    await userdataTO.doc(akungoogle).collection('dataTO').doc(id).update(
-      {
-        'progresspengerjaanKIM': !progresspengerjaan,
-      },
-    );
-  }
-
-  static Future<void> updateprogresspengerjaanBIO(
-      String akungoogle, String id, bool progresspengerjaan) async {
-    await userdataTO.doc(akungoogle).collection('dataTO').doc(id).update(
-      {
-        'progresspengerjaanBIO': !progresspengerjaan,
-      },
-    );
-  }
-
-  static Future<void> updatepembelianTO2TFGOPAY(
-      String akungoogle, int id, String metodepembayaran, String GOPAY) async {
-    await userdataTO
-        .doc(akungoogle)
-        .collection('dataTO')
-        .doc(id.toString())
-        .update(
-      {
-        'id': id,
-        'statuspembayaran': 'tunggu verifikasi',
-        'metodepembayaran': metodepembayaran,
-        'bukti1': GOPAY,
-      },
-    );
-  }
-
-  static Future<void> updatepembelianTO2FREE(String akungoogle, int id,
-      String metodepembayaran, String FREE1, String FREE2, String FREE3) async {
-    await userdataTO
-        .doc(akungoogle)
-        .collection('dataTO')
-        .doc(id.toString())
-        .update(
-      {
-        'id': id,
-        'statuspembayaran': 'tunggu verifikasi',
-        'metodepembayaran': metodepembayaran,
-        'bukti1': FREE1,
-        'bukti2': FREE2,
-        'bukti3': FREE3,
-      },
-    );
-  }
 
   static Future<void> updatecountakun() async {
-    await count.doc('hitung').update(
+
+    await listpasiencount.doc('count').update(
       {
-        'banyakuser': int.tryParse('banyakuser')! + 1,
+        'count': FieldValue.increment(1),
       },
     );
   }
@@ -220,14 +65,14 @@ class DatabaseServices {
         'agama': (agama == 1)
             ? 'Islam'
             : (agama == 2)
-                ? 'Protestan'
-                : (agama == 3)
-                    ? 'Katolik'
-                    : (agama == 4)
-                        ? 'Budha'
-                        : (agama == 5)
-                            ? 'Hindu'
-                            : ' ',
+            ? 'Protestan'
+            : (agama == 3)
+            ? 'Katolik'
+            : (agama == 4)
+            ? 'Budha'
+            : (agama == 5)
+            ? 'Hindu'
+            : ' ',
         'telepon': telepon,
         'pekerjaan': pekerjaan,
         'suku': suku,

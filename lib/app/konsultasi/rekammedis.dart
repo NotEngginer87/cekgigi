@@ -2,7 +2,6 @@
 
 import 'package:cekgigi/app/konsultasi/pilihdokter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:date_time_picker/date_time_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gender_picker/source/enums.dart';
@@ -13,6 +12,8 @@ import 'package:path/path.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import '../../api/DatabaseServices.dart';
 
 class RekamMedis extends StatefulWidget {
   const RekamMedis({Key? key}) : super(key: key);
@@ -26,6 +27,7 @@ class _RekamMedisState extends State<RekamMedis> {
 
   TextEditingController nama = TextEditingController();
   TextEditingController noHP = TextEditingController();
+  TextEditingController umurcontrol = TextEditingController();
   TextEditingController alamat = TextEditingController();
   TextEditingController agama = TextEditingController();
   TextEditingController pekerjaan = TextEditingController();
@@ -38,6 +40,7 @@ class _RekamMedisState extends State<RekamMedis> {
   late bool switchumur = false;
   late bool switchnotelepon = false;
   late bool switchalamat = false;
+  late bool switchnikah = false;
   late bool switchagama = false;
   late bool switchpekerjaan = false;
   late bool switchsuku = false;
@@ -56,6 +59,9 @@ class _RekamMedisState extends State<RekamMedis> {
   bool? switchimpor;
 
   String? _valueagama = 'pilih';
+  String? _valuenikah = 'pilih';
+
+  bool isLastStep2 = false;
 
   Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(
         stream: task.snapshotEvents,
@@ -83,6 +89,8 @@ class _RekamMedisState extends State<RekamMedis> {
   Widget build(BuildContext context) {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference userdata = firestore.collection('user');
+    CollectionReference listpasiencount =
+        firestore.collection('listpasiencount');
 
     final FirebaseAuth auth = FirebaseAuth.instance;
     final User? user = auth.currentUser;
@@ -114,6 +122,7 @@ class _RekamMedisState extends State<RekamMedis> {
                       tanggalawal = int.tryParse(datatanggal);
                       bulanawal = int.tryParse(databulan);
                       tahunawal = int.tryParse(datatahun);
+                      umur = DateTime.now().year - tahunawal!;
 
                       return ElevatedButton(
                           onPressed: () {
@@ -121,6 +130,7 @@ class _RekamMedisState extends State<RekamMedis> {
                               nama.text = datanama;
                               noHP.text = datanomorHP!;
                               alamat.text = dataalamat!;
+                              umurcontrol.text = umur.toString();
                               jeniskelamin.text = datagender;
                               tanggal = datatanggal;
                               bulan = databulan;
@@ -198,32 +208,17 @@ class _RekamMedisState extends State<RekamMedis> {
                   height: 24,
                 ),
                 const Text(
-                  'Tanggal Lahir : ',
+                  'Umur : ',
                   textAlign: TextAlign.left,
                 ),
-                DateTimePicker(
-                  type: DateTimePickerType.date,
-                  dateMask: 'dd MMMM, yyyy',
-                  firstDate: DateTime(1900),
-                  initialDate: DateTime.now(),
-                  lastDate: DateTime(2100),
-                  icon: const Icon(Icons.event),
-                  dateLabelText: 'Date',
-                  selectableDayPredicate: (date) {
-                    tanggal = date.day.toString();
-                    bulan = date.month.toString();
-                    tahun = date.year.toString();
-                    umur = DateTime.now().year - int.parse(tahun!);
-                    switchumur = true;
-                    return true;
+                TextFormField(
+                  controller: umurcontrol,
+                  keyboardType: TextInputType.phone,
+                  onChanged: (value) {
+                    setState(() {
+                      switchumur = true;
+                    });
                   },
-                  onChanged: (val) => print(val),
-                  validator: (val) {
-                    print(val);
-                    if (switchimpor == true) {}
-                    return null;
-                  },
-                  onSaved: (val) => print(val),
                 ),
                 const SizedBox(
                   height: 24,
@@ -268,6 +263,37 @@ class _RekamMedisState extends State<RekamMedis> {
               content: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const Text(
+                    'Status Pernikahan : ',
+                    textAlign: TextAlign.left,
+                  ),
+                  DropdownButton(
+                      value: _valuenikah,
+                      elevation: 10,
+                      isExpanded: true,
+                      items: const [
+                        DropdownMenuItem(
+                          child: Text("pilih"),
+                          value: 'pilih',
+                        ),
+                        DropdownMenuItem(
+                          child: Text("Belum menikah"),
+                          value: 'Belum menikah',
+                        ),
+                        DropdownMenuItem(
+                          child: Text("Sudah menikah"),
+                          value: 'Sudah menikah',
+                        ),
+                      ],
+                      onChanged: (dynamic value) {
+                        setState(() {
+                          _valuenikah = value;
+                          switchnikah = true;
+                        });
+                      }),
+                  const SizedBox(
+                    height: 24,
+                  ),
                   const Text(
                     'Agama : ',
                     textAlign: TextAlign.left,
@@ -342,7 +368,7 @@ class _RekamMedisState extends State<RekamMedis> {
           Step(
             state: currentstep > 2 ? StepState.complete : StepState.indexed,
             isActive: currentstep >= 2,
-            title: const Text('Alamat'),
+            title: const Text('Keluhan'),
             content: Column(
               children: <Widget>[
                 const Text(
@@ -449,17 +475,25 @@ class _RekamMedisState extends State<RekamMedis> {
               }
             }
             if (currentstep == 1) {
-              if (switchagama == true) {
-                if (switchpekerjaan == true) {
-                  if (switchsuku == true) {
-                    setState(() {
-                      currentstep = 2;
-                    });
+              if (switchnikah == true) {
+                if (switchagama == true) {
+                  if (switchpekerjaan == true) {
+                    if (switchsuku == true) {
+                      setState(() {
+                        currentstep = 2;
+                      });
+                    }
                   }
                 }
               }
             }
-            if (currentstep == 2) {}
+            if (currentstep == 2) {
+              if (switchkeluhan == true) {
+                if (switchfoto == true) {
+                  isLastStep2 = true;
+                }
+              }
+            }
           },
           onStepTapped: (step) => setState(() {
                 currentstep = step;
@@ -478,29 +512,45 @@ class _RekamMedisState extends State<RekamMedis> {
               child: Row(
                 children: [
                   isLastStep
-                      ? Expanded(
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SelectDokter(
-                                          nama.text,
-                                          alamat.text,
-                                          agama.text,
-                                          noHP.text,
-                                          pekerjaan.text,
-                                          suku.text,
-                                          jeniskelamin.text,
-                                          umur.toString(),
-                                          keluhan.text,
-                                          imageUrl,
-                                        )),
-                              );
-                            },
-                            child: const Text('Konfirmasi'),
-                          ),
-                        )
+                      ? isLastStep2
+                          ? StreamBuilder<DocumentSnapshot>(
+                              stream: listpasiencount.doc('count').snapshots(),
+                              builder: (context, AsyncSnapshot snapshot) {
+                                if (snapshot.hasData) {
+                                  Map<String, dynamic> data = snapshot.data!
+                                      .data() as Map<String, dynamic>;
+
+                                  int idpasien = data['count'];
+
+                                  return Expanded(
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        print(idpasien);
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => SelectDokter(idpasien),
+                                          ),
+                                        );
+                                        DatabaseServices.updatecountakun();
+
+                                        print(idpasien);
+                                      },
+                                      child: const Text('Konfirmasi'),
+                                    ),
+                                  );
+                                }
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              },
+                            )
+                          : Expanded(
+                              child: ElevatedButton(
+                                onPressed: details.onStepContinue,
+                                child: const Text('lanjut'),
+                              ),
+                            )
                       : Expanded(
                           child: ElevatedButton(
                             onPressed: details.onStepContinue,
