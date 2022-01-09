@@ -86,44 +86,14 @@ class ButtonKonsultasi extends StatelessWidget {
 
 class konfirmasipembayaran extends StatelessWidget {
   konfirmasipembayaran({Key? key,
-    required this.gelar,
-
-    required this.waktuawal,
-    required this.waktuakhir,
-    required this.nama,
-    required this.asal,
-    required this.urlgambar,
-
-    required this.namapasien,
-    required this.alamat,
-    required this.agama,
-    required this.telepon,
-    required this.pekerjaan,
-    required this.suku,
-    required this.gender,
-    required this.umur,
-    required this.keluhan,
-    required this.gambar,
+    required this.iddokter,
+    required this.idpasien,
+    required this.imageurl
   }) : super(key: key);
 
-  final String gelar;
-  final int waktuawal;
-  final int waktuakhir;
-  final String nama;
-  final String asal;
-  final String urlgambar;
-
-
-  final String? namapasien;
-  final String? alamat;
-  final int? agama;
-  final String? telepon;
-  final String? pekerjaan;
-  final String? suku;
-  final int? gender;
-  final String? umur;
-  final String? keluhan;
-  final String? gambar;
+  final String imageurl;
+  final int idpasien;
+  final String iddokter;
 
 
   final Stream<int> _bids = (() async* {
@@ -208,84 +178,7 @@ class konfirmasipembayaran extends StatelessWidget {
                   child: ListView(
                     padding: const EdgeInsets.all(10),
                     children: [
-                      Card(
-                        clipBehavior: Clip.antiAlias,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        elevation: 10,
-                        child: Stack(
-                          alignment: Alignment.topCenter,
-                          children: [
-                            Positioned(
-                              left: 20,
-                              top: 208,
-                              child: SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.6,
-                                child: Text('Nama',
-                                    textAlign: TextAlign.left,
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 14,
-                                        color: Colors.black)),
-                              ),
-                            ),
-                            Positioned(
-                              left: 110,
-                              top: 208,
-                              child: Text(': ' + nama,
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 14,
-                                      color: Colors.black)),
-                            ),
-                            Positioned(
-                              left: 20,
-                              top: 240,
-                              child: SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.6,
-                                child: Text('Asal',
-                                    textAlign: TextAlign.left,
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 14,
-                                        color: Colors.black)),
-                              ),
-                            ),
-                            Positioned(
-                              left: 110,
-                              top: 240,
-                              child: Text(': ' + asal,
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 14,
-                                      color: Colors.black)),
-                            ),
-                            SizedBox(
-                              height: 270,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: 200,
-                                    child: Ink.image(
-                                      image: NetworkImage(
-                                        urlgambar,
-                                      ),
-                                      height: 240,
-                                      width: 160,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 12,
-                      ),
+
                       Container(
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -564,41 +457,7 @@ class konfirmasipembayaran extends StatelessWidget {
                               color: Colors.black)),
                     ]),
               ),
-              Padding(
-                padding: const EdgeInsets.only(right: 20),
-                child: StreamBuilder(
-                    stream: users.snapshots(),
-                    builder: (_, AsyncSnapshot snapshot) {
-                      if (snapshot.hasData) {
-                        return Column(
-                          children: snapshot.data.docs
-                              .map<Widget>((e) => ButtonKonsultasi(
-                            e.data()['nama'],
-                            e.data()['id'],
-                            nama,
-                            gelar,
-                            waktuawal,
-                            waktuakhir,
-                            asal,
-                            urlgambar,
-                            namapasien!,
-                            alamat!,
-                            agama!,
-                            telepon!,
-                            pekerjaan!,
-                            suku!,
-                            gender!,
-                            umur!,
-                            keluhan!,
-                            gambar!,
-                          ))
-                              .toList(),
-                        );
-                      } else {
-                        return const CircularProgressIndicator();
-                      }
-                    }),
-              ),
+
             ],
           ),
         ],
