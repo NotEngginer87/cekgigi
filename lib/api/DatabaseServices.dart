@@ -6,12 +6,22 @@ class DatabaseServices {
   static FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   static CollectionReference userdata = firestore.collection('user');
+  static CollectionReference datapasien = firestore.collection('listpasien');
   static CollectionReference count = firestore.collection('count');
-  static CollectionReference listpasiencount = firestore.collection('listpasiencount');
+  static CollectionReference listpasiencount =
+      firestore.collection('listpasiencount');
   static CollectionReference blog = firestore.collection('soal');
 
-  static Future<void> updateakun(String? email, String nama, String gender, String? tanggal,
-      String? bulan, String? tahun, String alamat, String nomorHP,String? imageUrl) async {
+  static Future<void> updateakun(
+      String? email,
+      String nama,
+      String gender,
+      String? tanggal,
+      String? bulan,
+      String? tahun,
+      String alamat,
+      String nomorHP,
+      String? imageUrl) async {
     await userdata.doc(email).set(
       {
         'email': email,
@@ -22,14 +32,43 @@ class DatabaseServices {
         'tahun': tahun,
         'alamat': alamat,
         'nomorhp': nomorHP,
-        'imageurl' : imageUrl,
+        'imageurl': imageUrl,
       },
     );
   }
 
+  static Future<void> updateketeranganpasien(
+      int id,
+      String nama,
+      String gender,
+      String umur,
+      String noHP,
+      String alamat,
+      String statusperkawinan,
+      String agama,
+      String suku,
+      String pekerjaan,
+      String keluhan,
+      String gambarkeluhan) async {
+    await datapasien.doc(id.toString()).set(
+      {
+        'Aid': id,
+        'Anama': nama,
+        'Agender': gender,
+        'Aumur': umur,
+        'AnoHP': noHP,
+        'Aalamat': alamat,
+        'Bstatusperkawinan': statusperkawinan,
+        'Bagama': agama,
+        'Bsuku': suku,
+        'Bpekerjaan': pekerjaan,
+        'Ckeluhan': keluhan,
+        'Cgambarkeluhan': gambarkeluhan,
+      },
+    );
+  }
 
   static Future<void> updatecountakun() async {
-
     await listpasiencount.doc('count').update(
       {
         'count': FieldValue.increment(1),
@@ -65,14 +104,14 @@ class DatabaseServices {
         'agama': (agama == 1)
             ? 'Islam'
             : (agama == 2)
-            ? 'Protestan'
-            : (agama == 3)
-            ? 'Katolik'
-            : (agama == 4)
-            ? 'Budha'
-            : (agama == 5)
-            ? 'Hindu'
-            : ' ',
+                ? 'Protestan'
+                : (agama == 3)
+                    ? 'Katolik'
+                    : (agama == 4)
+                        ? 'Budha'
+                        : (agama == 5)
+                            ? 'Hindu'
+                            : ' ',
         'telepon': telepon,
         'pekerjaan': pekerjaan,
         'suku': suku,

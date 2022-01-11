@@ -490,7 +490,9 @@ class _RekamMedisState extends State<RekamMedis> {
             if (currentstep == 2) {
               if (switchkeluhan == true) {
                 if (switchfoto == true) {
-                  isLastStep2 = true;
+                  setState(() {
+                    isLastStep2 = true;
+                  });
                 }
               }
             }
@@ -506,51 +508,54 @@ class _RekamMedisState extends State<RekamMedis> {
                   });
                 },
           controlsBuilder: (context, details) {
-            final isLastStep = currentstep == getSteps().length - 1;
             return Container(
               margin: const EdgeInsets.only(top: 12),
               child: Row(
                 children: [
-                  isLastStep
-                      ? isLastStep2
-                          ? StreamBuilder<DocumentSnapshot>(
-                              stream: listpasiencount.doc('count').snapshots(),
-                              builder: (context, AsyncSnapshot snapshot) {
-                                if (snapshot.hasData) {
-                                  Map<String, dynamic> data = snapshot.data!
-                                      .data() as Map<String, dynamic>;
+                  isLastStep2
+                      ? StreamBuilder<DocumentSnapshot>(
+                          stream: listpasiencount.doc('count').snapshots(),
+                          builder: (context, AsyncSnapshot snapshot) {
+                            if (snapshot.hasData) {
+                              Map<String, dynamic> data =
+                                  snapshot.data!.data() as Map<String, dynamic>;
 
-                                  int idpasien = data['count'];
+                              int idpasien = data['count'];
 
-                                  return Expanded(
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        print(idpasien);
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => SelectDokter(idpasien),
-                                          ),
-                                        );
-                                        DatabaseServices.updatecountakun();
+                              return Expanded(
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    print(idpasien);
 
-                                        print(idpasien);
-                                      },
-                                      child: const Text('Konfirmasi'),
-                                    ),
-                                  );
-                                }
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              },
-                            )
-                          : Expanded(
-                              child: ElevatedButton(
-                                onPressed: details.onStepContinue,
-                                child: const Text('lanjut'),
-                              ),
-                            )
+                                    DatabaseServices.updatecountakun();
+                                    DatabaseServices.updateketeranganpasien(
+                                        idpasien,
+                                        nama.text,
+                                        jeniskelamin.text,
+                                        umurcontrol.text,
+                                        noHP.text,
+                                        alamat.text,
+                                        _valuenikah.toString(),
+                                        _valueagama.toString(),
+                                        suku.text,
+                                        pekerjaan.text,
+                                        keluhan.text,
+                                        imageUrl!);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SelectDokter(idpasien)));
+                                  },
+                                  child: const Text('Konfirmasi'),
+                                ),
+                              );
+                            }
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          },
+                        )
                       : Expanded(
                           child: ElevatedButton(
                             onPressed: details.onStepContinue,
