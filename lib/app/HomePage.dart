@@ -27,14 +27,30 @@ class _HalamanRumahState extends State<HalamanRumah> {
     return Scaffold(
       backgroundColor: Colors.white,
       extendBody: true,
-      body: SizedBox(
+      body: Container(
+
+        color: Colors.grey.shade50,
         height: MediaQuery.of(context).size.height,
         child: Center(
           child: (_selectedIndex == 0)
               ? ListView(
                   children: [
                     infopasien(),
-                    tomboltombol(),
+                    Container(
+                      color: Colors.white,
+                      height: 150,
+                      child: Stack(
+                        children: [
+                          Container(
+                            height: 75,
+                            color: Colors.blue,
+                          ),
+                          tomboltombol(),
+                        ],
+                      ),
+                    ),
+
+
                     event(),
                     FavBlog(),
                     keuntunganmenggunakanaplikasi()
@@ -56,7 +72,7 @@ class _HalamanRumahState extends State<HalamanRumah> {
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: EdgeInsets.all(20),
+        padding: EdgeInsets.all(12),
         child: Container(
           decoration: BoxDecoration(
             color: Colors.white,

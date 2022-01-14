@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, unnecessary_null_comparison
+// ignore_for_file: avoid_print, unnecessary_null_comparison, must_be_immutable, deprecated_member_use
 
 import 'package:cekgigi/app/konsultasi/pilihdokter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -16,8 +16,8 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../api/DatabaseServices.dart';
 
 class RekamMedis extends StatefulWidget {
-  const RekamMedis({Key? key}) : super(key: key);
-
+  RekamMedis(this.kegiatan, {Key? key,}) : super(key: key);
+  String kegiatan;
   @override
   _RekamMedisState createState() => _RekamMedisState();
 }
@@ -377,6 +377,7 @@ class _RekamMedisState extends State<RekamMedis> {
                 ),
                 TextFormField(
                   controller: keluhan,
+                  maxLines: 5,
                   keyboardType: TextInputType.streetAddress,
                   onChanged: (value) {
                     setState(() {
@@ -453,6 +454,8 @@ class _RekamMedisState extends State<RekamMedis> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Rekam Medis'),
+        centerTitle: true,
+        elevation: 0,
       ),
       body: Stepper(
           type: StepperType.vertical,
@@ -540,12 +543,14 @@ class _RekamMedisState extends State<RekamMedis> {
                                         suku.text,
                                         pekerjaan.text,
                                         keluhan.text,
-                                        imageUrl!);
+                                        imageUrl!,
+                                    widget.kegiatan,
+                                    emaila!);
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                SelectDokter(idpasien)));
+                                                SelectDokter(idpasien,widget.kegiatan)));
                                   },
                                   child: const Text('Konfirmasi'),
                                 ),

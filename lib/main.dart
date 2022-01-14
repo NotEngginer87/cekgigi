@@ -1,13 +1,11 @@
-// ignore_for_file: prefer_const_constructors, avoid_print
+// ignore_for_file: prefer_const_constructors, avoid_print, deprecated_member_use, unnecessary_null_comparison
 
 import 'dart:io';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gender_picker/source/enums.dart';
 import 'package:gender_picker/source/gender_picker.dart';
 import 'package:path/path.dart';
 
 import 'package:cekgigi/api/DatabaseServices.dart';
-import 'package:cekgigi/onboarding_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -49,36 +47,13 @@ class ControllerAuth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
-    CollectionReference usera = firestore.collection('user');
-    final FirebaseAuth auth = FirebaseAuth.instance;
-    final User? user = auth.currentUser;
-    final emaila = user?.email;
     return StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
-            return StreamBuilder<DocumentSnapshot>(
-              stream: usera.doc(emaila.toString()).snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  Map<String, dynamic> data =
-                      snapshot.data!.data() as Map<String, dynamic>;
-                  var emailk = data['email'];
-
-                  if (emaila == emailk) {
-                    return HalamanRumah();
-                  } else {
-                    return OnBoardScreen();
-                  }
-                }
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
-            );
+            return HalamanRumah();
           } else {
-            return OnboardingScreen();
+            return OnBoardScreen();
           }
         });
   }

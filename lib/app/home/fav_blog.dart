@@ -20,17 +20,22 @@ class _FavBlogState extends State<FavBlog> {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference blog = firestore.collection('blog');
     return Padding(
-        padding: EdgeInsets.only(left: 20, right: 20,top: 20, bottom: 20),
+        padding: EdgeInsets.only(left: 8, right: 8,top: 20,),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text('artikel populer : ',
-                  style: GoogleFonts.pathwayGothicOne(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 20,
-                  )),
+            Row(
+              children: [
+                SizedBox(width: 4,),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text('artikel populer : ',
+                      style: GoogleFonts.pathwayGothicOne(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                      )),
+                ),
+              ],
             ),
             StreamBuilder<QuerySnapshot>(
               stream: blog

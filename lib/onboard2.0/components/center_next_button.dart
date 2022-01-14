@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:cekgigi/app/HomePage.dart';
 import 'package:flutter/material.dart';
 
 class CenterNextButton extends StatelessWidget {
@@ -95,7 +96,13 @@ class CenterNextButton extends StatelessWidget {
                     child: _signUpMoveAnimation.value > 0.7
                         ? InkWell(
                             key: const ValueKey('Sign Up button'),
-                            onTap: onNextClick,
+                            onTap: (){
+                              onNextClick;
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                    return const HalamanRumah();
+                                  }));
+                            },
                             child: Padding(
                               padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                               child: Row(

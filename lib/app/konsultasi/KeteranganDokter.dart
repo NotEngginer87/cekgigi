@@ -2,23 +2,28 @@
 
 import 'package:cekgigi/app/konsultasi/keterangan%20dokter/sisidokternya.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 
+import '../../ChatDokter/Chat.dart';
+import '../../api/DatabaseServices.dart';
 import 'konfirmasipembayaran.dart';
 
 class KeteranganDokter extends StatefulWidget {
   const KeteranganDokter(
     this.image,
     this.iddokter,
-    this.idpasien, {
+    this.idpasien,
+    this.kegiatan, {
     Key? key,
   }) : super(key: key);
   final String image;
   final String iddokter;
   final int idpasien;
+  final String kegiatan;
   @override
   _KeteranganDokterState createState() => _KeteranganDokterState();
 }
@@ -27,10 +32,14 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Dokter Gigi'),centerTitle: true,backgroundColor: Colors.blue,elevation: 0,),
+      appBar: AppBar(
+        title: const Text('Dokter Gigi'),
+        centerTitle: true,
+        backgroundColor: Colors.blue,
+        elevation: 0,
+      ),
       body: Column(
         children: [
-
           Expanded(
             child: Container(
               color: Colors.blue,
@@ -44,7 +53,9 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                   child: Expanded(
                     child: ListView(
                       children: [
-                        dokternya(widget.iddokter),
+                        infodokternya(widget.iddokter),
+                        edukasidokternya(widget.iddokter),
+                        klinikdokternya(widget.iddokter),
                         komentarnya(widget.iddokter),
                         const SizedBox(
                           height: 12,
@@ -86,7 +97,7 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                     width: MediaQuery.of(context).size.width / 3,
                   ),
                   onTap: () async {
-                    _onButtonPressedslider();
+                    _onButtonPressedchat();
                   },
                 ),
                 InkWell(
@@ -137,6 +148,10 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
   late bool max = false;
 
   void _onButtonPressedslider() {
+
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? user = auth.currentUser;
+    final emaila = user?.email;
     showModalBottomSheet(
         context: context,
         builder: (context) {
@@ -144,8 +159,8 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height * 0.5,
             child: Padding(
-              padding:
-                  const EdgeInsets.only(top: 12, bottom: 12, left: 12, right: 12),
+              padding: const EdgeInsets.only(
+                  top: 12, bottom: 12, left: 12, right: 12),
               child: ListView(
                 children: [
                   Container(
@@ -195,7 +210,286 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                                 style: TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.w800),
                               ),
+                              StreamBuilder(
+                                  stream: _bids,
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<int> snapshot) {
+                                    if (snapshot.hasData) {
+                                      return Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                            DateTime.now().hour.toString() +
+                                                ' : ' +
+                                                DateTime.now()
+                                                    .minute
+                                                    .toString() +
+                                                ' : ' +
+                                                DateTime.now()
+                                                    .second
+                                                    .toString(),
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w800,
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    } else {
+                                      return const CircularProgressIndicator();
+                                    }
+                                  }),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: const BorderRadius.all(Radius.circular(12)),
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 10,
+                          color: Colors.black.withOpacity(.2),
+                        )
+                      ],
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 12, bottom: 12, left: 12, right: 12),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Harga : ',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w800),
+                          ),
+                          const SizedBox(
+                            height: 4,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: const [
+                              Text(
+                                'Biaya konsultasi : ',
+                                style: TextStyle(
+                                    fontSize: 12, fontWeight: FontWeight.w600),
+                              ),
+                              Text(
+                                'Rp 20.000,00',
+                                style: TextStyle(
+                                    fontSize: 12, fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          const Text(
+                            'Diskon : ',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w800),
+                          ),
+                          const SizedBox(
+                            height: 4,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: const [
+                              Text(
+                                'Promo iDent : ',
+                                style: TextStyle(
+                                    fontSize: 12, fontWeight: FontWeight.w600),
+                              ),
+                              Text(
+                                'Rp 20.000,00',
+                                style: TextStyle(
+                                    fontSize: 12, fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                          const Divider(
+                            color: Colors.black,
+                            height: 12,
+                            thickness: 2,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: const [
+                              Text(
+                                'Grand Total : ',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w600),
+                              ),
+                              Text(
+                                'Rp 0,00',
+                                style: TextStyle(
+                                    fontSize: 12, fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: const BorderRadius.all(Radius.circular(12)),
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 10,
+                          color: Colors.black.withOpacity(.2),
+                        )
+                      ],
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 16,
+                        right: 16,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Syarat dan Ketentuan : ',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w700),
+                              ),
+                              ElevatedButton(
+                                  onPressed: () {
+                                    _onButtonPressedSyaratdanKetentuan();
+                                  },
+                                  child: const Text('klik'))
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Builder(
+                    builder: (context) {
+                      final GlobalKey<SlideActionState> _key = GlobalKey();
+                      return Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: SlideAction(
+                          key: _key,
+                          text: 'konsultasi',
+                          onSubmit: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => konfirmasipembayaran(
+                                        imageurl: widget.image,
+                                        idpasien: widget.idpasien,
+                                        iddokter: widget.iddokter,
+                                      )),
+                            );
 
+                            DatabaseServices
+                                .masukkanpasienkedatabasedokterigigi(
+                                    widget.iddokter,
+                                    widget.idpasien,
+                                    widget.kegiatan);
+                            DatabaseServices
+                                .masukkandatakonsultasikedoktergigikeriwayat(
+                                    emaila!,
+                                    widget.iddokter,
+                                    widget.idpasien,
+                                    widget.kegiatan);
+                            Future.delayed(
+                              const Duration(seconds: 1),
+                              () => _key.currentState?.reset(),
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  void _onButtonPressedchat() {
+
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? user = auth.currentUser;
+    final emaila = user?.email;
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * 0.5,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  top: 12, bottom: 12, left: 12, right: 12),
+              child: ListView(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: const BorderRadius.all(Radius.circular(12)),
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 10,
+                          color: Colors.black.withOpacity(.2),
+                        )
+                      ],
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 8, bottom: 8, left: 12, right: 12),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Tanggal konsultasi : ',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w800),
+                              ),
+                              Text(
+                                DateTime.now().day.toString() +
+                                    ' / ' +
+                                    DateTime.now().month.toString() +
+                                    ' / ' +
+                                    DateTime.now().year.toString(),
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Pukul : ',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w800),
+                              ),
                               StreamBuilder(
                                   stream: _bids,
                                   builder: (BuildContext context,
@@ -342,7 +636,9 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.only(
-                          left: 16, right: 16,),
+                        left: 16,
+                        right: 16,
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -354,9 +650,11 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                                 style: TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.w700),
                               ),
-                              ElevatedButton(onPressed: (){
-                                _onButtonPressedSyaratdanKetentuan();
-                              }, child: const Text('klik'))
+                              ElevatedButton(
+                                  onPressed: () {
+                                    _onButtonPressedSyaratdanKetentuan();
+                                  },
+                                  child: const Text('klik'))
                             ],
                           ),
                         ],
@@ -375,15 +673,26 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => konfirmasipembayaran(
-                                        imageurl: widget.image,
-                                        idpasien: widget.idpasien,
-                                        iddokter: widget.iddokter,
-                                      )),
+                                  builder: (context) => Chat(
+                                    widget.idpasien,
+                                    widget.iddokter,
+                                  )),
                             );
+
+                            DatabaseServices
+                                .masukkanpasienkedatabasedokterigigi(
+                                widget.iddokter,
+                                widget.idpasien,
+                                widget.kegiatan);
+                            DatabaseServices
+                                .masukkandatakonsultasikedoktergigikeriwayat(
+                                emaila!,
+                                widget.iddokter,
+                                widget.idpasien,
+                                widget.kegiatan);
                             Future.delayed(
                               const Duration(seconds: 1),
-                              () => _key.currentState?.reset(),
+                                  () => _key.currentState?.reset(),
                             );
                           },
                         ),
@@ -396,7 +705,6 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
           );
         });
   }
-
 
   void _onButtonPressedSyaratdanKetentuan() {
     showModalBottomSheet(
@@ -428,41 +736,45 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w700),
                         ),
-                        const SizedBox(height: 24,),
+                        const SizedBox(
+                          height: 24,
+                        ),
                         Column(
                           children: const [
                             Text(
-
                               '        Setelah mengisi formulir, Anda akan diarahkan ke tampilan video call untuk melakukan konsultasi secara langsung bersama dokter gigi. Jika anda memilih untuk keluar aplikasi atau kembali ke halaman sebelumnya, maka data tidak akan terekam, dan Anda diminta untuk mengisi form kembali',
                               style: TextStyle(
-                                  fontSize: 16,),
+                                fontSize: 16,
+                              ),
                             ),
                             SizedBox(
                               height: 8,
                             ),
                             Text(
-                              '        Kami sangat menjunjung tinggi kode etik dokter dan dokter gigi serta demi menjaga privasi pasien, konsultasi hanya akan bersifat dua arah, antara Anda dengan dokter gigi di dalam video call. ',
-                              style: TextStyle(
-                                  fontSize: 16,)
-                            ),
+                                '        Kami sangat menjunjung tinggi kode etik dokter dan dokter gigi serta demi menjaga privasi pasien, konsultasi hanya akan bersifat dua arah, antara Anda dengan dokter gigi di dalam video call. ',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                )),
                             SizedBox(
                               height: 8,
                             ),
                             Text(
                               '        Kami selaku developer iDent menjamin jawaban Anda tidak akan terekam oleh pihak ketiga dan hanya akan disimpan oleh dokter gigi untuk kepentingan pelayanan medis yang akan diberikan.',
                               style: TextStyle(
-                                  fontSize: 16,),
+                                fontSize: 16,
+                              ),
                             ),
                           ],
                         ),
-
                         const SizedBox(
                           height: 16,
                         ),
-                        ElevatedButton(child: const Text('kembali'),onPressed: (){
-                          Navigator.pop(context);
-
-                        },)
+                        ElevatedButton(
+                          child: const Text('kembali'),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        )
                       ],
                     )
                   ],

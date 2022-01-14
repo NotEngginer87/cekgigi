@@ -7,7 +7,7 @@ class DatabaseServices {
 
   static CollectionReference userdata = firestore.collection('user');
   static CollectionReference datapasien = firestore.collection('listpasien');
-  static CollectionReference count = firestore.collection('count');
+  static CollectionReference doktergigi = firestore.collection('doktergigi');
   static CollectionReference listpasiencount =
       firestore.collection('listpasiencount');
   static CollectionReference blog = firestore.collection('soal');
@@ -38,21 +38,25 @@ class DatabaseServices {
   }
 
   static Future<void> updateketeranganpasien(
-      int id,
-      String nama,
-      String gender,
-      String umur,
-      String noHP,
-      String alamat,
-      String statusperkawinan,
-      String agama,
-      String suku,
-      String pekerjaan,
-      String keluhan,
-      String gambarkeluhan) async {
+    int id,
+    String nama,
+    String gender,
+    String umur,
+    String noHP,
+    String alamat,
+    String statusperkawinan,
+    String agama,
+    String suku,
+    String pekerjaan,
+    String keluhan,
+    String gambarkeluhan,
+    String kegiatan,
+      String email,
+  ) async {
     await datapasien.doc(id.toString()).set(
       {
         'Aid': id,
+        'Aemail': email,
         'Anama': nama,
         'Agender': gender,
         'Aumur': umur,
@@ -64,6 +68,7 @@ class DatabaseServices {
         'Bpekerjaan': pekerjaan,
         'Ckeluhan': keluhan,
         'Cgambarkeluhan': gambarkeluhan,
+        'Dkegiatan': kegiatan,
       },
     );
   }
@@ -76,11 +81,66 @@ class DatabaseServices {
     );
   }
 
+  static Future<void> masukkanpasienkedatabasedokterigigi(
+      String iddokter, int idpasien, String kegiatan) async {
+    await doktergigi
+        .doc(iddokter)
+        .collection('datapasien')
+        .doc('datapasien')
+        .collection(kegiatan)
+        .doc(idpasien.toString())
+        .set(
+      {
+        'kegiatan': kegiatan,
+        'idpasien': idpasien,
+      },
+    );
+  }
+
+  static Future<void> masukkandatakonsultasikedoktergigikeriwayat(
+      String email, String iddokter, int idpasien, String kegiatan) async {
+    await userdata
+        .doc(email)
+        .collection('riwayatkonsultasi')
+        .doc('datapasien')
+        .collection('datapasien')
+        .doc(idpasien.toString())
+        .set(
+      {
+        'kegiatan': kegiatan,
+        'iddokter': iddokter,
+        'idpasien': idpasien,
+      },
+    );
+  }
+
   static Future<void> updatecountakunuser(int countt, String akungoogle) async {
     await userdata.doc(akungoogle).set(
       {
         'id': countt,
         'akungoogle': akungoogle,
+      },
+    );
+  }
+
+  static Future<void> updatechat(String email, String iddokter, String idchat, String chat, int year, int month, int day, int hour, int minutes, int second) async {
+    await userdata.doc(email).collection('chat').doc(iddokter).collection('chat').doc(idchat).set(
+      {
+        'id': idchat,
+        'chat': chat,
+        'year': year,
+        'month': month,
+        'day': day,
+        'hour': hour,
+        'minutes': minutes,
+        'second': second,
+      },
+    );
+  }
+  static Future<void> updatecountchataccount(String email, String iddokter,) async {
+    await userdata.doc(email).collection('chat').doc(iddokter).update(
+      {
+        'count': FieldValue.increment(1),
       },
     );
   }

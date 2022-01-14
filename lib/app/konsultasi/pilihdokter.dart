@@ -24,6 +24,7 @@ class dokterCard extends StatelessWidget {
   final bool indikatorhidup;
   final bool indikatoronline;
   final int idpasien;
+  final String kegiatan;
 
   const dokterCard(
       this.id,
@@ -40,7 +41,8 @@ class dokterCard extends StatelessWidget {
       this.rating,
       this.indikatorhidup,
       this.indikatoronline,
-      this.idpasien);
+      this.idpasien,
+      this.kegiatan,);
 
   @override
   Widget build(BuildContext context) {
@@ -228,6 +230,7 @@ class dokterCard extends StatelessWidget {
                               urlgambar!,
                               id!,
                               idpasien,
+                          kegiatan,
                             )),
                   );
                 },
@@ -508,9 +511,10 @@ class SelectDokter extends StatelessWidget {
   final TextEditingController urlgambarController = TextEditingController();
 
   final int idpasien;
-
+  final String kegiatan;
   SelectDokter(
     this.idpasien,
+    this.kegiatan,
   );
 
   @override
@@ -537,7 +541,6 @@ class SelectDokter extends StatelessWidget {
                 child: ListView(
                   padding: const EdgeInsets.all(16),
                   children: [
-                    
                     StreamBuilder(
                         stream:
                             users.orderBy('id', descending: false).snapshots(),
@@ -570,6 +573,7 @@ class SelectDokter extends StatelessWidget {
                                                     e.data()['indikatorhidup'],
                                                     e.data()['indikatoronline'],
                                                     idpasien,
+                                                    kegiatan,
                                                   ),
                                             ],
                                           ))
