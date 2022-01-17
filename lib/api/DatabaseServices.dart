@@ -51,7 +51,7 @@ class DatabaseServices {
     String keluhan,
     String gambarkeluhan,
     String kegiatan,
-      String email,
+    String email,
   ) async {
     await datapasien.doc(id.toString()).set(
       {
@@ -123,21 +123,40 @@ class DatabaseServices {
     );
   }
 
-  static Future<void> updatechat(String email, String iddokter, String idchat, String chat, int year, int month, int day, int hour, int minutes, int second) async {
-    await userdata.doc(email).collection('chat').doc(iddokter).collection('chat').doc(idchat).set(
+  static Future<void> updatechat(String email, String iddokter, String idchat,
+      String chat, int countchattime, String status) async {
+    await userdata
+        .doc(email)
+        .collection('chat')
+        .doc(iddokter)
+        .collection('chat')
+        .doc(idchat)
+        .set(
       {
         'id': idchat,
         'chat': chat,
-        'year': year,
-        'month': month,
-        'day': day,
-        'hour': hour,
-        'minutes': minutes,
-        'second': second,
+        'countchattime': countchattime,
+        'status': status,
       },
     );
   }
-  static Future<void> updatecountchataccount(String email, String iddokter,) async {
+
+  static Future<void> setcountchataccount(
+    String email,
+    String iddokter,
+  ) async {
+    await userdata.doc(email).collection('chat').doc(iddokter).set(
+      {
+        'count': 1,
+        'iddokter': iddokter,
+      },
+    );
+  }
+
+  static Future<void> updatecountchataccount(
+    String email,
+    String iddokter,
+  ) async {
     await userdata.doc(email).collection('chat').doc(iddokter).update(
       {
         'count': FieldValue.increment(1),

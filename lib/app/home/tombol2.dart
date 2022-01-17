@@ -1,5 +1,6 @@
 // ignore_for_file: camel_case_types, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:cekgigi/ChatDokter/Chat.dart';
 import 'package:cekgigi/app/konsultasi/rekammedis.dart';
 import 'package:cekgigi/app/riwayatkonsultasi.dart';
 import 'package:flutter/material.dart';
@@ -136,6 +137,38 @@ class _tomboltombolState extends State<tomboltombol> {
                           height: 8,
                         ),
                         Text('Atur Jadwal'),
+                      ],
+                    )),
+                Expanded(
+                    child: Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 1,
+                                blurStyle: BlurStyle.outer,
+                              )
+                            ],
+                          ),
+                          width: MediaQuery.of(context).size.width / 9,
+                          height: MediaQuery.of(context).size.width / 9,
+                          child: IconButton(
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => ChatMenu()));
+                              },
+                              icon: Icon(
+                                LineIcons.calendarAlt,
+                                size: 24,
+                                color: Colors.black,
+                              )),
+                        ),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Text('Chat Dokter'),
                       ],
                     )),
               ],

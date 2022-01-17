@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:cekgigi/api/AuthServices.dart';
 import 'package:cekgigi/app/HomePage.dart';
 import 'package:flutter/material.dart';
 
@@ -97,7 +98,8 @@ class CenterNextButton extends StatelessWidget {
                         ? InkWell(
                             key: const ValueKey('Sign Up button'),
                             onTap: (){
-                              onNextClick;
+                              AuthServices.signInWithGoogle();
+
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
                                     return const HalamanRumah();

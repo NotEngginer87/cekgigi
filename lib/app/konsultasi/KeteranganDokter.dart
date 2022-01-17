@@ -670,11 +670,12 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                           key: _key,
                           text: 'konsultasi',
                           onSubmit: () {
+                            DatabaseServices.setcountchataccount(emaila!,widget.iddokter);
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => Chat(
-                                    widget.idpasien,
+
                                     widget.iddokter,
                                   )),
                             );
@@ -686,7 +687,7 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                                 widget.kegiatan);
                             DatabaseServices
                                 .masukkandatakonsultasikedoktergigikeriwayat(
-                                emaila!,
+                                emaila,
                                 widget.iddokter,
                                 widget.idpasien,
                                 widget.kegiatan);

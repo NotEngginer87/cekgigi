@@ -1,10 +1,13 @@
 // ignore_for_file: prefer_const_constructors, non_constant_identifier_names
 
+import 'package:cekgigi/Account/SignUp.dart';
 import 'package:cekgigi/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../firebase/auth.dart';
 
 
 class Tab3 extends StatefulWidget {
@@ -158,6 +161,10 @@ class _Tab3State extends State<Tab3> {
               SizedBox(
                 height: 16,
               ),
+
+              ElevatedButton(onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => AuthTypeSelector()));
+              }, child: Text('haha')),
             ],
           ),
         ),

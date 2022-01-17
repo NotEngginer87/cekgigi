@@ -16,6 +16,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'app/HomePage.dart';
+import 'firebase/auth.dart';
 import 'onboard2.0/introduction_animation_screen.dart';
 
 void main() async {
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ControllerAuth(),
+      home: AuthTypeSelector(),
     );
   }
 }
