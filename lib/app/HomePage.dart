@@ -53,7 +53,8 @@ class _HalamanRumahState extends State<HalamanRumah> {
 
                     event(),
                     FavBlog(),
-                    keuntunganmenggunakanaplikasi()
+                    keuntunganmenggunakanaplikasi(),
+
                   ],
                 )
               : (_selectedIndex == 1)

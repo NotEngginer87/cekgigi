@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, avoid_print
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -43,10 +43,6 @@ class AuthServices {
 
   static Future<UserCredential?> signInWithEMAIL(String email, String password) async {
     try {
-      UserCredential result = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: email,
-          password: password
-      );
 
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {

@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../onboard2.0/introduction_animation_screen.dart';
+import '../story.dart';
 import 'keuntungan/caramenggunakan.dart';
 
 class keuntungancard extends StatelessWidget {
@@ -101,7 +101,7 @@ class keuntunganmenggunakanaplikasi extends StatelessWidget {
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return const OnBoardScreen();
+                      return const KeuntunganiDentStory();
                     }));
                   },
                 ),

@@ -1,4 +1,4 @@
-// ignore_for_file: require_trailing_commas
+// ignore_for_file: require_trailing_commas, prefer_function_declarations_over_variables, avoid_print
 // Copyright 2020 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -34,7 +34,7 @@ class ScaffoldSnackbar {
 
 /// Entrypoint example for various sign-in flows with Firebase.
 class SignInPage extends StatefulWidget {
-  SignInPage({Key? key}) : super(key: key);
+  const SignInPage({Key? key}) : super(key: key);
 
   /// The page title.
   final String title = 'Sign In & Out';
@@ -489,7 +489,7 @@ class _AnonymouslySignInSection extends StatefulWidget {
 
 class _AnonymouslySignInSectionState extends State<_AnonymouslySignInSection> {
   bool? _success;
-  String _userID = '';
+  final String _userID = '';
 
   @override
   Widget build(BuildContext context) {

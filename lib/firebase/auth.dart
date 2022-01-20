@@ -5,6 +5,8 @@ import 'package:flutter_signin_button/button_builder.dart';
 import 'login.dart';
 
 class AuthTypeSelector extends StatelessWidget {
+  const AuthTypeSelector({Key? key}) : super(key: key);
+
   // Navigates to a new page
   void _pushPage(BuildContext context, Widget page) {
     Navigator.of(context) /*!*/ .push(
@@ -28,7 +30,7 @@ class AuthTypeSelector extends StatelessWidget {
               icon: Icons.person_add,
               backgroundColor: Colors.indigo,
               text: 'Registration',
-              onPressed: () => _pushPage(context, RegisterPage()),
+              onPressed: () => _pushPage(context, const RegisterPage()),
             ),
           ),
           Container(
@@ -38,7 +40,7 @@ class AuthTypeSelector extends StatelessWidget {
               icon: Icons.verified_user,
               backgroundColor: Colors.orange,
               text: 'Sign In',
-              onPressed: () => _pushPage(context, SignInPage()),
+              onPressed: () => _pushPage(context, const SignInPage()),
             ),
           ),
         ],

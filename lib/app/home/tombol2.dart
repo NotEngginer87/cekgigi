@@ -126,41 +126,11 @@ class _tomboltombolState extends State<tomboltombol> {
                           width: MediaQuery.of(context).size.width / 9,
                           height: MediaQuery.of(context).size.width / 9,
                           child: IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                LineIcons.calendarAlt,
-                                size: 24,
-                                color: Colors.black,
-                              )),
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text('Atur Jadwal'),
-                      ],
-                    )),
-                Expanded(
-                    child: Column(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 1,
-                                blurStyle: BlurStyle.outer,
-                              )
-                            ],
-                          ),
-                          width: MediaQuery.of(context).size.width / 9,
-                          height: MediaQuery.of(context).size.width / 9,
-                          child: IconButton(
                               onPressed: () {
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => ChatMenu()));
                               },
                               icon: Icon(
-                                LineIcons.calendarAlt,
+                                Icons.message_rounded,
                                 size: 24,
                                 color: Colors.black,
                               )),

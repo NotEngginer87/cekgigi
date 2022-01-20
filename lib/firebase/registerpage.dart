@@ -16,6 +16,8 @@ class RegisterPage extends StatefulWidget {
   /// The page title.
   final String title = 'Registration';
 
+  const RegisterPage({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _RegisterPageState();
 }
@@ -72,7 +74,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         await _register();
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Registrasi()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const Registrasi()));
                       }
                     },
                     text: 'Register',
@@ -88,7 +90,10 @@ class _RegisterPageState extends State<RegisterPage> {
                         : 'Registration failed'),
                   ),
                 )
-              ],
+,
+              ElevatedButton(child: const Text('homepage'),onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const HalamanRumah()));
+              },)],
             ),
           ),
         ),

@@ -3,7 +3,6 @@
 import 'package:cekgigi/api/DatabaseServices.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
@@ -22,6 +21,8 @@ class Chat extends StatefulWidget {
 
 class _ChatState extends State<Chat> {
   bool switchmengetik = false;
+
+  bool opendialogbox = false;
   @override
   Widget build(BuildContext context) {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -133,6 +134,8 @@ class _ChatState extends State<Chat> {
           ),
           Expanded(
               child: ListView(
+
+                reverse: true,
             children: [
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.6,
@@ -147,7 +150,7 @@ class _ChatState extends State<Chat> {
                   builder: (_, AsyncSnapshot snapshot) {
                     if (snapshot.hasData) {
                       return SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.5,
+                          width: MediaQuery.of(context).size.width,
                           child: Column(
                               children: snapshot.data.docs
                                   .map<Widget>((e) => Balloonchat(
@@ -175,16 +178,149 @@ class _ChatState extends State<Chat> {
               ),
             ],
           )),
+          (opendialogbox == true)
+              ? Align(
+            alignment: Alignment.center,
+            child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      color: Colors.white,
+                      boxShadow: const [
+                        BoxShadow(
+                          blurRadius: 1,
+                          blurStyle: BlurStyle.outer,
+                        )
+                      ],
+                    ),
+                    width: MediaQuery.of(context).size.width - 40,
+                    height: MediaQuery.of(context).size.width / 4,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 2, right: 2, top: 20, bottom: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Expanded(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      color: Colors.white,
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          blurRadius: 1,
+                                          blurStyle: BlurStyle.outer,
+                                        )
+                                      ],
+                                    ),
+                                    height:
+                                    MediaQuery.of(context).size.width / 9,
+                                    child: IconButton(
+                                        onPressed: () {},
+                                        icon: const Icon(
+                                          LineIcons.stethoscope,
+                                          size: 24,
+                                          color: Colors.black,
+                                        )),
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  const Text('konsultasi'),
+                                ],
+                              )),
+                          Expanded(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      color: Colors.white,
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          blurRadius: 1,
+                                          blurStyle: BlurStyle.outer,
+                                        )
+                                      ],
+                                    ),
+                                    height:
+                                    MediaQuery.of(context).size.width / 9,
+                                    child: IconButton(
+                                        onPressed: () {},
+                                        icon: const Icon(
+                                          LineIcons.medicalNotes,
+                                          size: 24,
+                                          color: Colors.black,
+                                        )),
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  const Text('riwayat'),
+                                ],
+                              )),
+                          Expanded(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      color: Colors.white,
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          blurRadius: 1,
+                                          blurStyle: BlurStyle.outer,
+                                        )
+                                      ],
+                                    ),
+                                    height:
+                                    MediaQuery.of(context).size.width / 9,
+                                    child: IconButton(
+                                        onPressed: () {},
+                                        icon: const Icon(
+                                          LineIcons.calendarAlt,
+                                          size: 24,
+                                          color: Colors.black,
+                                        )),
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  const Text('Atur Jadwal'),
+                                ],
+                              )),
+                        ],
+                      ),
+                    ))),
+          )
+              : Container(),
           Padding(
             padding: const EdgeInsets.all(12),
-            child: Row(
+            child:Row(
               children: [
+                Expanded(
+                  child: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          (opendialogbox == false)
+                              ? opendialogbox = true
+                              : opendialogbox = false;
+                        });
+                      },
+                      icon: const Icon(
+                        Icons.add,
+                      )),
+                  flex: 1,
+                ),
                 Expanded(
                   child: TextFormField(
                     controller: ControllerChat,
                     keyboardType: TextInputType.text,
                   ),
-                  flex: 9,
+                  flex: 8,
                 ),
                 Expanded(
                   child: StreamBuilder<DocumentSnapshot>(
@@ -196,10 +332,10 @@ class _ChatState extends State<Chat> {
                     builder: (context, AsyncSnapshot snapshot) {
                       if (snapshot.hasData) {
                         Map<String, dynamic> data =
-                            snapshot.data!.data() as Map<String, dynamic>;
+                        snapshot.data!.data() as Map<String, dynamic>;
 
                         int count = data['count'];
-                        count += 1000000;
+                        count += 5000000;
                         int year = DateTime.now().year;
                         int month = DateTime.now().month;
                         int day = DateTime.now().day;
@@ -216,16 +352,28 @@ class _ChatState extends State<Chat> {
 
                         return IconButton(
                             onPressed: () {
-                              DatabaseServices.updatechat(
-                                email!,
-                                widget.iddokter,
-                                count.toString(),
-                                ControllerChat.text,
-                                countt,
-                                'pasien',
-                              );
-                              DatabaseServices.updatecountchataccount(
-                                  email, widget.iddokter);
+                              if (ControllerChat.text != '') {
+                                DatabaseServices.updatechat(
+                                  email!,
+                                  widget.iddokter,
+                                  count.toString(),
+                                  ControllerChat.text,
+                                  countt,
+                                  'dokter',
+                                );
+                                DatabaseServices
+                                    .updatecountchataccount(
+                                    email,
+                                    widget.iddokter);
+                                DatabaseServices.updatechat(
+                                  email,
+                                  widget.iddokter,
+                                  count.toString(),
+                                  ControllerChat.text,
+                                  countt,
+                                  'dokter',
+                                );
+                              }
                               ControllerChat.text = '';
                             },
                             icon: const Icon(Icons.send));
@@ -456,16 +604,6 @@ class ListChat extends StatelessWidget {
                                     color: Colors.white),
                               ),
                             ],
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(CupertinoIcons.settings),
-                            color: Colors.white,
-                            iconSize: 24,
                           ),
                         ],
                       ),
