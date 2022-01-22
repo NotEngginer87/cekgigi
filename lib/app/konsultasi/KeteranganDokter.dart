@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:slide_to_act/slide_to_act.dart';
+import 'package:cekgigi/style.dart';
 
 import '../../ChatDokter/Chat.dart';
 import '../../api/DatabaseServices.dart';
@@ -35,14 +36,14 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
       appBar: AppBar(
         title: const Text('Dokter Gigi'),
         centerTitle: true,
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.teal.shade900,
         elevation: 0,
       ),
       body: Column(
         children: [
           Expanded(
             child: Container(
-              color: Colors.blue,
+              color: Colors.teal.shade900,
               child: Container(
                   decoration: BoxDecoration(
                     color: Colors.grey.shade200,
@@ -374,6 +375,7 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                                   onPressed: () {
                                     _onButtonPressedSyaratdanKetentuan();
                                   },
+                                  style: untukKonsultasiButton,
                                   child: const Text('klik'))
                             ],
                           ),
@@ -387,6 +389,8 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                       return Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: SlideAction(
+                          innerColor: Colors.teal.shade900,
+                          outerColor: Colors.red,
                           key: _key,
                           text: 'konsultasi',
                           onSubmit: () {
@@ -671,6 +675,7 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                           text: 'konsultasi',
                           onSubmit: () {
                             DatabaseServices.setcountchataccount(emaila!,widget.iddokter);
+                            DatabaseServices.setchatdokter(emaila,widget.iddokter);
                             Navigator.push(
                               context,
                               MaterialPageRoute(

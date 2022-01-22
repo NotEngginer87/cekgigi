@@ -26,7 +26,7 @@ class _infopasienState extends State<infopasien> {
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.blue,
+        color: Colors.teal.shade900,
       ),
       width: MediaQuery.of(context).size.width,
       height: 80,

@@ -14,6 +14,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../api/DatabaseServices.dart';
+import '../../style.dart';
 
 class RekamMedis extends StatefulWidget {
   RekamMedis(this.kegiatan, {Key? key,}) : super(key: key);
@@ -96,6 +97,8 @@ class _RekamMedisState extends State<RekamMedis> {
     final User? user = auth.currentUser;
     final emaila = user!.email;
 
+
+
     List<Step> getSteps() => [
           Step(
             state: currentstep > 0 ? StepState.complete : StepState.indexed,
@@ -125,6 +128,7 @@ class _RekamMedisState extends State<RekamMedis> {
                       umur = DateTime.now().year - tahunawal!;
 
                       return ElevatedButton(
+                        style: untukKonsultasiButton,
                           onPressed: () {
                             setState(() {
                               nama.text = datanama;
@@ -450,14 +454,16 @@ class _RekamMedisState extends State<RekamMedis> {
             ),
           ),
         ];
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Rekam Medis'),
         centerTitle: true,
         elevation: 0,
+        backgroundColor: Colors.teal.shade900,
       ),
-      body: Stepper(
+      body:  Stepper(
+
+
           type: StepperType.vertical,
           currentStep: currentstep,
           steps: getSteps(),
@@ -501,15 +507,15 @@ class _RekamMedisState extends State<RekamMedis> {
             }
           },
           onStepTapped: (step) => setState(() {
-                currentstep = step;
-              }),
+            currentstep = step;
+          }),
           onStepCancel: currentstep == 0
               ? null
               : () {
-                  setState(() {
-                    currentstep -= 1;
-                  });
-                },
+            setState(() {
+              currentstep -= 1;
+            });
+          },
           controlsBuilder: (context, details) {
             return Container(
               margin: const EdgeInsets.only(top: 12),
@@ -517,56 +523,56 @@ class _RekamMedisState extends State<RekamMedis> {
                 children: [
                   isLastStep2
                       ? StreamBuilder<DocumentSnapshot>(
-                          stream: listpasiencount.doc('count').snapshots(),
-                          builder: (context, AsyncSnapshot snapshot) {
-                            if (snapshot.hasData) {
-                              Map<String, dynamic> data =
-                                  snapshot.data!.data() as Map<String, dynamic>;
+                    stream: listpasiencount.doc('count').snapshots(),
+                    builder: (context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        Map<String, dynamic> data =
+                        snapshot.data!.data() as Map<String, dynamic>;
 
-                              int idpasien = data['count'];
+                        int idpasien = data['count'];
 
-                              return Expanded(
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    print(idpasien);
-
-                                    DatabaseServices.updatecountakun();
-                                    DatabaseServices.updateketeranganpasien(
-                                        idpasien,
-                                        nama.text,
-                                        jeniskelamin.text,
-                                        umurcontrol.text,
-                                        noHP.text,
-                                        alamat.text,
-                                        _valuenikah.toString(),
-                                        _valueagama.toString(),
-                                        suku.text,
-                                        pekerjaan.text,
-                                        keluhan.text,
-                                        imageUrl!,
-                                    widget.kegiatan,
-                                    emaila!);
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                SelectDokter(idpasien,widget.kegiatan)));
-                                  },
-                                  child: const Text('Konfirmasi'),
-                                ),
-                              );
-                            }
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          },
-                        )
-                      : Expanded(
+                        return Expanded(
                           child: ElevatedButton(
-                            onPressed: details.onStepContinue,
-                            child: const Text('lanjut'),
+                            onPressed: () {
+                              print(idpasien);
+
+                              DatabaseServices.updatecountakun();
+                              DatabaseServices.updateketeranganpasien(
+                                  idpasien,
+                                  nama.text,
+                                  jeniskelamin.text,
+                                  umurcontrol.text,
+                                  noHP.text,
+                                  alamat.text,
+                                  _valuenikah.toString(),
+                                  _valueagama.toString(),
+                                  suku.text,
+                                  pekerjaan.text,
+                                  keluhan.text,
+                                  imageUrl!,
+                                  widget.kegiatan,
+                                  emaila!);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          SelectDokter(idpasien,widget.kegiatan)));
+                            },
+                            child: const Text('Konfirmasi'),
                           ),
-                        ),
+                        );
+                      }
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
+                  )
+                      : Expanded(
+                    child: ElevatedButton(
+                      onPressed: details.onStepContinue,
+                      child: const Text('lanjut'),
+                    ),
+                  ),
                   const SizedBox(
                     width: 20,
                   ),
@@ -581,6 +587,7 @@ class _RekamMedisState extends State<RekamMedis> {
               ),
             );
           }),
+
     );
   }
 
@@ -624,6 +631,9 @@ class _RekamMedisState extends State<RekamMedis> {
     }
   }
 }
+
+
+
 
 class AddUserCountCard extends StatelessWidget {
   final int? count;

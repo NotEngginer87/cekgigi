@@ -43,7 +43,7 @@ class _HalamanRumahState extends State<HalamanRumah> {
                         children: [
                           Container(
                             height: 75,
-                            color: Colors.blue,
+                            color: Colors.teal.shade900,
                           ),
                           tomboltombol(),
                         ],

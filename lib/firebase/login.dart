@@ -438,7 +438,7 @@ class _EmailLinkSignInSectionState extends State<_EmailLinkSignInSection> {
                 child: SignInButtonBuilder(
                   icon: Icons.insert_link,
                   text: 'Sign In',
-                  backgroundColor: Colors.blueGrey[700]!,
+                  backgroundColor: Colors.teal.shade900,
                   onPressed: () async {
                     await _signInWithEmailAndLink();
                   },

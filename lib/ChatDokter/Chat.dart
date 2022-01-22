@@ -53,7 +53,7 @@ class _ChatState extends State<Chat> {
                     padding: const EdgeInsets.only(bottom: 2),
                     child: InkWell(
                       child: Container(
-                        color: Colors.blue.shade500,
+                        color: Colors.teal.shade500,
                         height: 70,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -451,7 +451,7 @@ class _InfoDokternyaState extends State<InfoDokternya> {
         children: [
           Expanded(
             child: Container(
-              color: Colors.blue,
+              color: Colors.teal.shade900,
               child: Container(
                   decoration: BoxDecoration(
                     color: Colors.grey.shade200,
@@ -560,7 +560,7 @@ class ListChat extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 2),
               child: InkWell(
                 child: Container(
-                  color: Colors.blue.shade400,
+                  color: Colors.teal.shade400,
                   height: 100,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

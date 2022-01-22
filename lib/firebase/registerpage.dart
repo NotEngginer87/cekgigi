@@ -70,7 +70,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   alignment: Alignment.center,
                   child: SignInButtonBuilder(
                     icon: Icons.person_add,
-                    backgroundColor: Colors.blueGrey,
+                    backgroundColor: Colors.teal.shade900,
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         await _register();

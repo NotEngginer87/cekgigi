@@ -310,12 +310,18 @@ class _edukasidokternyaState extends State<edukasidokternya> {
           String kampusSpesialistamat = data['kampusSpesialistamat'];
           String kampusprofesitamat = data['kampusprofesitamat'];
 
+          String kampusS1keterangan = data['kampusS1keterangan'];
+          String kampusS2keterangan = data['kampusS2keterangan'];
+          String kampusS3keterangan = data['kampusS3keterangan'];
+          String kampusSpesialisketerangan = data['kampusSpesialisketerangan'];
+          String kampusprofesiketerangan = data['kampusprofesiketerangan'];
+
           return Padding(
             padding: const EdgeInsets.only(
                 top: 4, left: 20, right: 20, bottom: 4),
             child: Container(
               width: MediaQuery.of(context).size.width,
-              decoration: const BoxDecoration(
+              decoration:  const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(25)),
               ),
@@ -334,10 +340,10 @@ class _edukasidokternyaState extends State<edukasidokternya> {
                         Container(
                           width: 36,
                           height: 36,
-                          decoration: const BoxDecoration(
-                            color: Colors.orange,
+                          decoration:  BoxDecoration(
+                            color: Colors.teal.shade800,
                             borderRadius:
-                            BorderRadius.all(Radius.circular(12)),
+                            const BorderRadius.all(Radius.circular(12)),
                           ),
                           child: const Icon(
                             Icons.school,
@@ -355,26 +361,29 @@ class _edukasidokternyaState extends State<edukasidokternya> {
                               fontSize: 16,
                               color: Colors.black),
                         ),
+
+
                       ],
                     ),
                   ),
-                  const SizedBox(
-                    height: 8,
-                  ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 32),
+                    padding: const EdgeInsets.only(left: 40),
                     child: Column(
                       children: [
+
+                        const SizedBox(
+                          height: 8,
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Container(
                               width: 32,
                               height: 32,
-                              decoration: const BoxDecoration(
-                                color: Colors.orange,
+                              decoration:  BoxDecoration(
+                                color: Colors.teal.shade800,
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(8)),
+                                const BorderRadius.all(Radius.circular(8)),
                               ),
                               child: const Icon(
                                 Icons.school_outlined,
@@ -389,7 +398,7 @@ class _edukasidokternyaState extends State<edukasidokternya> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Sarjana',
+                                  'Sarjana - ' + kampusS1keterangan,
                                   textAlign: TextAlign.left,
                                   style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w500,
@@ -419,10 +428,10 @@ class _edukasidokternyaState extends State<edukasidokternya> {
                             Container(
                               width: 32,
                               height: 32,
-                              decoration: const BoxDecoration(
-                                color: Colors.orange,
+                              decoration:  BoxDecoration(
+                                color: Colors.teal.shade800,
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(8)),
+                                const BorderRadius.all(Radius.circular(8)),
                               ),
                               child: const Icon(
                                 Icons.school_outlined,
@@ -437,7 +446,7 @@ class _edukasidokternyaState extends State<edukasidokternya> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Profesi Dokter Gigi',
+                                  'Profesi - ' + kampusprofesiketerangan,
                                   textAlign: TextAlign.left,
                                   style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w500,
@@ -461,16 +470,16 @@ class _edukasidokternyaState extends State<edukasidokternya> {
                         const SizedBox(
                           height: 8,
                         ),
-                        (kampusS2 != null)
+                        (kampusS2 != '')
                             ? Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Container(
                               width: 32,
                               height: 32,
-                              decoration: const BoxDecoration(
-                                color: Colors.orange,
-                                borderRadius: BorderRadius.all(
+                              decoration:  BoxDecoration(
+                                color: Colors.teal.shade800,
+                                borderRadius: const BorderRadius.all(
                                     Radius.circular(8)),
                               ),
                               child: const Icon(
@@ -487,7 +496,7 @@ class _edukasidokternyaState extends State<edukasidokternya> {
                               CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Magister',
+                                  'Magister - ' + kampusS2keterangan,
                                   textAlign: TextAlign.left,
                                   style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w500,
@@ -512,16 +521,16 @@ class _edukasidokternyaState extends State<edukasidokternya> {
                         const SizedBox(
                           height: 8,
                         ),
-                        (kampusS3 != null)
+                        (kampusS3 != '')
                             ? Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Container(
                               width: 32,
                               height: 32,
-                              decoration: const BoxDecoration(
-                                color: Colors.orange,
-                                borderRadius: BorderRadius.all(
+                              decoration:  BoxDecoration(
+                                color: Colors.teal.shade800,
+                                borderRadius: const BorderRadius.all(
                                     Radius.circular(8)),
                               ),
                               child: const Icon(
@@ -538,7 +547,7 @@ class _edukasidokternyaState extends State<edukasidokternya> {
                               CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Doktoral',
+                                  'Doktoral - ' + kampusS3keterangan,
                                   textAlign: TextAlign.left,
                                   style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w500,
@@ -563,16 +572,16 @@ class _edukasidokternyaState extends State<edukasidokternya> {
                         const SizedBox(
                           height: 8,
                         ),
-                        (kampusSpesialis != null)
+                        (kampusSpesialis != '')
                             ? Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Container(
                               width: 32,
                               height: 32,
-                              decoration: const BoxDecoration(
-                                color: Colors.orange,
-                                borderRadius: BorderRadius.all(
+                              decoration:  BoxDecoration(
+                                color: Colors.teal.shade800,
+                                borderRadius: const BorderRadius.all(
                                     Radius.circular(8)),
                               ),
                               child: const Icon(
@@ -589,7 +598,7 @@ class _edukasidokternyaState extends State<edukasidokternya> {
                               CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Spesialis',
+                                  'Spesialis - ' + kampusSpesialisketerangan,
                                   textAlign: TextAlign.left,
                                   style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w500,
@@ -615,6 +624,10 @@ class _edukasidokternyaState extends State<edukasidokternya> {
                             : Container(),
                       ],
                     ),
+                  ),
+
+                  const SizedBox(
+                    height: 8,
                   ),
                   const SizedBox(
                     height: 20,
@@ -644,255 +657,294 @@ class _klinikdokternyaState extends State<klinikdokternya> {
   Widget build(BuildContext context) {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference dokter = firestore.collection('doktergigi');
-    return Column(
-      children: [
+    return StreamBuilder<DocumentSnapshot>(
+      stream: dokter
+          .doc(widget.iddokter)
+          .collection('klinik')
+          .doc('y')
+          .snapshots(),
+      builder: (context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          Map<String, dynamic> data =
+          snapshot.data!.data() as Map<String, dynamic>;
 
-        StreamBuilder<DocumentSnapshot>(
-          stream: dokter
-              .doc(widget.iddokter)
-              .collection('klinik')
-              .doc('y')
-              .snapshots(),
-          builder: (context, AsyncSnapshot snapshot) {
-            if (snapshot.hasData) {
-              Map<String, dynamic> data =
-              snapshot.data!.data() as Map<String, dynamic>;
+          String klinik1 = data['klinik1'];
+          String klinik2 = data['klinik2'];
+          String klinik3 = data['klinik3'];
+          String awaltimeklinik1 = data['awaltimeklinik1'];
+          String awaltimeklinik2 = data['awaltimeklinik2'];
+          String awaltimeklinik3 = data['awaltimeklinik3'];
+          String akhirtimeklinik1 = data['akhirtimeklinik1'];
+          String akhirtimeklinik2 = data['akhirtimeklinik2'];
+          String akhirtimeklinik3 = data['akhirtimeklinik3'];
 
-              String klinik1 = data['klinik1'];
-              String klinik2 = data['klinik2'];
-              String klinik3 = data['klinik3'];
-              String awaltimeklinik1 = data['awaltimeklinik1'];
-              String awaltimeklinik2 = data['awaltimeklinik2'];
-              String awaltimeklinik3 = data['awaltimeklinik3'];
-              String akhirtimeklinik1 = data['akhirtimeklinik1'];
-              String akhirtimeklinik2 = data['akhirtimeklinik2'];
-              String akhirtimeklinik3 = data['akhirtimeklinik3'];
-
-              return Padding(
-                padding: const EdgeInsets.only(
-                    top: 4, left: 20, right: 20, bottom: 4),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(25)),
+          return Padding(
+            padding: const EdgeInsets.only(
+                top: 4, left: 20, right: 20, bottom: 4),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(25)),
+                  ),
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 20,
                       ),
-                      child: Column(
-                        children: [
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 20),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: 36,
-                                  height: 36,
-                                  decoration: const BoxDecoration(
-                                    color: Colors.orange,
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(12)),
-                                  ),
-                                  child: const Icon(
-                                    Icons.local_hospital,
-                                    size: 24,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 12,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      klinik1,
-                                      style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 16,
-                                          color: Colors.black),
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          awaltimeklinik1,
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 12,
-                                              color: Colors.grey),
-                                        ),
-                                        Text(
-                                          ' - ',
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 12,
-                                              color: Colors.grey),
-                                        ),
-                                        Text(
-                                          akhirtimeklinik1,
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 12,
-                                              color: Colors.grey),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: 36,
+                              height: 36,
+                              decoration: BoxDecoration(
+                                color: Colors.teal.shade900,
+                                borderRadius:
+                                const BorderRadius.all(Radius.circular(12)),
+                              ),
+                              child: const Icon(
+                                Icons.local_hospital,
+                                size: 24,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 20),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: 36,
-                                  height: 36,
-                                  decoration: const BoxDecoration(
-                                    color: Colors.orange,
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(12)),
-                                  ),
-                                  child: const Icon(
-                                    Icons.local_hospital,
-                                    size: 24,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 12,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      klinik2,
-                                      style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 16,
-                                          color: Colors.black),
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          awaltimeklinik2,
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 12,
-                                              color: Colors.grey),
-                                        ),
-                                        Text(
-                                          ' - ',
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 12,
-                                              color: Colors.grey),
-                                        ),
-                                        Text(
-                                          akhirtimeklinik2,
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 12,
-                                              color: Colors.grey),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
+                            const SizedBox(
+                              width: 12,
                             ),
-                          ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 20),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: 36,
-                                  height: 36,
-                                  decoration: const BoxDecoration(
-                                    color: Colors.orange,
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(12)),
-                                  ),
-                                  child: const Icon(
-                                    Icons.local_hospital,
-                                    size: 24,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 12,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      klinik3,
-                                      style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 16,
-                                          color: Colors.black),
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          awaltimeklinik3,
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 12,
-                                              color: Colors.grey),
-                                        ),
-                                        Text(
-                                          ' - ',
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 12,
-                                              color: Colors.grey),
-                                        ),
-                                        Text(
-                                          akhirtimeklinik3,
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 12,
-                                              color: Colors.grey),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
+                            Text(
+                              'Klinik',
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                  color: Colors.black),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      (klinik1 != '')
+                          ? Padding(
+                        padding: const EdgeInsets.only(left: 30),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: 36,
+                              height: 36,
+                              decoration: BoxDecoration(
+                                color: Colors.teal.shade900,
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(12)),
+                              ),
+                              child: const Icon(
+                                Icons.local_hospital_outlined,
+                                size: 24,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 12,
+                            ),
+                            Column(
+                              crossAxisAlignment:
+                              CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  klinik1,
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
+                                      color: Colors.black),
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      awaltimeklinik1,
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 12,
+                                          color: Colors.grey),
+                                    ),
+                                    Text(
+                                      ' - ',
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 12,
+                                          color: Colors.grey),
+                                    ),
+                                    Text(
+                                      akhirtimeklinik1,
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 12,
+                                          color: Colors.grey),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
+                          : Container(),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      (klinik2 != '')
+                          ? Padding(
+                        padding: const EdgeInsets.only(left: 30),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: 36,
+                              height: 36,
+                              decoration: BoxDecoration(
+                                color: Colors.teal.shade900,
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(12)),
+                              ),
+                              child: const Icon(
+                                Icons.local_hospital_outlined,
+                                size: 24,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 12,
+                            ),
+                            Column(
+                              crossAxisAlignment:
+                              CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  klinik2,
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
+                                      color: Colors.black),
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      awaltimeklinik2,
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 12,
+                                          color: Colors.grey),
+                                    ),
+                                    Text(
+                                      ' - ',
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 12,
+                                          color: Colors.grey),
+                                    ),
+                                    Text(
+                                      akhirtimeklinik2,
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 12,
+                                          color: Colors.grey),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
+                          : Container(),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      (klinik3 != '')
+                          ? Padding(
+                        padding: const EdgeInsets.only(left: 30),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: 36,
+                              height: 36,
+                              decoration:  BoxDecoration(
+                                color: Colors.teal.shade900,
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(12)),
+                              ),
+                              child: const Icon(
+                                Icons.local_hospital_outlined,
+                                size: 24,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 12,
+                            ),
+                            Column(
+                              crossAxisAlignment:
+                              CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  klinik3,
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
+                                      color: Colors.black),
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      awaltimeklinik3,
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 12,
+                                          color: Colors.grey),
+                                    ),
+                                    Text(
+                                      ' - ',
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 12,
+                                          color: Colors.grey),
+                                    ),
+                                    Text(
+                                      akhirtimeklinik3,
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 12,
+                                          color: Colors.grey),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
+                          : Container(),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  ),
                 ),
-              );
-            }
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          },
-        ),
-      ],
+              ],
+            ),
+          );
+        }
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
     );
   }
 }

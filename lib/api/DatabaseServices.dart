@@ -167,6 +167,19 @@ class DatabaseServices {
       {
         'count': 1,
         'iddokter': iddokter,
+        'requestvideocall' : false,
+      },
+    );
+  }
+
+  static Future<void> setchatdokter(
+      String email,
+      String iddokter,
+      ) async {
+    await doktergigi.doc(iddokter).collection('chat').doc(email).set(
+      {
+        'count': 1,
+        'iddokter': iddokter,
       },
     );
   }

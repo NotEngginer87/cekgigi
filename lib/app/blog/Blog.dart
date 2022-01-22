@@ -439,7 +439,7 @@ class _blogstlState extends State<blogstl> {
                           decoration: TextDecoration.underline,
                           fontWeight: FontWeight.w500,
                           fontSize: 12,
-                          color: Colors.blue),
+                          color: Colors.teal.shade900),
                       textAlign: TextAlign.left,
                     ),
                     SizedBox(
@@ -457,7 +457,7 @@ class _blogstlState extends State<blogstl> {
                           decoration: TextDecoration.underline,
                           fontWeight: FontWeight.w500,
                           fontSize: 12,
-                          color: Colors.blue),
+                          color: Colors.teal.shade900),
                       textAlign: TextAlign.left,
                     ),
                     SizedBox(
@@ -475,7 +475,7 @@ class _blogstlState extends State<blogstl> {
                           decoration: TextDecoration.underline,
                           fontWeight: FontWeight.w500,
                           fontSize: 12,
-                          color: Colors.blue),
+                          color: Colors.teal.shade900),
                       textAlign: TextAlign.left,
                     ),
                     SizedBox(

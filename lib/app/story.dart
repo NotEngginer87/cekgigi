@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:story_view/controller/story_controller.dart';
 import 'package:story_view/widgets/story_view.dart';
+
 class MoreStories extends StatefulWidget {
   const MoreStories({Key? key}) : super(key: key);
 
@@ -22,30 +23,24 @@ class _MoreStoriesState extends State<MoreStories> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("More"),
-      ),
       body: StoryView(
         storyItems: [
           StoryItem.text(
             title: "Cara menggunakan Aplikasi iDent",
-            backgroundColor: Colors.blue,
+            backgroundColor: Colors.teal.shade900,
           ),
-
           StoryItem.pageImage(
             url:
-            "https://firebasestorage.googleapis.com/v0/b/teledentistry-70122.appspot.com/o/WhatsApp%20Image%202022-01-19%20at%2001.10.17.jpeg?alt=media&token=a360f53a-253b-4b37-a3e8-be5ce9622ffe",
-
+                "https://firebasestorage.googleapis.com/v0/b/teledentistry-70122.appspot.com/o/WhatsApp%20Image%202022-01-19%20at%2001.10.17.jpeg?alt=media&token=a360f53a-253b-4b37-a3e8-be5ce9622ffe",
             controller: storyController,
           ),
           StoryItem.pageImage(
-              url: "https://firebasestorage.googleapis.com/v0/b/teledentistry-70122.appspot.com/o/WhatsApp%20Image%202022-01-19%20at%2001.10.17.jpeg?alt=media&token=a360f53a-253b-4b37-a3e8-be5ce9622ffe",
-
-
+              url:
+                  "https://firebasestorage.googleapis.com/v0/b/teledentistry-70122.appspot.com/o/WhatsApp%20Image%202022-01-19%20at%2001.10.17.jpeg?alt=media&token=a360f53a-253b-4b37-a3e8-be5ce9622ffe",
               controller: storyController),
           StoryItem.text(
             title: "Hehe",
-            backgroundColor: Colors.blue,
+            backgroundColor: Colors.teal.shade900,
           ),
         ],
         onStoryShow: (s) {
@@ -61,7 +56,6 @@ class _MoreStoriesState extends State<MoreStories> {
     );
   }
 }
-
 
 class KeuntunganiDentStory extends StatefulWidget {
   const KeuntunganiDentStory({Key? key}) : super(key: key);
@@ -82,34 +76,28 @@ class _KeuntunganiDentStory extends State<KeuntunganiDentStory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("More"),
-      ),
       body: StoryView(
         storyItems: [
           StoryItem.text(
             title: "Keuntungan Menggunakan iDent",
-            backgroundColor: Colors.blue,
+            backgroundColor: Colors.teal.shade900,
           ),
-
           StoryItem.pageImage(
             url:
-            "https://firebasestorage.googleapis.com/v0/b/teledentistry-70122.appspot.com/o/keuntungan%2FBiaya-Murah%20(1)%20(1).png?alt=media&token=69bf855b-f866-4b0f-9804-ea492f00f606",
-
+                "https://firebasestorage.googleapis.com/v0/b/teledentistry-70122.appspot.com/o/keuntungan%2FBiaya-Murah%20(1)%20(1).png?alt=media&token=69bf855b-f866-4b0f-9804-ea492f00f606",
             controller: storyController,
           ),
           StoryItem.pageImage(
-              url: "https://firebasestorage.googleapis.com/v0/b/teledentistry-70122.appspot.com/o/keuntungan%2FUntitled-Artwork%20(1)%20(1).png?alt=media&token=1f2875e7-ee20-4c56-adf5-db4986241615",
-
-
+              url:
+                  "https://firebasestorage.googleapis.com/v0/b/teledentistry-70122.appspot.com/o/keuntungan%2FUntitled-Artwork%20(1)%20(1).png?alt=media&token=1f2875e7-ee20-4c56-adf5-db4986241615",
               controller: storyController),
           StoryItem.pageImage(
-              url: "https://firebasestorage.googleapis.com/v0/b/teledentistry-70122.appspot.com/o/keuntungan%2FBeach%2C-home%2C-forest%20(1).png?alt=media&token=b73c1fa3-18c1-4a62-9bf1-5d2576ca990d",
-
+              url:
+                  "https://firebasestorage.googleapis.com/v0/b/teledentistry-70122.appspot.com/o/keuntungan%2FBeach%2C-home%2C-forest%20(1).png?alt=media&token=b73c1fa3-18c1-4a62-9bf1-5d2576ca990d",
               controller: storyController),
           StoryItem.text(
             title: "Hehe",
-            backgroundColor: Colors.blue,
+            backgroundColor: Colors.teal.shade900,
           ),
         ],
         onStoryShow: (s) {
@@ -145,41 +133,33 @@ class _TutorialiDentStory extends State<TutorialiDentStory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("More"),
-      ),
       body: StoryView(
         storyItems: [
           StoryItem.text(
             title: "Keuntungan Menggunakan iDent",
-            backgroundColor: Colors.blue,
+            backgroundColor: Colors.teal.shade900,
           ),
-
           StoryItem.pageImage(
             url:
-            "https://firebasestorage.googleapis.com/v0/b/teledentistry-70122.appspot.com/o/keuntungan%2FBiaya-Murah%20(1)%20(1).png?alt=media&token=69bf855b-f866-4b0f-9804-ea492f00f606",
-
+                "https://firebasestorage.googleapis.com/v0/b/teledentistry-70122.appspot.com/o/keuntungan%2FBiaya-Murah%20(1)%20(1).png?alt=media&token=69bf855b-f866-4b0f-9804-ea492f00f606",
             controller: storyController,
           ),
           StoryItem.pageImage(
-              url: "https://firebasestorage.googleapis.com/v0/b/teledentistry-70122.appspot.com/o/keuntungan%2FUntitled-Artwork%20(1)%20(1).png?alt=media&token=1f2875e7-ee20-4c56-adf5-db4986241615",
-
-
+              url:
+                  "https://firebasestorage.googleapis.com/v0/b/teledentistry-70122.appspot.com/o/keuntungan%2FUntitled-Artwork%20(1)%20(1).png?alt=media&token=1f2875e7-ee20-4c56-adf5-db4986241615",
               controller: storyController),
           StoryItem.pageImage(
-              url: "https://firebasestorage.googleapis.com/v0/b/teledentistry-70122.appspot.com/o/keuntungan%2FBeach%2C-home%2C-forest%20(1).png?alt=media&token=b73c1fa3-18c1-4a62-9bf1-5d2576ca990d",
-
+              url:
+                  "https://firebasestorage.googleapis.com/v0/b/teledentistry-70122.appspot.com/o/keuntungan%2FBeach%2C-home%2C-forest%20(1).png?alt=media&token=b73c1fa3-18c1-4a62-9bf1-5d2576ca990d",
               controller: storyController),
-          StoryItem.text(
-            title: "Hehe",
-            backgroundColor: Colors.blue,
-          ),
+
         ],
         onStoryShow: (s) {
           print("Showing a story");
         },
         onComplete: () {
           print("Completed a cycle");
+          Navigator.pop(context);
         },
         progressPosition: ProgressPosition.top,
         repeat: false,
