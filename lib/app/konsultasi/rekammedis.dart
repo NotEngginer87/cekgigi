@@ -17,7 +17,10 @@ import '../../api/DatabaseServices.dart';
 import '../../style.dart';
 
 class RekamMedis extends StatefulWidget {
-  RekamMedis(this.kegiatan, {Key? key,}) : super(key: key);
+  RekamMedis(
+    this.kegiatan, {
+    Key? key,
+  }) : super(key: key);
   String kegiatan;
   @override
   _RekamMedisState createState() => _RekamMedisState();
@@ -97,8 +100,6 @@ class _RekamMedisState extends State<RekamMedis> {
     final User? user = auth.currentUser;
     final emaila = user!.email;
 
-
-
     List<Step> getSteps() => [
           Step(
             state: currentstep > 0 ? StepState.complete : StepState.indexed,
@@ -107,52 +108,55 @@ class _RekamMedisState extends State<RekamMedis> {
             content: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                StreamBuilder<DocumentSnapshot>(
-                  stream: userdata.doc(emaila.toString()).snapshots(),
-                  builder: (context, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData) {
-                      Map<String, dynamic> data =
-                          snapshot.data!.data() as Map<String, dynamic>;
+                Align(
+                  alignment: Alignment.center,
+                  child: StreamBuilder<DocumentSnapshot>(
+                    stream: userdata.doc(emaila.toString()).snapshots(),
+                    builder: (context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        Map<String, dynamic> data =
+                            snapshot.data!.data() as Map<String, dynamic>;
 
-                      String datanama = data['nama'];
-                      String datagender = data['gender'];
-                      String? dataalamat = data['alamat'];
-                      String? datanomorHP = data['nomorhp'];
-                      String datatanggal = data['tanggal'];
-                      String databulan = data['bulan'];
-                      String datatahun = data['tahun'];
+                        String datanama = data['nama'];
+                        String datagender = data['gender'];
+                        String? dataalamat = data['alamat'];
+                        String? datanomorHP = data['nomorhp'];
+                        String datatanggal = data['tanggal'];
+                        String databulan = data['bulan'];
+                        String datatahun = data['tahun'];
 
-                      tanggalawal = int.tryParse(datatanggal);
-                      bulanawal = int.tryParse(databulan);
-                      tahunawal = int.tryParse(datatahun);
-                      umur = DateTime.now().year - tahunawal!;
+                        tanggalawal = int.tryParse(datatanggal);
+                        bulanawal = int.tryParse(databulan);
+                        tahunawal = int.tryParse(datatahun);
+                        umur = DateTime.now().year - tahunawal!;
 
-                      return ElevatedButton(
-                        style: untukKonsultasiButton,
-                          onPressed: () {
-                            setState(() {
-                              nama.text = datanama;
-                              noHP.text = datanomorHP!;
-                              alamat.text = dataalamat!;
-                              umurcontrol.text = umur.toString();
-                              jeniskelamin.text = datagender;
-                              tanggal = datatanggal;
-                              bulan = databulan;
-                              tahun = datatahun;
-                              switchimpor = true;
-                              switchnama = true;
-                              switchumur = true;
-                              switchnotelepon = true;
-                              switchalamat = true;
-                              switchgender = true;
-                            });
-                          },
-                          child: const Text('impor dari profil'));
-                    }
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  },
+                        return ElevatedButton(
+                            style: untukKonsultasiButton,
+                            onPressed: () {
+                              setState(() {
+                                nama.text = datanama;
+                                noHP.text = datanomorHP!;
+                                alamat.text = dataalamat!;
+                                umurcontrol.text = umur.toString();
+                                jeniskelamin.text = datagender;
+                                tanggal = datatanggal;
+                                bulan = databulan;
+                                tahun = datatahun;
+                                switchimpor = true;
+                                switchnama = true;
+                                switchumur = true;
+                                switchnotelepon = true;
+                                switchalamat = true;
+                                switchgender = true;
+                              });
+                            },
+                            child: const Text('impor dari profil'));
+                      }
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
+                  ),
                 ),
                 const Text(
                   'nama : ',
@@ -455,140 +459,147 @@ class _RekamMedisState extends State<RekamMedis> {
           ),
         ];
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Rekam Medis'),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.teal.shade900,
-      ),
-      body:  Stepper(
-
-
-          type: StepperType.vertical,
-          currentStep: currentstep,
-          steps: getSteps(),
-          onStepContinue: () {
-            if (currentstep == 0) {
-              if (switchnama == true) {
-                if (switchgender == true) {
-                  if (switchumur == true) {
-                    if (switchnotelepon == true) {
-                      if (switchalamat == true) {
+        appBar: AppBar(
+          title: const Text('Rekam Medis'),
+          centerTitle: true,
+          elevation: 0,
+          backgroundColor: Colors.teal.shade900,
+        ),
+        body: Theme(
+          data: ThemeData(
+              colorScheme: ColorScheme.fromSwatch()
+                  .copyWith(primary: Colors.teal.shade900)),
+          child: Stepper(
+              type: StepperType.vertical,
+              currentStep: currentstep,
+              steps: getSteps(),
+              onStepContinue: () {
+                setState(() {
+                  if (currentstep == 0) {
+                    if (switchnama == true) {
+                      if (switchgender == true) {
+                        if (switchumur == true) {
+                          if (switchnotelepon == true) {
+                            if (switchalamat == true) {
+                              setState(() {
+                                currentstep = 1;
+                              });
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                  if (currentstep == 1) {
+                    if (switchnikah == true) {
+                      if (switchagama == true) {
+                        if (switchpekerjaan == true) {
+                          if (switchsuku == true) {
+                            setState(() {
+                              currentstep = 2;
+                            });
+                          }
+                        }
+                      }
+                    }
+                  }
+                  if (currentstep == 2) {
+                    if (switchkeluhan == true) {
+                      if (switchfoto == true) {
                         setState(() {
-                          currentstep = 1;
+                          isLastStep2 = true;
                         });
                       }
                     }
                   }
-                }
-              }
-            }
-            if (currentstep == 1) {
-              if (switchnikah == true) {
-                if (switchagama == true) {
-                  if (switchpekerjaan == true) {
-                    if (switchsuku == true) {
+                });
+              },
+              onStepTapped: (step) => setState(() {
+                    currentstep = step;
+                  }),
+              onStepCancel: currentstep == 0
+                  ? null
+                  : () {
                       setState(() {
-                        currentstep = 2;
+                        currentstep -= 1;
                       });
-                    }
-                  }
-                }
-              }
-            }
-            if (currentstep == 2) {
-              if (switchkeluhan == true) {
-                if (switchfoto == true) {
-                  setState(() {
-                    isLastStep2 = true;
-                  });
-                }
-              }
-            }
-          },
-          onStepTapped: (step) => setState(() {
-            currentstep = step;
-          }),
-          onStepCancel: currentstep == 0
-              ? null
-              : () {
-            setState(() {
-              currentstep -= 1;
-            });
-          },
-          controlsBuilder: (context, details) {
-            return Container(
-              margin: const EdgeInsets.only(top: 12),
-              child: Row(
-                children: [
-                  isLastStep2
-                      ? StreamBuilder<DocumentSnapshot>(
-                    stream: listpasiencount.doc('count').snapshots(),
-                    builder: (context, AsyncSnapshot snapshot) {
-                      if (snapshot.hasData) {
-                        Map<String, dynamic> data =
-                        snapshot.data!.data() as Map<String, dynamic>;
-
-                        int idpasien = data['count'];
-
-                        return Expanded(
-                          child: ElevatedButton(
-                            onPressed: () {
-                              print(idpasien);
-
-                              DatabaseServices.updatecountakun();
-                              DatabaseServices.updateketeranganpasien(
-                                  idpasien,
-                                  nama.text,
-                                  jeniskelamin.text,
-                                  umurcontrol.text,
-                                  noHP.text,
-                                  alamat.text,
-                                  _valuenikah.toString(),
-                                  _valueagama.toString(),
-                                  suku.text,
-                                  pekerjaan.text,
-                                  keluhan.text,
-                                  imageUrl!,
-                                  widget.kegiatan,
-                                  emaila!);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          SelectDokter(idpasien,widget.kegiatan)));
-                            },
-                            child: const Text('Konfirmasi'),
-                          ),
-                        );
-                      }
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
                     },
-                  )
-                      : Expanded(
-                    child: ElevatedButton(
-                      onPressed: details.onStepContinue,
-                      child: const Text('lanjut'),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  if (currentstep != 0)
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: details.onStepCancel,
-                        child: const Text('balik'),
-                      ),
-                    ),
-                ],
-              ),
-            );
-          }),
+              controlsBuilder: (context, details) {
+                return Container(
+                  margin: const EdgeInsets.only(top: 12),
+                  child: Row(
+                    children: [
+                      isLastStep2
+                          ? StreamBuilder<DocumentSnapshot>(
+                              stream:
+                                  listpasiencount.doc('count').snapshots(),
+                              builder: (context, AsyncSnapshot snapshot) {
+                                if (snapshot.hasData) {
+                                  Map<String, dynamic> data = snapshot.data!
+                                      .data() as Map<String, dynamic>;
 
-    );
+                                  int idpasien = data['count'];
+
+                                  return Expanded(
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        setState(() {});
+                                        print(idpasien);
+
+                                        DatabaseServices.updatecountakun();
+                                        DatabaseServices
+                                            .updateketeranganpasien(
+                                                idpasien,
+                                                nama.text,
+                                                jeniskelamin.text,
+                                                umurcontrol.text,
+                                                noHP.text,
+                                                alamat.text,
+                                                _valuenikah.toString(),
+                                                _valueagama.toString(),
+                                                suku.text,
+                                                pekerjaan.text,
+                                                keluhan.text,
+                                                imageUrl!,
+                                                widget.kegiatan,
+                                                emaila!);
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    SelectDokter(idpasien,
+                                                        widget.kegiatan)));
+                                      },
+                                      child: const Text('Konfirmasi'),
+                                    ),
+                                  );
+                                }
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              },
+                            )
+                          : Expanded(
+                              child: ElevatedButton(
+                                onPressed: details.onStepContinue,
+                                child: const Text('lanjut'),
+                              ),
+                            ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      if (currentstep != 0)
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: details.onStepCancel,
+                            child: const Text('balik'),
+                          ),
+                        ),
+                    ],
+                  ),
+                );
+              }),
+        ));
   }
 
   uploadImage() async {
@@ -631,9 +642,6 @@ class _RekamMedisState extends State<RekamMedis> {
     }
   }
 }
-
-
-
 
 class AddUserCountCard extends StatelessWidget {
   final int? count;

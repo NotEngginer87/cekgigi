@@ -131,7 +131,7 @@ class keuntunganmenggunakanaplikasi extends StatelessWidget {
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return const menggunakanaplikasi();
+                      return const TutorialiDentStory();
                     }));
                   },
                 ),
@@ -145,6 +145,7 @@ class keuntunganmenggunakanaplikasi extends StatelessWidget {
             ],
           ),
         );
+
     return Padding(
         padding:
             const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),

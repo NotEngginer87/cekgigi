@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 
+import '../../style.dart';
+
 class event extends StatefulWidget {
   const event({Key? key}) : super(key: key);
 
@@ -226,6 +228,8 @@ class _eventState extends State<event> {
                                                                       .w700),
                                                         ),
                                                         ElevatedButton(
+                                                            style:
+                                                                untukKonsultasiButton,
                                                             onPressed: () {},
                                                             child: Text(
                                                                 penyelenggara))
@@ -245,6 +249,9 @@ class _eventState extends State<event> {
                                               padding:
                                                   const EdgeInsets.all(12.0),
                                               child: SlideAction(
+                                                outerColor:
+                                                    Colors.teal.shade900,
+                                                innerColor: Colors.white,
                                                 key: _key,
                                                 text: 'Ikuti ' + slider,
                                                 textStyle: TextStyle(
@@ -255,7 +262,8 @@ class _eventState extends State<event> {
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (context) =>
-                                                              RekamMedis('sekmit')));
+                                                              RekamMedis(
+                                                                  'sekmit')));
                                                   Future.delayed(
                                                     const Duration(seconds: 1),
                                                     () => _key.currentState
@@ -312,7 +320,7 @@ class _eventState extends State<event> {
                           builder: (context) {
                             return Container(
                               width: MediaQuery.of(context).size.width * 0.8,
-                              height: 400,
+                              height: 150,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(12),

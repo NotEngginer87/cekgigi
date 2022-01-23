@@ -30,41 +30,55 @@ class _RiwayatKonsultasiState extends State<RiwayatKonsultasi> {
         title: const Text('Riwayat Konsultasi'),
         centerTitle: true,
         elevation: 0,
+        backgroundColor: Colors.teal.shade900,
       ),
       body: Container(
         color: Colors.grey.shade50,
-        child: StreamBuilder<QuerySnapshot>(
-          stream: riwayatkonsultasi
-              .doc(email)
-              .collection('riwayatkonsultasi')
-              .doc('datapasien')
-              .collection('datapasien')
-              .snapshots(),
-          builder: (_, AsyncSnapshot snapshot) {
-            if (snapshot.hasData) {
-              return Column(
-                  children: snapshot.data.docs
-                      .map<Widget>((e) => RiwayatCard(
-                            e.data()['idpasien'],
-                            e.data()['iddokter'],
-                            e.data()['kegiatan'],
-                          ))
-                      .toList());
-            } else {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: const [
-                  Center(
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
+        child: Expanded(
+            child: Container(
+                color: Colors.teal.shade900,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(12),
+                        topRight: Radius.circular(12)),
                   ),
-                ],
-              );
-            }
-          },
-        ),
+                  child:
+
+                  StreamBuilder<QuerySnapshot>(
+                    stream: riwayatkonsultasi
+                        .doc(email)
+                        .collection('riwayatkonsultasi')
+                        .doc('datapasien')
+                        .collection('datapasien')
+                        .snapshots(),
+                    builder: (_, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        return Column(
+                            children: snapshot.data.docs
+                                .map<Widget>((e) => RiwayatCard(
+                              e.data()['idpasien'],
+                              e.data()['iddokter'],
+                              e.data()['kegiatan'],
+                            ))
+                                .toList());
+                      } else {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: const [
+                            Center(
+                              child: Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                            ),
+                          ],
+                        );
+                      }
+                    },
+                  ),)))
+
       ),
     );
   }
@@ -180,56 +194,70 @@ class _DetailKasusState extends State<DetailKasus> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Riwayat Konsultasi'),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.teal.shade900,
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(12),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: SafeArea(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
-                  child: GNav(
-                    rippleColor: Colors.grey[300]!,
-                    hoverColor: Colors.grey[100]!,
-                    gap: 8,
-                    activeColor: Colors.black,
-                    iconSize: 24,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 12),
-                    duration: const Duration(milliseconds: 400),
-                    tabBackgroundColor: Colors.grey[100]!,
-                    color: Colors.black,
-                    tabs: const [
-                      GButton(
-                        icon: LineIcons.home,
-                        text: 'Data Pasien',
-                      ),
-                      GButton(
-                        icon: LineIcons.book,
-                        text: 'Keluhan',
-                      ),
-                      GButton(
-                        icon: LineIcons.book,
-                        text: 'Data Dokter',
-                      ),
-                    ],
-                    selectedIndex: _selectedIndex,
-                    onTabChange: (index) {
-                      setState(() {
-                        _selectedIndex = index;
-                      });
-                    },
-                  ),
+          Container(
+              color: Colors.teal.shade900,
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(12),
+                      topRight: Radius.circular(12)),
                 ),
-              ),
-            ),
-          ),
+                child:
+                Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: SafeArea(
+                      child: Padding(
+                        padding:
+                        const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
+                        child: GNav(
+                          rippleColor: Colors.grey[300]!,
+                          hoverColor: Colors.grey[100]!,
+                          gap: 8,
+                          activeColor: Colors.black,
+                          iconSize: 24,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 12),
+                          duration: const Duration(milliseconds: 400),
+                          tabBackgroundColor: Colors.grey[100]!,
+                          color: Colors.black,
+                          tabs: const [
+                            GButton(
+                              icon: LineIcons.book,
+                              text: 'Data Pasien',
+                            ),
+                            GButton(
+                              icon: LineIcons.image,
+                              text: 'Keluhan',
+                            ),
+                            GButton(
+                              icon: LineIcons.stethoscope,
+                              text: 'Data Dokter',
+                            ),
+                          ],
+                          selectedIndex: _selectedIndex,
+                          onTabChange: (index) {
+                            setState(() {
+                              _selectedIndex = index;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ),)),
+
           (_selectedIndex == 0)
               ? Expanded(
                   child: ListView(

@@ -41,7 +41,7 @@ class _OnBoardScreenState
   Widget build(BuildContext context) {
     print(_animationController?.value);
     return Scaffold(
-      backgroundColor: const Color(0xffF7EBE1),
+      backgroundColor: Colors.white,
       body: ClipRect(
         child: Stack(
           children: [

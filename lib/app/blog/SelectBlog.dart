@@ -24,7 +24,7 @@ class _SelectBlogState extends State<SelectBlog> {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.fromLTRB(10, 2, 10, 2),
+          padding: EdgeInsets.fromLTRB(10, 12, 10, 2),
           child: Column(
             children: [
               Align(
@@ -433,7 +433,7 @@ class BlogCard extends StatelessWidget {
                   child: Text(
                     bab!,
                     style: GoogleFonts.pathwayGothicOne(
-                        fontWeight: FontWeight.w500, fontSize: 20,color: Colors.pink),
+                        fontWeight: FontWeight.w500, fontSize: 20,color: Colors.black),
                   ),
                 ),
                 SizedBox(
@@ -585,16 +585,19 @@ class BlogCarda extends StatelessWidget {
                                   MediaQuery.of(context).size.width,
                                   child: Column(
                                     children: [
-                                      Expanded(
-                                        child: Ink.image(
-                                          image: NetworkImage(
-                                            '$urlgambar1',
+                                      Hero(
+                                        tag: 'blog',
+                                        child: Expanded(
+                                          child: Ink.image(
+                                            image: NetworkImage(
+                                              '$urlgambar1',
+                                            ),
+                                            height: 120,
+                                            width: 200,
+                                            fit: BoxFit.cover,
                                           ),
-                                          height: 120,
-                                          width: 200,
-                                          fit: BoxFit.cover,
                                         ),
-                                      ),
+                                      )
                                     ],
                                   ),
                                 ),

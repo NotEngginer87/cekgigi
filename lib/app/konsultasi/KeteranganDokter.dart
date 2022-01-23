@@ -139,17 +139,20 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
     );
   }
 
-  final Stream<int> _bids = (() async* {
-    for (int i = 1; i <= 100000000; i++) {
+  final bool _running = true;
+  Stream<String> _clock() async* {
+    // This loop will run forever because _running is always true
+    while (_running) {
       await Future<void>.delayed(const Duration(seconds: 1));
-      yield 1;
+      DateTime _now = DateTime.now();
+      // This will be displayed on the screen as current time
+      yield "${_now.hour} : ${_now.minute} : ${_now.second}";
     }
-  })();
+  }
 
   late bool max = false;
 
   void _onButtonPressedslider() {
-
     final FirebaseAuth auth = FirebaseAuth.instance;
     final User? user = auth.currentUser;
     final emaila = user?.email;
@@ -212,35 +215,18 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                                     fontSize: 16, fontWeight: FontWeight.w800),
                               ),
                               StreamBuilder(
-                                  stream: _bids,
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot<int> snapshot) {
-                                    if (snapshot.hasData) {
-                                      return Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Text(
-                                            DateTime.now().hour.toString() +
-                                                ' : ' +
-                                                DateTime.now()
-                                                    .minute
-                                                    .toString() +
-                                                ' : ' +
-                                                DateTime.now()
-                                                    .second
-                                                    .toString(),
-                                            style: const TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w800,
-                                            ),
-                                          ),
-                                        ],
-                                      );
-                                    } else {
-                                      return const CircularProgressIndicator();
-                                    }
-                                  }),
+                                stream: _clock(),
+                                builder: (context, AsyncSnapshot<String> snapshot) {
+                                  if (snapshot.connectionState == ConnectionState.waiting) {
+                                    return const CircularProgressIndicator();
+                                  }
+                                  return Text(
+                                    snapshot.data!,
+                                    style: const TextStyle(
+                                        fontSize: 16, fontWeight: FontWeight.w800),
+                                  );
+                                },
+                              ),
                             ],
                           ),
                         ],
@@ -390,7 +376,7 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                         padding: const EdgeInsets.all(12.0),
                         child: SlideAction(
                           innerColor: Colors.teal.shade900,
-                          outerColor: Colors.red,
+                          outerColor: Colors.white,
                           key: _key,
                           text: 'konsultasi',
                           onSubmit: () {
@@ -432,7 +418,6 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
   }
 
   void _onButtonPressedchat() {
-
     final FirebaseAuth auth = FirebaseAuth.instance;
     final User? user = auth.currentUser;
     final emaila = user?.email;
@@ -495,35 +480,19 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                                     fontSize: 16, fontWeight: FontWeight.w800),
                               ),
                               StreamBuilder(
-                                  stream: _bids,
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot<int> snapshot) {
-                                    if (snapshot.hasData) {
-                                      return Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.end,
-                                        children: [
-                                          Text(
-                                            DateTime.now().hour.toString() +
-                                                ' : ' +
-                                                DateTime.now()
-                                                    .minute
-                                                    .toString() +
-                                                ' : ' +
-                                                DateTime.now()
-                                                    .second
-                                                    .toString(),
-                                            style: const TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w800,
-                                            ),
-                                          ),
-                                        ],
-                                      );
-                                    } else {
-                                      return const CircularProgressIndicator();
-                                    }
-                                  }),
+                                stream: _clock(),
+                                builder: (context, AsyncSnapshot<String> snapshot) {
+                                  if (snapshot.connectionState == ConnectionState.waiting) {
+                                    return const CircularProgressIndicator();
+                                  }
+                                  return Text(
+                                    snapshot.data!,
+                                    style: const TextStyle(
+                                        fontSize: 16, fontWeight: FontWeight.w800),
+                                  );
+                                },
+                              ),
+
                             ],
                           ),
                         ],
@@ -655,6 +624,7 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                                     fontSize: 16, fontWeight: FontWeight.w700),
                               ),
                               ElevatedButton(
+                                  style: untukKonsultasiButton,
                                   onPressed: () {
                                     _onButtonPressedSyaratdanKetentuan();
                                   },
@@ -671,34 +641,37 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                       return Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: SlideAction(
+                          innerColor: Colors.teal.shade900,
+                          outerColor: Colors.white,
                           key: _key,
                           text: 'konsultasi',
                           onSubmit: () {
-                            DatabaseServices.setcountchataccount(emaila!,widget.iddokter);
-                            DatabaseServices.setchatdokter(emaila,widget.iddokter);
+                            DatabaseServices.setcountchataccount(
+                                emaila!, widget.iddokter);
+                            DatabaseServices.setchatdokter(
+                                emaila, widget.iddokter);
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => Chat(
-
-                                    widget.iddokter,
-                                  )),
+                                        widget.iddokter,
+                                      )),
                             );
 
                             DatabaseServices
                                 .masukkanpasienkedatabasedokterigigi(
-                                widget.iddokter,
-                                widget.idpasien,
-                                widget.kegiatan);
+                                    widget.iddokter,
+                                    widget.idpasien,
+                                    widget.kegiatan);
                             DatabaseServices
                                 .masukkandatakonsultasikedoktergigikeriwayat(
-                                emaila,
-                                widget.iddokter,
-                                widget.idpasien,
-                                widget.kegiatan);
+                                    emaila,
+                                    widget.iddokter,
+                                    widget.idpasien,
+                                    widget.kegiatan);
                             Future.delayed(
                               const Duration(seconds: 1),
-                                  () => _key.currentState?.reset(),
+                              () => _key.currentState?.reset(),
                             );
                           },
                         ),

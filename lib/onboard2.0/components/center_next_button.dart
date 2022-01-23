@@ -1,7 +1,8 @@
 import 'package:animations/animations.dart';
 import 'package:cekgigi/api/AuthServices.dart';
-import 'package:cekgigi/app/HomePage.dart';
+import 'package:cekgigi/main.dart';
 import 'package:flutter/material.dart';
+
 
 class CenterNextButton extends StatelessWidget {
   final AnimationController animationController;
@@ -102,26 +103,20 @@ class CenterNextButton extends StatelessWidget {
 
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
-                                    return const HalamanRumah();
+                                    return const Registrasi();
                                   }));
                             },
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: const [
-                                  Text(
-                                    'Sign Up',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  Icon(Icons.arrow_forward_rounded,
-                                      color: Colors.white),
-                                ],
+                            child: const Padding(
+                              padding: EdgeInsets.only(left: 16.0, right: 16.0),
+                              child: Text(
+                                'Sign Up',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+
+                                ),
+                                textAlign: TextAlign.center,
                               ),
                             ),
                           )
@@ -143,27 +138,7 @@ class CenterNextButton extends StatelessWidget {
             padding: const EdgeInsets.only(top: 8),
             child: SlideTransition(
               position: _loginTextMoveAnimation,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Text(
-                    'Already have an account? ',
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                  Text(
-                    'Login',
-                    style: TextStyle(
-                      color: Color(0xff132137),
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
+              child: Container()
             ),
           ),
         ],

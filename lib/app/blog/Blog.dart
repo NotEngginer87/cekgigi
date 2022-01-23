@@ -133,6 +133,7 @@ class _blogstlState extends State<blogstl> {
                   fit: BoxFit.fitWidth,
                 ),
                 collapseMode: CollapseMode.parallax,
+                
               ),
             ),
             SliverList(
@@ -165,7 +166,7 @@ class _blogstlState extends State<blogstl> {
                   style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w500,
                       fontSize: 14,
-                      color: Colors.pink),
+                      color: Colors.teal.shade900),
                 ),
               ),
               SizedBox(

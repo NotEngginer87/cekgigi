@@ -3,6 +3,7 @@
 import 'package:cekgigi/api/DatabaseServices.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
@@ -53,7 +54,7 @@ class _ChatState extends State<Chat> {
                     padding: const EdgeInsets.only(bottom: 2),
                     child: InkWell(
                       child: Container(
-                        color: Colors.teal.shade500,
+                        color: Colors.teal.shade900,
                         height: 70,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -134,8 +135,7 @@ class _ChatState extends State<Chat> {
           ),
           Expanded(
               child: ListView(
-
-                reverse: true,
+            reverse: true,
             children: [
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.6,
@@ -180,126 +180,126 @@ class _ChatState extends State<Chat> {
           )),
           (opendialogbox == true)
               ? Align(
-            alignment: Alignment.center,
-            child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      color: Colors.white,
-                      boxShadow: const [
-                        BoxShadow(
-                          blurRadius: 1,
-                          blurStyle: BlurStyle.outer,
-                        )
-                      ],
-                    ),
-                    width: MediaQuery.of(context).size.width - 40,
-                    height: MediaQuery.of(context).size.width / 4,
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 2, right: 2, top: 20, bottom: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Expanded(
-                              child: Column(
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      color: Colors.white,
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          blurRadius: 1,
-                                          blurStyle: BlurStyle.outer,
-                                        )
-                                      ],
+                  alignment: Alignment.center,
+                  child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            color: Colors.white,
+                            boxShadow: const [
+                              BoxShadow(
+                                blurRadius: 1,
+                                blurStyle: BlurStyle.outer,
+                              )
+                            ],
+                          ),
+                          width: MediaQuery.of(context).size.width - 40,
+                          height: MediaQuery.of(context).size.width / 4,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 2, right: 2, top: 20, bottom: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Expanded(
+                                    child: Column(
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(50),
+                                        color: Colors.white,
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            blurRadius: 1,
+                                            blurStyle: BlurStyle.outer,
+                                          )
+                                        ],
+                                      ),
+                                      height:
+                                          MediaQuery.of(context).size.width / 9,
+                                      child: IconButton(
+                                          onPressed: () {},
+                                          icon: const Icon(
+                                            LineIcons.stethoscope,
+                                            size: 24,
+                                            color: Colors.black,
+                                          )),
                                     ),
-                                    height:
-                                    MediaQuery.of(context).size.width / 9,
-                                    child: IconButton(
-                                        onPressed: () {},
-                                        icon: const Icon(
-                                          LineIcons.stethoscope,
-                                          size: 24,
-                                          color: Colors.black,
-                                        )),
-                                  ),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  const Text('konsultasi'),
-                                ],
-                              )),
-                          Expanded(
-                              child: Column(
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      color: Colors.white,
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          blurRadius: 1,
-                                          blurStyle: BlurStyle.outer,
-                                        )
-                                      ],
+                                    const SizedBox(
+                                      height: 8,
                                     ),
-                                    height:
-                                    MediaQuery.of(context).size.width / 9,
-                                    child: IconButton(
-                                        onPressed: () {},
-                                        icon: const Icon(
-                                          LineIcons.medicalNotes,
-                                          size: 24,
-                                          color: Colors.black,
-                                        )),
-                                  ),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  const Text('riwayat'),
-                                ],
-                              )),
-                          Expanded(
-                              child: Column(
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      color: Colors.white,
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          blurRadius: 1,
-                                          blurStyle: BlurStyle.outer,
-                                        )
-                                      ],
+                                    const Text('konsultasi'),
+                                  ],
+                                )),
+                                Expanded(
+                                    child: Column(
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(50),
+                                        color: Colors.white,
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            blurRadius: 1,
+                                            blurStyle: BlurStyle.outer,
+                                          )
+                                        ],
+                                      ),
+                                      height:
+                                          MediaQuery.of(context).size.width / 9,
+                                      child: IconButton(
+                                          onPressed: () {},
+                                          icon: const Icon(
+                                            LineIcons.medicalNotes,
+                                            size: 24,
+                                            color: Colors.black,
+                                          )),
                                     ),
-                                    height:
-                                    MediaQuery.of(context).size.width / 9,
-                                    child: IconButton(
-                                        onPressed: () {},
-                                        icon: const Icon(
-                                          LineIcons.calendarAlt,
-                                          size: 24,
-                                          color: Colors.black,
-                                        )),
-                                  ),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  const Text('Atur Jadwal'),
-                                ],
-                              )),
-                        ],
-                      ),
-                    ))),
-          )
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    const Text('riwayat'),
+                                  ],
+                                )),
+                                Expanded(
+                                    child: Column(
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(50),
+                                        color: Colors.white,
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            blurRadius: 1,
+                                            blurStyle: BlurStyle.outer,
+                                          )
+                                        ],
+                                      ),
+                                      height:
+                                          MediaQuery.of(context).size.width / 9,
+                                      child: IconButton(
+                                          onPressed: () {},
+                                          icon: const Icon(
+                                            LineIcons.calendarAlt,
+                                            size: 24,
+                                            color: Colors.black,
+                                          )),
+                                    ),
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    const Text('Atur Jadwal'),
+                                  ],
+                                )),
+                              ],
+                            ),
+                          ))),
+                )
               : Container(),
           Padding(
             padding: const EdgeInsets.all(12),
-            child:Row(
+            child: Row(
               children: [
                 Expanded(
                   child: IconButton(
@@ -316,7 +316,7 @@ class _ChatState extends State<Chat> {
                   flex: 1,
                 ),
                 Expanded(
-                  child: TextFormField(
+                  child: CupertinoTextFormFieldRow(
                     controller: ControllerChat,
                     keyboardType: TextInputType.text,
                   ),
@@ -332,7 +332,7 @@ class _ChatState extends State<Chat> {
                     builder: (context, AsyncSnapshot snapshot) {
                       if (snapshot.hasData) {
                         Map<String, dynamic> data =
-                        snapshot.data!.data() as Map<String, dynamic>;
+                            snapshot.data!.data() as Map<String, dynamic>;
 
                         int count = data['count'];
                         count += 5000000;
@@ -359,13 +359,11 @@ class _ChatState extends State<Chat> {
                                   count.toString(),
                                   ControllerChat.text,
                                   countt,
-                                  'dokter',
+                                  'pasien',
                                 );
-                                DatabaseServices
-                                    .updatecountchataccount(
-                                    email,
-                                    widget.iddokter);
-                                DatabaseServices.updatechat(
+                                DatabaseServices.updatecountchataccount(
+                                    email, widget.iddokter);
+                                DatabaseServices.updatechatdokter(
                                   email,
                                   widget.iddokter,
                                   count.toString(),
@@ -416,7 +414,7 @@ class Balloonchat extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
               color:
-                  (status == 'pasien') ? Colors.green.shade800 : Colors.black87,
+                  (status == 'pasien') ? Colors.teal.shade900 : Colors.black87,
               child: ConstrainedBox(
                   constraints: BoxConstraints(
                       maxWidth: MediaQuery.of(context).size.width * 0.7),
@@ -444,6 +442,7 @@ class _InfoDokternyaState extends State<InfoDokternya> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('info dokter'),
+        backgroundColor: Colors.teal.shade900,
         elevation: 0,
         centerTitle: true,
       ),
@@ -499,6 +498,7 @@ class _ChatMenuState extends State<ChatMenu> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('chat'),
+        backgroundColor: Colors.teal.shade900,
       ),
       body: Column(
         children: [
@@ -512,8 +512,8 @@ class _ChatMenuState extends State<ChatMenu> {
                     return Column(
                         children: snapshot.data.docs
                             .map<Widget>((e) => ListChat(
-                          e.data()['iddokter'],
-                        ))
+                                  e.data()['iddokter'],
+                                ))
                             .toList());
                   } else {
                     return Column(
@@ -560,7 +560,7 @@ class ListChat extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 2),
               child: InkWell(
                 child: Container(
-                  color: Colors.teal.shade400,
+                  color: Colors.teal.shade900,
                   height: 100,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -611,10 +611,8 @@ class ListChat extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Chat(iddokter)));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Chat(iddokter)));
                 },
               ));
         }
