@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:cekgigi/api/DatabaseServices.dart';
 import 'package:cekgigi/app/home/EditProfil.dart';
 import 'package:cekgigi/app/konsultasi/keterangan%20dokter/sisidokternya.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -191,6 +192,10 @@ class _DetailKasusState extends State<DetailKasus> {
   int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
+
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? user = auth.currentUser;
+    final email = user!.email;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Riwayat Konsultasi'),
@@ -257,6 +262,7 @@ class _DetailKasusState extends State<DetailKasus> {
                     ),
                   ),
                 ),)),
+
 
           (_selectedIndex == 0)
               ? Expanded(

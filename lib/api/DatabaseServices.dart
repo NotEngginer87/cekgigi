@@ -8,6 +8,7 @@ class DatabaseServices {
   static CollectionReference userdata = firestore.collection('user');
   static CollectionReference datapasien = firestore.collection('listpasien');
   static CollectionReference doktergigi = firestore.collection('doktergigi');
+  static CollectionReference FAQ = firestore.collection('FAQ');
   static CollectionReference listpasiencount =
   firestore.collection('listpasiencount');
   static CollectionReference blog = firestore.collection('soal');
@@ -180,6 +181,30 @@ class DatabaseServices {
       {
         'count': 1,
         'iddokter': iddokter,
+      },
+    );
+  }
+
+
+  static Future<void> setFAQ(String email,int n) async {
+
+
+      await userdata.doc(email.toString()).collection('FAQ').doc(n.toString()).set(
+      {
+        'expand': false,
+        'id': n,
+      },
+    );
+
+
+  }
+
+
+  static Future<void> expandFAQ(int id, bool expand, String email,) async {
+
+    await userdata.doc(email.toString()).collection('FAQ').doc(id.toString()).update(
+      {
+        'expand': !expand,
       },
     );
   }

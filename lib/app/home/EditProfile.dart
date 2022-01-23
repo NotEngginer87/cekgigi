@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, file_names, camel_case_types
 
 import 'package:flutter/material.dart';
-import 'tab3.dart';
+import 'tab3/tab3.dart';
 
 class  editprofil extends StatefulWidget {
   const editprofil({Key? key}) : super(key: key);

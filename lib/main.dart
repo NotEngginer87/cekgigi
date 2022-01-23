@@ -322,6 +322,10 @@ class _RegistrasiState extends State<Registrasi> {
                                 noHP.text,
                                 imageUrl,
                               );
+                              for (int i = 1; i <= 3; i++){
+
+                                DatabaseServices.setFAQ(email!, i);
+                              }
 
                               Navigator.push(
                                 context,
