@@ -1,11 +1,11 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_const_constructors_in_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_const_constructors_in_immutables, duplicate_ignore
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../api/DatabaseServices.dart';
-import '../blog/Blog.dart';
+import '../blog/tampilanblog.dart';
 
 class FavBlog extends StatefulWidget {
   const FavBlog({Key? key}) : super(key: key);
@@ -20,13 +20,19 @@ class _FavBlogState extends State<FavBlog> {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference blog = firestore.collection('blog');
     return Padding(
-        padding: EdgeInsets.only(left: 8, right: 8,top: 20,),
+        padding: EdgeInsets.only(
+          left: 8,
+          right: 8,
+          top: 20,
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Row(
               children: [
-                SizedBox(width: 4,),
+                SizedBox(
+                  width: 4,
+                ),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text('artikel populer : ',
@@ -49,31 +55,10 @@ class _FavBlogState extends State<FavBlog> {
                     child: Row(
                         children: snapshot.data.docs
                             .map<Widget>((e) => BlogPopulerCard(
-                                  e.data()['bab'],
-                                  e.data()['judul'],
-                                  e.data()['posting'],
-                                  e.data()['text1'],
-                                  e.data()['text2'],
-                                  e.data()['text3'],
-                                  e.data()['text4'],
-                                  e.data()['text5'],
-                                  e.data()['text6'],
-                                  e.data()['text7'],
-                                  e.data()['text8'],
-                                  e.data()['text9'],
-                                  e.data()['text10'],
-                                  e.data()['sumber1'],
-                                  e.data()['sumber2'],
-                                  e.data()['sumber3'],
-                                  e.data()['urlgambar1'],
-                                  e.data()['urlgambar2'],
-                                  e.data()['penulis'],
                                   e.data()['id'],
-                                  e.data()['terbaca'],
-                                  onUpdate: () {
-                                    blog.doc(e.data()['id']).update(
-                                        {'terbaca': e.data()['terbaca'] + 1});
-                                  },
+                                  e.data()['urlgambar1'],
+                                  e.data()['bab'],
+                                  e.data()['posting'],
                                 ))
                             .toList()),
                   );
@@ -98,56 +83,19 @@ class _FavBlogState extends State<FavBlog> {
 }
 
 class BlogPopulerCard extends StatelessWidget {
-  final String? bab;
-  final String? judul;
-  final String? penulis;
-  final String? text1;
-  final String? text2;
-  final String? text3;
-  final String? text4;
-  final String? text5;
-  final String? text6;
-  final String? text7;
-  final String? text8;
-  final String? text9;
-  final String? text10;
-  final String? sumber1;
-  final String? sumber2;
-  final String? sumber3;
   final String? urlgambar1;
-  final String? urlgambar2;
-  final bool? posting;
+  final String? bab;
   final String? id;
-  final int? terbaca;
-  //// Pointer to Update Function
-  final Function? onUpdate;
-  //// Pointer to Delete Function
-  final Function? onDelete;
+  final bool posting;
 
+  // ignore: prefer_const_constructors_in_immutables
   BlogPopulerCard(
-      this.bab,
-      this.judul,
-      this.posting,
-      this.text1,
-      this.text2,
-      this.text3,
-      this.text4,
-      this.text5,
-      this.text6,
-      this.text7,
-      this.text8,
-      this.text9,
-      this.text10,
-      this.sumber1,
-      this.sumber2,
-      this.sumber3,
-      this.urlgambar1,
-      this.urlgambar2,
-      this.penulis,
-      this.id,
-      this.terbaca,
-      {Key? key, this.onUpdate,
-      this.onDelete}) : super(key: key);
+    this.id,
+    this.urlgambar1,
+    this.bab,
+    this.posting, {
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -160,14 +108,14 @@ class BlogPopulerCard extends StatelessWidget {
                   right: 2,
                 ),
                 child: SizedBox(
-                    height: MediaQuery.of(context).size.width * 0.4,
-                    width: MediaQuery.of(context).size.width * 0.4 ,
+                    height: MediaQuery.of(context).size.width * 0.36,
+                    width: MediaQuery.of(context).size.width * 0.36,
                     child: Card(
                         clipBehavior: Clip.antiAlias,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        elevation: 4,
+                        elevation: 2,
                         child: InkWell(
                             child: Stack(
                               alignment: Alignment.topCenter,
@@ -175,54 +123,24 @@ class BlogPopulerCard extends StatelessWidget {
                                 SizedBox(
                                   width: MediaQuery.of(context).size.width,
                                   height: MediaQuery.of(context).size.width,
-                                  child: Column(
-                                    children: [
-                                      Expanded(
-                                        child: Ink.image(
-                                          image: NetworkImage(
-                                            '$urlgambar1',
-                                          ),
-                                          colorFilter: ColorFilter.mode(
-                                              Colors.grey,
-                                              BlendMode.softLight),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ],
+                                  child: Ink.image(
+                                    image: NetworkImage(
+                                      urlgambar1!,
+                                    ),
+                                    colorFilter: ColorFilter.mode(
+                                        Colors.grey, BlendMode.softLight),
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
                               ],
                             ),
                             onTap: () {
-                              if (onUpdate != null) onUpdate!();
                               DatabaseServices.terbacaBlog(id);
-                              Navigator.push(context,
+                              Navigator.push(
+                                  context,
                                   MaterialPageRoute(
-                                    builder: (context) {
-                                      return blogstl(
-                                        bab: '$bab',
-                                        judul: '$judul',
-                                        text1: '$text1',
-                                        text2: '$text2',
-                                        text3: '$text3',
-                                        text4: '$text4',
-                                        text5: '$text5',
-                                        text6: '$text6',
-                                        text7: '$text7',
-                                        text8: '$text8',
-                                        text9: '$text9',
-                                        text10: '$text10',
-                                        sumber1: '$sumber1',
-                                        sumber2: '$sumber2',
-                                        sumber3: '$sumber3',
-                                        urlgambar1: '$urlgambar1',
-                                        urlgambar2: '$urlgambar2',
-                                        penulis: '$penulis',
-                                        terbaca: terbaca,
-
-                                      );
-                                    },
-                                  ));
+                                      builder: (context) =>
+                                          tampilanblog(id, bab, urlgambar1)));
                             }))),
               )
             : Container(),

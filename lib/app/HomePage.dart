@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, file_names, non_constant_identifier_names
 
-import 'package:cekgigi/app/blog/SelectBlog.dart';
 import 'package:cekgigi/app/home/fav_blog.dart';
 import 'package:cekgigi/app/home/infopasien.dart';
 import 'package:cekgigi/app/home/keuntungan.dart';
@@ -8,9 +7,12 @@ import 'package:cekgigi/app/home/tab3/FAQ.dart';
 import 'package:cekgigi/app/home/tombol2.dart';
 import 'package:cekgigi/app/home/tab3/whatsapp.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
+import '../api/DatabaseServices.dart';
+import 'blog/BlogDepan.dart';
 import 'home/event.dart';
 import 'home/tab3/kontak.dart';
 import 'home/tab3/tab3.dart';
@@ -27,7 +29,6 @@ class _HalamanRumahState extends State<HalamanRumah> {
 
   @override
   Widget build(BuildContext context) {
-
     final ButtonStyle Buttonstyle = ElevatedButton.styleFrom(
       onPrimary: Colors.black,
       primary: Colors.white,
@@ -38,7 +39,6 @@ class _HalamanRumahState extends State<HalamanRumah> {
         borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
     );
-
     return Scaffold(
       backgroundColor: Colors.white,
       extendBody: true,
@@ -73,18 +73,17 @@ class _HalamanRumahState extends State<HalamanRumah> {
                     ? ListView(
                         children: [
                           infopasien(),
-                          Expanded(
+                          Container(
+                              color: Colors.teal.shade900,
                               child: Container(
-                                  color: Colors.teal.shade900,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(12),
-                                          topRight: Radius.circular(12)),
-                                    ),
-                                    child: SelectBlog(),
-                                  )))
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(12),
+                                      topRight: Radius.circular(12)),
+                                ),
+                                child: SelectBlog2(),
+                              ))
                         ],
                       )
                     : ListView(
@@ -177,6 +176,171 @@ class _HalamanRumahState extends State<HalamanRumah> {
           ),
         ),
       ),
+    );
+  }
+}
+
+
+
+
+class BlogPopulerCard extends StatelessWidget {
+  final String? urlgambar1;
+  final String? id;
+  final bool posting;
+
+  // ignore: prefer_const_constructors_in_immutables
+  BlogPopulerCard(
+      this.id,
+      this.urlgambar1,
+      this.posting, {
+        Key? key,
+      }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        (posting == true)
+            ? Padding(
+          padding: EdgeInsets.only(
+            left: 2,
+            right: 2,
+          ),
+          child: SizedBox(
+              height: MediaQuery.of(context).size.width * 0.6,
+              width: MediaQuery.of(context).size.width * 0.6,
+              child: Card(
+                  clipBehavior: Clip.antiAlias,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  elevation: 4,
+                  child: InkWell(
+                      child: Stack(
+                        alignment: Alignment.topCenter,
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.width,
+                            child: Ink.image(
+                              image: NetworkImage(
+                                '$urlgambar1',
+                              ),
+                              colorFilter: ColorFilter.mode(
+                                  Colors.grey, BlendMode.softLight),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ],
+                      ),
+                      onTap: () {
+                        DatabaseServices.terbacaBlog(id);
+                      }))),
+        )
+            : Container(),
+      ],
+    );
+  }
+}
+
+class BlogCard extends StatelessWidget {
+  final String? bab;
+  final String? judul;
+  final String? penulis;
+  final String? urlgambar1;
+  final String? id;
+  final int terbaca;
+  final bool posting;
+
+  const BlogCard(
+      this.id,
+      this.bab,
+      this.judul,
+      this.penulis,
+      this.urlgambar1,
+      this.terbaca,
+      this.posting, {
+        Key? key,
+      }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      child: Row(
+        children: [
+          (posting == true)
+              ? Padding(
+            padding: EdgeInsets.only(
+              left: 8,
+              right: 8,
+            ),
+            child: SizedBox(
+                height: MediaQuery.of(context).size.width * 0.3,
+                width: MediaQuery.of(context).size.width * 0.3,
+                child: Card(
+                  clipBehavior: Clip.antiAlias,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  elevation: 10,
+                  child: Ink.image(
+                    image: NetworkImage(
+                      '$urlgambar1',
+                    ),
+                    height: 120,
+                    width: 200,
+                    fit: BoxFit.cover,
+                  ),
+                )),
+          )
+              : Container(),
+          SizedBox(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  child: Text(
+                    bab!,
+                    style: GoogleFonts.pathwayGothicOne(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                        color: Colors.black),
+                  ),
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  child: Text(
+                    judul!,
+                    style: GoogleFonts.pathwayGothicOne(
+                        fontWeight: FontWeight.w500, fontSize: 18),
+                  ),
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  child: Text(
+                    'sudah terbaca : ' + terbaca.toString(),
+                    style: GoogleFonts.pathwayGothicOne(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                        color: Colors.grey),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+      onTap: () {
+        DatabaseServices.terbacaBlog(id);
+      },
     );
   }
 }

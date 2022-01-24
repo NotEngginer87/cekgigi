@@ -529,62 +529,61 @@ class _RekamMedisState extends State<RekamMedis> {
                   margin: const EdgeInsets.only(top: 12),
                   child: Row(
                     children: [
-                      isLastStep2
-                          ? StreamBuilder<DocumentSnapshot>(
-                              stream:
-                                  listpasiencount.doc('count').snapshots(),
-                              builder: (context, AsyncSnapshot snapshot) {
-                                if (snapshot.hasData) {
-                                  Map<String, dynamic> data = snapshot.data!
-                                      .data() as Map<String, dynamic>;
+                      ((isLastStep2 == true) && (currentstep == 2))
+                          ? Expanded(
+                  child: StreamBuilder<DocumentSnapshot>(
+                    stream:
+                    listpasiencount.doc('count').snapshots(),
+                    builder: (context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        Map<String, dynamic> data = snapshot.data!
+                            .data() as Map<String, dynamic>;
 
-                                  int idpasien = data['count'];
+                        int idpasien = data['count'];
 
-                                  return Expanded(
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        setState(() {});
-                                        print(idpasien);
+                        return ElevatedButton(
+                          onPressed: () {
 
-                                        DatabaseServices.updatecountakun();
-                                        DatabaseServices
-                                            .updateketeranganpasien(
-                                                idpasien,
-                                                nama.text,
-                                                jeniskelamin.text,
-                                                umurcontrol.text,
-                                                noHP.text,
-                                                alamat.text,
-                                                _valuenikah.toString(),
-                                                _valueagama.toString(),
-                                                suku.text,
-                                                pekerjaan.text,
-                                                keluhan.text,
-                                                imageUrl!,
-                                                widget.kegiatan,
-                                                emaila!);
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    SelectDokter(idpasien,
-                                                        widget.kegiatan)));
-                                      },
-                                      child: const Text('Konfirmasi'),
-                                    ),
-                                  );
-                                }
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              },
-                            )
+                            DatabaseServices.updatecountakun();
+                            DatabaseServices
+                                .updateketeranganpasien(
+                                idpasien,
+                                nama.text,
+                                jeniskelamin.text,
+                                umurcontrol.text,
+                                noHP.text,
+                                alamat.text,
+                                _valuenikah.toString(),
+                                _valueagama.toString(),
+                                suku.text,
+                                pekerjaan.text,
+                                keluhan.text,
+                                imageUrl!,
+                                widget.kegiatan,
+                                emaila!);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        SelectDokter(idpasien,
+                                            widget.kegiatan)));
+                          },
+                          child: const Text('Konfirmasi'),
+                        );
+                      }
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
+                  )
+                )
                           : Expanded(
                               child: ElevatedButton(
                                 onPressed: details.onStepContinue,
                                 child: const Text('lanjut'),
                               ),
                             ),
+
                       const SizedBox(
                         width: 20,
                       ),
@@ -599,7 +598,8 @@ class _RekamMedisState extends State<RekamMedis> {
                   ),
                 );
               }),
-        ));
+        ),
+      );
   }
 
   uploadImage() async {

@@ -33,25 +33,26 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Dokter Gigi'),
-        centerTitle: true,
-        backgroundColor: Colors.teal.shade900,
-        elevation: 0,
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Container(
-              color: Colors.teal.shade900,
-              child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
-                    borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20)),
-                  ),
-                  child: Expanded(
+        appBar: AppBar(
+          title: const Text('Info Dokter Gigi'),
+          centerTitle: true,
+          backgroundColor: Colors.teal.shade900,
+          elevation: 0,
+        ),
+        body: Container(
+          color: Colors.grey.shade50,
+          child: Column(
+            children: [
+              Expanded(
+                child: Container(
+                  color: Colors.teal.shade900,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade200,
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20)),
+                    ),
                     child: ListView(
                       children: [
                         infodokternya(widget.iddokter),
@@ -63,80 +64,92 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                         ),
                       ],
                     ),
-                  )),
-            ),
+                  ),
+                ),
+              ),
+              Container(
+                color: Colors.grey.shade100,
+
+                height: 80,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(4),
+                      child: InkWell(
+                        child: SizedBox(
+                          child: Card(
+                              clipBehavior: Clip.antiAlias,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              elevation: 2,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: const [
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  Icon(
+                                    Icons.chat,
+                                    size: 32,
+                                  ),
+                                  Text('Chat'),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                ],
+                              )),
+                          width: MediaQuery.of(context).size.width / 3,
+                        ),
+                        onTap: () async {
+                          _onButtonPressedchat();
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(4),
+                      child: InkWell(
+                        child: SizedBox(
+                          child: Card(
+                              clipBehavior: Clip.antiAlias,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              elevation: 2,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: const [
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  Icon(
+                                    Icons.video_call_rounded,
+                                    size: 32,
+                                  ),
+                                  Text(
+                                    'Video Call',
+                                  ),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                ],
+                              )),
+                          width: MediaQuery.of(context).size.width / 3,
+                        ),
+                        onTap: () {
+                          _onButtonPressedslider();
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
           ),
-          SizedBox(
-            height: 80,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                InkWell(
-                  child: SizedBox(
-                    child: Card(
-                        clipBehavior: Clip.antiAlias,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24),
-                        ),
-                        elevation: 4,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: const [
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Icon(
-                              Icons.chat,
-                              size: 36,
-                            ),
-                            Text('Chat'),
-                            SizedBox(
-                              height: 8,
-                            ),
-                          ],
-                        )),
-                    width: MediaQuery.of(context).size.width / 3,
-                  ),
-                  onTap: () async {
-                    _onButtonPressedchat();
-                  },
-                ),
-                InkWell(
-                  child: SizedBox(
-                    child: Card(
-                        clipBehavior: Clip.antiAlias,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24),
-                        ),
-                        elevation: 4,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: const [
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Icon(
-                              Icons.video_call,
-                              size: 36,
-                            ),
-                            Text('Video Call'),
-                            SizedBox(
-                              height: 8,
-                            ),
-                          ],
-                        )),
-                    width: MediaQuery.of(context).size.width / 3,
-                  ),
-                  onTap: () {
-                    _onButtonPressedslider();
-                  },
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
-    );
+        ));
   }
 
   final bool _running = true;
@@ -216,14 +229,17 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                               ),
                               StreamBuilder(
                                 stream: _clock(),
-                                builder: (context, AsyncSnapshot<String> snapshot) {
-                                  if (snapshot.connectionState == ConnectionState.waiting) {
+                                builder:
+                                    (context, AsyncSnapshot<String> snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
                                     return const CircularProgressIndicator();
                                   }
                                   return Text(
                                     snapshot.data!,
                                     style: const TextStyle(
-                                        fontSize: 16, fontWeight: FontWeight.w800),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w800),
                                   );
                                 },
                               ),
@@ -481,18 +497,20 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                               ),
                               StreamBuilder(
                                 stream: _clock(),
-                                builder: (context, AsyncSnapshot<String> snapshot) {
-                                  if (snapshot.connectionState == ConnectionState.waiting) {
+                                builder:
+                                    (context, AsyncSnapshot<String> snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
                                     return const CircularProgressIndicator();
                                   }
                                   return Text(
                                     snapshot.data!,
                                     style: const TextStyle(
-                                        fontSize: 16, fontWeight: FontWeight.w800),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w800),
                                   );
                                 },
                               ),
-
                             ],
                           ),
                         ],
@@ -749,6 +767,7 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                           height: 16,
                         ),
                         ElevatedButton(
+                          style: untukKonsultasiButton,
                           child: const Text('kembali'),
                           onPressed: () {
                             Navigator.pop(context);
@@ -871,7 +890,7 @@ class KomentarCard extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(100),
                   ),
-                  elevation: 4,
+                  elevation: 2,
                   child: Ink.image(
                     image: NetworkImage(
                       urlgambar,

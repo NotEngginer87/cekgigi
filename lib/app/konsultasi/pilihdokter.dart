@@ -27,22 +27,23 @@ class dokterCard extends StatelessWidget {
   final String kegiatan;
 
   const dokterCard(
-      this.id,
-      this.nama,
-      this.nip,
-      this.gelar,
-      this.urlgambar,
-      this.asal,
-      this.pasien,
-      this.username,
-      this.password,
-      this.waktuawal,
-      this.waktuakhir,
-      this.rating,
-      this.indikatorhidup,
-      this.indikatoronline,
-      this.idpasien,
-      this.kegiatan,);
+    this.id,
+    this.nama,
+    this.nip,
+    this.gelar,
+    this.urlgambar,
+    this.asal,
+    this.pasien,
+    this.username,
+    this.password,
+    this.waktuawal,
+    this.waktuakhir,
+    this.rating,
+    this.indikatorhidup,
+    this.indikatoronline,
+    this.idpasien,
+    this.kegiatan,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -230,7 +231,7 @@ class dokterCard extends StatelessWidget {
                               urlgambar!,
                               id!,
                               idpasien,
-                          kegiatan,
+                              kegiatan,
                             )),
                   );
                 },
@@ -523,153 +524,84 @@ class SelectDokter extends StatelessWidget {
     CollectionReference users = firestore.collection('doktergigi');
 
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Dokter Gigi'),
         centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.teal.shade900,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Container(
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(25),
-                      topRight: Radius.circular(25)),
-                ),
-                child: ListView(
-                  padding: const EdgeInsets.all(16),
-                  children: [
-                    StreamBuilder(
-                        stream:
-                            users.orderBy('id', descending: false).snapshots(),
-                        builder: (_, AsyncSnapshot snapshot) {
-                          if (snapshot.hasData) {
-                            return Column(
-                              children: [
-                                Column(
-                                  children: snapshot.data.docs
-                                      .map<Widget>((e) => Column(
-                                            children: [
-                                              if (e.data()['indikatoronline'] ==
-                                                  true)
-                                                if (e.data()[
-                                                        'indikatorhidup'] ==
-                                                    true)
-                                                  dokterCard(
-                                                    e.data()['id'],
-                                                    e.data()['nama'],
-                                                    e.data()['nip'],
-                                                    e.data()['gelar'],
-                                                    e.data()['urlgambar'],
-                                                    e.data()['asal'],
-                                                    e.data()['pasien'],
-                                                    e.data()['username'],
-                                                    e.data()['password'],
-                                                    e.data()['waktuawal'],
-                                                    e.data()['waktuakhir'],
-                                                    e.data()['rating'],
-                                                    e.data()['indikatorhidup'],
-                                                    e.data()['indikatoronline'],
-                                                    idpasien,
-                                                    kegiatan,
-                                                  ),
-                                            ],
-                                          ))
-                                      .toList(),
-                                ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                Card(
-                                    clipBehavior: Clip.antiAlias,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    elevation: 2,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 16,
-                                          bottom: 16,
-                                          left: 16,
-                                          right: 16),
-                                      child: SizedBox(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          child: const Text(
-                                            'Jika tidak ada dokter yang bisa dipilih, tunggulah paling lama sekitar 20 menit lagi',
-                                            style: TextStyle(fontSize: 16),
-                                            textAlign: TextAlign.justify,
-                                          )),
-                                    )),
-                              ],
-                            );
-                          } else {
-                            return Column(
-                              children: [
-                                Column(
-                                  children: snapshot.data.docs
-                                      .map<Widget>((e) => Column(
-                                            children: [
-                                              if (e.data()['indikatoronline'] ==
-                                                  true)
-                                                if (e.data()[
-                                                        'indikatorhidup'] ==
-                                                    true)
-                                                  dokterShimerCard(
-                                                    e.data()['id'],
-                                                    e.data()['nama'],
-                                                    e.data()['nip'],
-                                                    e.data()['gelar'],
-                                                    e.data()['urlgambar'],
-                                                    e.data()['asal'],
-                                                    e.data()['pasien'],
-                                                    e.data()['username'],
-                                                    e.data()['password'],
-                                                    e.data()['waktuawal'],
-                                                    e.data()['waktuakhir'],
-                                                    e.data()['rating'],
-                                                    e.data()['indikatorhidup'],
-                                                    e.data()['indikatoronline'],
-                                                  ),
-                                            ],
-                                          ))
-                                      .toList(),
-                                ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                Card(
-                                    clipBehavior: Clip.antiAlias,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    elevation: 2,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 16,
-                                          bottom: 16,
-                                          left: 16,
-                                          right: 16),
-                                      child: SizedBox(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          child: const Text(
-                                            'Jika tidak ada dokter yang bisa dipilih, tunggulah paling lama sekitar 20 menit lagi',
-                                            style: TextStyle(fontSize: 16),
-                                            textAlign: TextAlign.justify,
-                                          )),
-                                    )),
-                              ],
-                            );
-                          }
-                        }),
-                  ],
-                )),
+      body: Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25), topRight: Radius.circular(25)),
           ),
-        ],
-      ),
+          child: ListView(
+            padding: const EdgeInsets.all(16),
+            children: [
+              StreamBuilder(
+                  stream: users.orderBy('id', descending: false).snapshots(),
+                  builder: (_, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData) {
+                      return Column(
+                        children: [
+                          Column(
+                            children: snapshot.data.docs
+                                .map<Widget>((e) => Column(
+                                      children: [
+                                        if (e.data()['indikatoronline'] == true)
+                                          if (e.data()['indikatorhidup'] ==
+                                              true)
+                                            dokterCard(
+                                              e.data()['id'],
+                                              e.data()['nama'],
+                                              e.data()['nip'],
+                                              e.data()['gelar'],
+                                              e.data()['urlgambar'],
+                                              e.data()['asal'],
+                                              e.data()['pasien'],
+                                              e.data()['username'],
+                                              e.data()['password'],
+                                              e.data()['waktuawal'],
+                                              e.data()['waktuakhir'],
+                                              e.data()['rating'],
+                                              e.data()['indikatorhidup'],
+                                              e.data()['indikatoronline'],
+                                              idpasien,
+                                              kegiatan,
+                                            ),
+                                      ],
+                                    ))
+                                .toList(),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Card(
+                              clipBehavior: Clip.antiAlias,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              elevation: 2,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 16, bottom: 16, left: 16, right: 16),
+                                child: SizedBox(
+                                    width: MediaQuery.of(context).size.width,
+                                    child: const Text(
+                                      'Jika tidak ada dokter yang bisa dipilih, tunggulah paling lama sekitar 20 menit lagi',
+                                      style: TextStyle(fontSize: 16),
+                                      textAlign: TextAlign.justify,
+                                    )),
+                              )),
+                        ],
+                      );
+                    } else {
+                      return Container();
+                    }
+                  }),
+            ],
+          )),
     );
   }
 }

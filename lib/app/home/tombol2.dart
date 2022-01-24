@@ -31,116 +31,112 @@ class _tomboltombolState extends State<tomboltombol> {
             ],
           ),
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.width / 4,
           child: Padding(
             padding: EdgeInsets.only(left: 2, right: 2, top: 20, bottom: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Expanded(
-                    child: Column(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 1,
-                                blurStyle: BlurStyle.outer,
-                              )
-                            ],
-                          ),
-                          width: MediaQuery.of(context).size.width / 9,
-                          height: MediaQuery.of(context).size.width / 9,
-                          child: IconButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => RekamMedis('konsultasibiasa')),
-                                );
-                              },
-                              icon: Icon(
-                                LineIcons.stethoscope,
-                                size: 24,
-                                color: Colors.black,
-                              )),
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text('konsultasi'),
-                      ],
-                    )),
-                Expanded(
-                    child: Column(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 1,
-                                blurStyle: BlurStyle.outer,
-                              )
-                            ],
-                          ),
-                          width: MediaQuery.of(context).size.width / 9,
-                          height: MediaQuery.of(context).size.width / 9,
-                          child: IconButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => RiwayatKonsultasi()),
-                                );
-                              },
-                              icon: Icon(
-                                LineIcons.medicalNotes,
-                                size: 24,
-                                color: Colors.black,
-                              )),
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text('riwayat'),
-                      ],
-                    )),
-                Expanded(
-                    child: Column(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 1,
-                                blurStyle: BlurStyle.outer,
-                              )
-                            ],
-                          ),
-                          width: MediaQuery.of(context).size.width / 9,
-                          height: MediaQuery.of(context).size.width / 9,
-                          child: IconButton(
-                              onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => ChatMenu()));
-                              },
-                              icon: Icon(
-                                Icons.message_rounded,
-                                size: 24,
-                                color: Colors.black,
-                              )),
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text('Chat Dokter'),
-                      ],
-                    )),
+                Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 1,
+                            blurStyle: BlurStyle.outer,
+                          )
+                        ],
+                      ),
+                      width: 54,
+                      height: 54,
+                      child: IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RekamMedis('konsultasibiasa')),
+                            );
+                          },
+                          icon: Icon(
+                            LineIcons.stethoscope,
+                            size: 24,
+                            color: Colors.black,
+                          )),
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Text('konsultasi'),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 1,
+                            blurStyle: BlurStyle.outer,
+                          )
+                        ],
+                      ),
+                      width: 54,
+                      height: 54,
+                      child: IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RiwayatKonsultasi()),
+                            );
+                          },
+                          icon: Icon(
+                            LineIcons.medicalNotes,
+                            size: 24,
+                            color: Colors.black,
+                          )),
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Text('riwayat'),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 1,
+                            blurStyle: BlurStyle.outer,
+                          )
+                        ],
+                      ),
+                      width: 54,
+                      height: 54,
+                      child: IconButton(
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => ChatMenu()));
+                          },
+                          icon: Icon(
+                            Icons.message_rounded,
+                            size: 24,
+                            color: Colors.black,
+                          )),
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Text('Chat Dokter'),
+                  ],
+                )
               ],
             ),
           )),

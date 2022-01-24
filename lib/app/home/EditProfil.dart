@@ -24,6 +24,9 @@ class _EditProfilState extends State<EditProfil> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit Profilmu'),
+        backgroundColor: Colors.teal.shade900,
+        elevation: 0,
+        centerTitle: true,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

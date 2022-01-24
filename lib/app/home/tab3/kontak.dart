@@ -34,7 +34,7 @@ class kontak extends StatelessWidget {
       await launch('$link');
     }
 
-    return Container(
+    return SizedBox(
       height: 240,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

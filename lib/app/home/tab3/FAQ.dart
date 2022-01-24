@@ -1,7 +1,8 @@
+// ignore_for_file: file_names
+
 import 'package:cekgigi/api/DatabaseServices.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class FAQ extends StatefulWidget {
@@ -15,12 +16,8 @@ class _FAQState extends State<FAQ> {
   @override
   Widget build(BuildContext context) {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
-    CollectionReference pasien = firestore.collection('user');
     CollectionReference faq = firestore.collection('FAQ');
 
-    final FirebaseAuth auth = FirebaseAuth.instance;
-    final User? user = auth.currentUser;
-    final email = user!.email;
 
     return Scaffold(
         appBar: AppBar(
@@ -32,47 +29,44 @@ class _FAQState extends State<FAQ> {
         body: Container(
             color: Colors.teal.shade900,
             child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(12),
                       topRight: Radius.circular(12)),
                 ),
-                child: Expanded(
-                  child: ListView(children: [
-                    StreamBuilder<QuerySnapshot>(
-                      stream: faq.snapshots(),
-                      builder: (_, AsyncSnapshot snapshot) {
-                        if (snapshot.hasData) {
-                          return Column(
-                              children: snapshot.data.docs
-                                  .map<Widget>((e) => FAQCARD(
-                                        e.data()['id'],
-                                        e.data()['pertanyaan'],
-                                        e.data()['jawaban'],
-                                        e.data()['expand'],
-                                      ))
-                                  .toList());
-                        } else {
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Center(
-                                child: Center(
-                                  child: CircularProgressIndicator(),
-                                ),
+                child:  ListView(children: [
+                  StreamBuilder<QuerySnapshot>(
+                    stream: faq.snapshots(),
+                    builder: (_, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        return Column(
+                            children: snapshot.data.docs
+                                .map<Widget>((e) => FAQCARD(
+                              e.data()['id'],
+                              e.data()['pertanyaan'],
+                              e.data()['jawaban'],
+                              e.data()['expand'],
+                            ))
+                                .toList());
+                      } else {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: const [
+                            Center(
+                              child: Center(
+                                child: CircularProgressIndicator(),
                               ),
-                            ],
-                          );
-                        }
-                      },
-                    )
-                  ]),
-                ))));
+                            ),
+                          ],
+                        );
+                      }
+                    },
+                  )
+                ]),)));
   }
 }
-
 class FAQCARD extends StatefulWidget {
   const FAQCARD(this.id, this.pertanyaan, this.jawaban, this.expand, {Key? key})
       : super(key: key);
@@ -92,7 +86,7 @@ class _FAQCARDState extends State<FAQCARD> {
     final User? user = auth.currentUser;
     final email = user!.email;
 
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width * 0.9,
       child: Card(
           clipBehavior: Clip.antiAlias,
@@ -100,7 +94,7 @@ class _FAQCARDState extends State<FAQCARD> {
             borderRadius: BorderRadius.circular(8),
           ),
           child: Padding(
-            padding: EdgeInsets.only(top: 4, bottom: 12, left: 12, right: 12),
+            padding: const EdgeInsets.only(top: 4, bottom: 12, left: 12, right: 12),
             child: StreamBuilder<DocumentSnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('user')
@@ -113,7 +107,6 @@ class _FAQCARDState extends State<FAQCARD> {
                   Map<String, dynamic> data =
                       snapshot.data!.data() as Map<String, dynamic>;
 
-                  int id = data['id'];
                   bool expand = data['expand'];
 
                   return Column(
@@ -129,7 +122,7 @@ class _FAQCARDState extends State<FAQCARD> {
                                       widget.id, expand, email!);
                                 });
                               },
-                              icon: Icon(Icons.add)),
+                              icon: const Icon(Icons.add)),
                         ],
                       ),
                       (expand) ? Text(widget.jawaban) : Container(),

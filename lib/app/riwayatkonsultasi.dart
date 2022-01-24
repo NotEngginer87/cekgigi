@@ -1,6 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:cekgigi/api/DatabaseServices.dart';
 import 'package:cekgigi/app/home/EditProfil.dart';
 import 'package:cekgigi/app/konsultasi/keterangan%20dokter/sisidokternya.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -35,50 +34,49 @@ class _RiwayatKonsultasiState extends State<RiwayatKonsultasi> {
       ),
       body: Container(
         color: Colors.grey.shade50,
-        child: Expanded(
+        child: Container(
+            color: Colors.teal.shade900,
             child: Container(
-                color: Colors.teal.shade900,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(12),
-                        topRight: Radius.circular(12)),
-                  ),
-                  child:
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(12),
+                    topRight: Radius.circular(12)),
+              ),
+              child:
 
-                  StreamBuilder<QuerySnapshot>(
-                    stream: riwayatkonsultasi
-                        .doc(email)
-                        .collection('riwayatkonsultasi')
-                        .doc('datapasien')
-                        .collection('datapasien')
-                        .snapshots(),
-                    builder: (_, AsyncSnapshot snapshot) {
-                      if (snapshot.hasData) {
-                        return Column(
-                            children: snapshot.data.docs
-                                .map<Widget>((e) => RiwayatCard(
-                              e.data()['idpasien'],
-                              e.data()['iddokter'],
-                              e.data()['kegiatan'],
-                            ))
-                                .toList());
-                      } else {
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: const [
-                            Center(
-                              child: Center(
-                                child: CircularProgressIndicator(),
-                              ),
-                            ),
-                          ],
-                        );
-                      }
-                    },
-                  ),)))
+              StreamBuilder<QuerySnapshot>(
+                stream: riwayatkonsultasi
+                    .doc(email)
+                    .collection('riwayatkonsultasi')
+                    .doc('datapasien')
+                    .collection('datapasien')
+                    .snapshots(),
+                builder: (_, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    return Column(
+                        children: snapshot.data.docs
+                            .map<Widget>((e) => RiwayatCard(
+                          e.data()['idpasien'],
+                          e.data()['iddokter'],
+                          e.data()['kegiatan'],
+                        ))
+                            .toList());
+                  } else {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: const [
+                        Center(
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+                },
+              ),))
 
       ),
     );
@@ -193,9 +191,6 @@ class _DetailKasusState extends State<DetailKasus> {
   @override
   Widget build(BuildContext context) {
 
-    final FirebaseAuth auth = FirebaseAuth.instance;
-    final User? user = auth.currentUser;
-    final email = user!.email;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Riwayat Konsultasi'),

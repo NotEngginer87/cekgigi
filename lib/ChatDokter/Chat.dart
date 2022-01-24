@@ -1,15 +1,28 @@
-// ignore_for_file: file_names, non_constant_identifier_names
+// ignore_for_file: file_names, non_constant_identifier_names, avoid_print, unnecessary_null_comparison
 
 import 'package:cekgigi/api/DatabaseServices.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../app/konsultasi/KeteranganDokter.dart';
 import '../app/konsultasi/keterangan dokter/sisidokternya.dart';
+
+
+
+
+import 'dart:io';
+import 'package:path/path.dart';
+
+import '../../api/DatabaseServices.dart';
+
+
 
 class Chat extends StatefulWidget {
   const Chat(this.iddokter, {Key? key}) : super(key: key);
@@ -24,6 +37,8 @@ class _ChatState extends State<Chat> {
   bool switchmengetik = false;
 
   bool opendialogbox = false;
+
+  String? imageUrl;
   @override
   Widget build(BuildContext context) {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -67,7 +82,7 @@ class _ChatState extends State<Chat> {
                                     onPressed: () {
                                       Navigator.pop(context);
                                     },
-                                    icon: const Icon(Icons.arrow_back)),
+                                    icon: const Icon(Icons.arrow_back,color: Colors.white,)),
                                 Card(
                                   clipBehavior: Clip.antiAlias,
                                   shape: RoundedRectangleBorder(
@@ -114,6 +129,8 @@ class _ChatState extends State<Chat> {
                                   color: Colors.white,
                                   iconSize: 24,
                                 ),
+
+                                const SizedBox(width: 18,),
                               ],
                             ),
                           ],
@@ -390,6 +407,46 @@ class _ChatState extends State<Chat> {
       ),
     ));
   }
+
+  uploadImage() async {
+    final _storage = FirebaseStorage.instance;
+    final _picker = ImagePicker();
+    PickedFile? image;
+
+    //Check Permissions
+    await Permission.photos.request();
+
+    var permissionStatus = await Permission.photos.status;
+
+    if (permissionStatus.isGranted) {
+      //Select Image
+      image = await _picker.getImage(source: ImageSource.gallery);
+
+      var file = File(image!.path);
+
+      final fileName = basename(file.path);
+      final destination = 'user/fotokonsultasi/$fileName';
+
+      if (image != null) {
+        //Upload to Firebase
+        var snapshot = await _storage
+            .ref()
+            .child(destination)
+            .putFile(file)
+            .whenComplete(() => null);
+
+        var downloadUrl = await snapshot.ref.getDownloadURL();
+
+        setState(() {
+          imageUrl = downloadUrl;
+        });
+      } else {
+        print('No Path Received');
+      }
+    } else {
+      print('Grant Permissions and try again');
+    }
+  }
 }
 
 class Balloonchat extends StatelessWidget {
@@ -446,34 +503,26 @@ class _InfoDokternyaState extends State<InfoDokternya> {
         elevation: 0,
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Container(
-              color: Colors.teal.shade900,
-              child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
-                    borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20)),
-                  ),
-                  child: Expanded(
-                    child: ListView(
-                      children: [
-                        infodokternya(widget.iddokter),
-                        edukasidokternya(widget.iddokter),
-                        klinikdokternya(widget.iddokter),
-                        komentarnya(widget.iddokter),
-                        const SizedBox(
-                          height: 12,
-                        ),
-                      ],
-                    ),
-                  )),
+      body: Container(
+        color: Colors.teal.shade900,
+        child: Container(
+            decoration: BoxDecoration(
+              color: Colors.grey.shade200,
+              borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20)),
             ),
-          ),
-        ],
+            child: ListView(
+              children: [
+                infodokternya(widget.iddokter),
+                edukasidokternya(widget.iddokter),
+                klinikdokternya(widget.iddokter),
+                komentarnya(widget.iddokter),
+                const SizedBox(
+                  height: 12,
+                ),
+              ],
+            ),),
       ),
     );
   }
@@ -500,40 +549,50 @@ class _ChatMenuState extends State<ChatMenu> {
         title: const Text('chat'),
         backgroundColor: Colors.teal.shade900,
       ),
-      body: Column(
-        children: [
-          Expanded(
-              child: ListView(
-            children: [
-              StreamBuilder<QuerySnapshot>(
-                stream: pasien.doc(email).collection('chat').snapshots(),
-                builder: (_, AsyncSnapshot snapshot) {
-                  if (snapshot.hasData) {
-                    return Column(
-                        children: snapshot.data.docs
-                            .map<Widget>((e) => ListChat(
-                                  e.data()['iddokter'],
-                                ))
-                            .toList());
-                  } else {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
-                        Center(
-                          child: Center(
-                            child: CircularProgressIndicator(),
+      body: Container(
+        color: Colors.teal.shade900,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.grey.shade50,
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20)),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: ListView(
+              children: [
+                StreamBuilder<QuerySnapshot>(
+                  stream: pasien.doc(email).collection('chat').snapshots(),
+                  builder: (_, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData) {
+                      return Column(
+                          children: snapshot.data.docs
+                              .map<Widget>((e) => ListChat(
+                            e.data()['iddokter'],
+                          ))
+                              .toList());
+                    } else {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: const [
+                          Center(
+                            child: Center(
+                              child: CircularProgressIndicator(),
+                            ),
                           ),
-                        ),
-                      ],
-                    );
-                  }
-                },
-              ),
-            ],
-          ))
-        ],
+                        ],
+                      );
+                    }
+                  },
+                ),
+              ],
+            ),
+          )),
       ),
+
+
     );
   }
 }
@@ -556,65 +615,78 @@ class ListChat extends StatelessWidget {
           String gelar = data['gelar'];
           String gambar = data['urlgambar'];
 
-          return Padding(
-              padding: const EdgeInsets.only(bottom: 2),
-              child: InkWell(
-                child: Container(
-                  color: Colors.teal.shade900,
-                  height: 100,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Card(
-                            clipBehavior: Clip.antiAlias,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(100),
+          return Container(
+            color: Colors.grey.shade50,
+            child: Padding(
+                padding: const EdgeInsets.only(bottom: 2),
+                child: Column(
+                  children: [
+
+                    const Divider(height: 2,),
+                    InkWell(
+                      child: Container(
+                        color: Colors.grey.shade50,
+                        height: 100,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const SizedBox(
+                                  width: 12,
+                                ),
+                                Card(
+                                  clipBehavior: Clip.antiAlias,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(100),
+                                  ),
+                                  elevation: 4,
+                                  child: Ink.image(
+                                    image: NetworkImage(gambar),
+                                    height: 64,
+                                    width: 64,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 16,
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      nama,
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 20,
+                                          color: Colors.black),
+                                    ),
+                                    Text(
+                                      gelar,
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14,
+                                          color: Colors.black),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
-                            elevation: 4,
-                            child: Ink.image(
-                              image: NetworkImage(gambar),
-                              height: 50,
-                              width: 50,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 12,
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                nama,
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 20,
-                                    color: Colors.white),
-                              ),
-                              Text(
-                                gelar,
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14,
-                                    color: Colors.white),
-                              ),
-                            ],
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
-                ),
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Chat(iddokter)));
-                },
-              ));
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Chat(iddokter)));
+                      },
+                    ),
+                    const Divider(height: 2,),
+                  ],
+                )),
+          );
         }
         return const Center(
           child: CircularProgressIndicator(),

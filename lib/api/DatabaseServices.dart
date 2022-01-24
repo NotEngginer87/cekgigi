@@ -271,7 +271,7 @@ class DatabaseServices {
   static Future<void> terbacaBlog(String? id) async {
     await blog.doc(id).update(
       {
-        'terbaca': int.tryParse('terbaca')! + 1,
+        'terbaca': FieldValue.increment(1),
       },
     );
   }
