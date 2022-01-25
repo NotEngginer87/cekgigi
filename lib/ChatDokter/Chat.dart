@@ -386,7 +386,7 @@ class _ChatState extends State<Chat> {
                                   count.toString(),
                                   ControllerChat.text,
                                   countt,
-                                  'dokter',
+                                  'pasien',
                                 );
                               }
                               ControllerChat.text = '';
