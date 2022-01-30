@@ -45,38 +45,42 @@ class _RiwayatKonsultasiState extends State<RiwayatKonsultasi> {
               ),
               child:
 
-              StreamBuilder<QuerySnapshot>(
-                stream: riwayatkonsultasi
-                    .doc(email)
-                    .collection('riwayatkonsultasi')
-                    .doc('datapasien')
-                    .collection('datapasien')
-                    .snapshots(),
-                builder: (_, AsyncSnapshot snapshot) {
-                  if (snapshot.hasData) {
-                    return Column(
-                        children: snapshot.data.docs
-                            .map<Widget>((e) => RiwayatCard(
-                          e.data()['idpasien'],
-                          e.data()['iddokter'],
-                          e.data()['kegiatan'],
-                        ))
-                            .toList());
-                  } else {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
-                        Center(
-                          child: Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        ),
-                      ],
-                    );
-                  }
-                },
-              ),))
+              ListView(
+                children: [
+                  StreamBuilder<QuerySnapshot>(
+                    stream: riwayatkonsultasi
+                        .doc(email)
+                        .collection('riwayatkonsultasi')
+                        .doc('datapasien')
+                        .collection('datapasien')
+                        .snapshots(),
+                    builder: (_, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        return Column(
+                            children: snapshot.data.docs
+                                .map<Widget>((e) => RiwayatCard(
+                              e.data()['idpasien'],
+                              e.data()['iddokter'],
+                              e.data()['kegiatan'],
+                            ))
+                                .toList());
+                      } else {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: const [
+                            Center(
+                              child: Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                            ),
+                          ],
+                        );
+                      }
+                    },
+                  ),
+                ],
+              )))
 
       ),
     );

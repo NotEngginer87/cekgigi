@@ -307,6 +307,8 @@ class _IsiDataState extends State<IsiData> {
                         ? Expanded(
                             child: ElevatedButton(
                               onPressed: () {
+                                genderr ??= 'Laki-laki';
+                                print(genderr);
                                 DatabaseServices.updateakun(
                                   email,
                                   nama.text,

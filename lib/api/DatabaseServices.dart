@@ -125,7 +125,7 @@ class DatabaseServices {
   }
 
   static Future<void> updatechat(String email, String iddokter, String idchat,
-      String chat, int countchattime, String status) async {
+      String chat, int countchattime, String status, bool foto) async {
     await userdata
         .doc(email)
         .collection('chat')
@@ -138,12 +138,13 @@ class DatabaseServices {
         'chat': chat,
         'countchattime': countchattime,
         'status': status,
+        'foto': foto,
       },
     );
   }
 
   static Future<void> updatechatdokter(String email, String iddokter,
-      String idchat, String chat, int countchattime, String status) async {
+      String idchat, String chat, int countchattime, String status, bool foto) async {
     await doktergigi
         .doc(iddokter)
         .collection('chat')
@@ -156,6 +157,7 @@ class DatabaseServices {
         'chat': chat,
         'countchattime': countchattime,
         'status': status,
+        'foto' : false,
       },
     );
   }
@@ -163,25 +165,63 @@ class DatabaseServices {
   static Future<void> setcountchataccount(
     String email,
     String iddokter,
+      String idpasien,
   ) async {
     await userdata.doc(email).collection('chat').doc(iddokter).set(
       {
         'count': 1,
         'iddokter': iddokter,
         'requestvideocall': false,
+        'idpasien': idpasien,
+
       },
     );
+  }
+
+  static Future<void> deletechatdokter(
+    String email,
+    String iddokter,
+    int banyakchatdokter,
+    int banyakchatpasien,
+  ) async {
+    for (int i = 1; i <= banyakchatpasien; i++) {
+      int k = i + 5000000;
+      await userdata
+          .doc(email)
+          .collection('chat')
+          .doc(iddokter)
+          .collection('chat')
+          .doc(k.toString())
+          .delete();
+    }
+    for (int i = 1; i <= banyakchatdokter; i++) {
+      int k = i + 1000000;
+      await doktergigi
+          .doc(iddokter)
+          .collection('chat')
+          .doc(email)
+          .collection('chat')
+          .doc(k.toString())
+          .delete();
+    }
+    await userdata
+        .doc(email)
+        .collection('chat')
+        .doc(iddokter)
+        .delete();
   }
 
   static Future<void> setchatdokter(
     String email,
     String iddokter,
+      String idpasien,
   ) async {
     await doktergigi.doc(iddokter).collection('chat').doc(email).set(
       {
         'count': 1,
         'iddokter': iddokter,
         'emailpasien': email,
+        'idpasien': idpasien,
       },
     );
   }

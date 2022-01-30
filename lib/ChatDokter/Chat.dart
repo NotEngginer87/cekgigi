@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, non_constant_identifier_names, avoid_print, unnecessary_null_comparison
+// ignore_for_file: file_names, non_constant_identifier_names, avoid_print, unnecessary_null_comparison, deprecated_member_use
 
 import 'package:cekgigi/api/DatabaseServices.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,14 +14,8 @@ import 'package:permission_handler/permission_handler.dart';
 import '../app/konsultasi/KeteranganDokter.dart';
 import '../app/konsultasi/keterangan dokter/sisidokternya.dart';
 
-
-
-
 import 'dart:io';
 import 'package:path/path.dart';
-
-
-
 
 class Chat extends StatefulWidget {
   const Chat(this.iddokter, {Key? key}) : super(key: key);
@@ -81,7 +75,10 @@ class _ChatState extends State<Chat> {
                                     onPressed: () {
                                       Navigator.pop(context);
                                     },
-                                    icon: const Icon(Icons.arrow_back,color: Colors.white,)),
+                                    icon: const Icon(
+                                      Icons.arrow_back,
+                                      color: Colors.white,
+                                    )),
                                 Card(
                                   clipBehavior: Clip.antiAlias,
                                   shape: RoundedRectangleBorder(
@@ -128,8 +125,9 @@ class _ChatState extends State<Chat> {
                                   color: Colors.white,
                                   iconSize: 24,
                                 ),
-
-                                const SizedBox(width: 18,),
+                                const SizedBox(
+                                  width: 18,
+                                ),
                               ],
                             ),
                           ],
@@ -174,6 +172,7 @@ class _ChatState extends State<Chat> {
                                         e.data()['id'],
                                         e.data()['countchattime'],
                                         e.data()['status'],
+                                        e.data()['foto'],
                                       ))
                                   .toList()));
                     } else {
@@ -222,30 +221,72 @@ class _ChatState extends State<Chat> {
                                     child: Column(
                                   children: [
                                     Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(50),
-                                        color: Colors.white,
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            blurRadius: 1,
-                                            blurStyle: BlurStyle.outer,
-                                          )
-                                        ],
-                                      ),
-                                      height:
-                                          MediaQuery.of(context).size.width / 9,
-                                      child: IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(
-                                            LineIcons.stethoscope,
-                                            size: 24,
-                                            color: Colors.black,
-                                          )),
-                                    ),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                          color: Colors.white,
+                                          boxShadow: const [
+                                            BoxShadow(
+                                              blurRadius: 1,
+                                              blurStyle: BlurStyle.outer,
+                                            )
+                                          ],
+                                        ),
+                                        height:
+                                            MediaQuery.of(context).size.width /
+                                                9,
+                                        child: StreamBuilder<DocumentSnapshot>(
+                                          stream: pasien
+                                              .doc(email)
+                                              .collection('chat')
+                                              .doc(widget.iddokter)
+                                              .snapshots(),
+                                          builder: (context,
+                                              AsyncSnapshot snapshot) {
+                                            if (snapshot.hasData) {
+                                              Map<String, dynamic> data =
+                                                  snapshot.data!.data()
+                                                      as Map<String, dynamic>;
+
+                                              int count = data['count'];
+                                              count += 5000000;
+                                              int year = DateTime.now().year;
+                                              int month = DateTime.now().month;
+                                              int day = DateTime.now().day;
+                                              int hour = DateTime.now().hour;
+                                              int minutes =
+                                                  DateTime.now().minute;
+                                              int second =
+                                                  DateTime.now().second;
+
+                                              int countt = second +
+                                                  minutes * 100 +
+                                                  hour * 10000 +
+                                                  day * 1000000 +
+                                                  month * 100000000 +
+                                                  year * 10000000000;
+
+                                              return IconButton(
+                                                  onPressed: () {
+                                                    uploadImage(email!,count,countt);
+
+                                                  },
+                                                  icon: const Icon(
+                                                    LineIcons.camera,
+                                                    size: 24,
+                                                    color: Colors.black,
+                                                  ));
+                                            }
+                                            return const Center(
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            );
+                                          },
+                                        )),
                                     const SizedBox(
                                       height: 8,
                                     ),
-                                    const Text('konsultasi'),
+                                    const Text('upload foto'),
                                   ],
                                 )),
                                 Expanded(
@@ -313,32 +354,54 @@ class _ChatState extends State<Chat> {
                           ))),
                 )
               : Container(),
+          const Divider(),
           Padding(
             padding: const EdgeInsets.all(12),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  child: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          (opendialogbox == false)
-                              ? opendialogbox = true
-                              : opendialogbox = false;
-                        });
-                      },
-                      icon: const Icon(
-                        Icons.add,
-                      )),
-                  flex: 1,
-                ),
-                Expanded(
-                  child: CupertinoTextFormFieldRow(
-                    controller: ControllerChat,
-                    keyboardType: TextInputType.text,
+                  flex: 12,
+                  child: Card(
+                    clipBehavior: Clip.antiAlias,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    color: Colors.white,
+                    elevation: 4,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Expanded(
+                          child: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  (opendialogbox == false)
+                                      ? opendialogbox = true
+                                      : opendialogbox = false;
+                                });
+                              },
+                              icon: const Icon(
+                                Icons.add,
+                              )),
+                          flex: 1,
+                        ),
+                        Expanded(
+                          child: CupertinoTextFormFieldRow(
+                            controller: ControllerChat,
+                            keyboardType: TextInputType.text,
+                          ),
+                          flex: 8,
+                        ),
+                      ],
+                    ),
                   ),
-                  flex: 8,
                 ),
                 Expanded(
+                  flex: 2,
                   child: StreamBuilder<DocumentSnapshot>(
                     stream: pasien
                         .doc(email)
@@ -366,38 +429,47 @@ class _ChatState extends State<Chat> {
                             month * 100000000 +
                             year * 10000000000;
 
-                        return IconButton(
-                            onPressed: () {
-                              if (ControllerChat.text != '') {
-                                DatabaseServices.updatechat(
-                                  email!,
-                                  widget.iddokter,
-                                  count.toString(),
-                                  ControllerChat.text,
-                                  countt,
-                                  'pasien',
-                                );
-                                DatabaseServices.updatecountchataccount(
-                                    email, widget.iddokter);
-                                DatabaseServices.updatechatdokter(
-                                  email,
-                                  widget.iddokter,
-                                  count.toString(),
-                                  ControllerChat.text,
-                                  countt,
-                                  'pasien',
-                                );
-                              }
-                              ControllerChat.text = '';
-                            },
-                            icon: const Icon(Icons.send));
+                        return Card(
+                          clipBehavior: Clip.antiAlias,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(24),
+                          ),
+                          elevation: 4,
+                          color: Colors.teal.shade900,
+                          child: IconButton(
+                              color: Colors.white,
+                              onPressed: () {
+                                if (ControllerChat.text != '') {
+                                  DatabaseServices.updatechat(
+                                      email!,
+                                      widget.iddokter,
+                                      count.toString(),
+                                      ControllerChat.text,
+                                      countt,
+                                      'pasien',
+                                      false);
+                                  DatabaseServices.updatecountchataccount(
+                                      email, widget.iddokter);
+                                  DatabaseServices.updatechatdokter(
+                                    email,
+                                    widget.iddokter,
+                                    count.toString(),
+                                    ControllerChat.text,
+                                    countt,
+                                    'pasien',
+                                    false,
+                                  );
+                                }
+                                ControllerChat.text = '';
+                              },
+                              icon: const Icon(Icons.send)),
+                        );
                       }
                       return const Center(
                         child: CircularProgressIndicator(),
                       );
                     },
                   ),
-                  flex: 1,
                 ),
               ],
             ),
@@ -407,7 +479,7 @@ class _ChatState extends State<Chat> {
     ));
   }
 
-  uploadImage() async {
+  uploadImage(String email, int count, int countt) async {
     final _storage = FirebaseStorage.instance;
     final _picker = ImagePicker();
     PickedFile? image;
@@ -424,7 +496,7 @@ class _ChatState extends State<Chat> {
       var file = File(image!.path);
 
       final fileName = basename(file.path);
-      final destination = 'user/fotokonsultasi/$fileName';
+      final destination = 'user/fotokonsultasi/chat/$fileName';
 
       if (image != null) {
         //Upload to Firebase
@@ -438,6 +510,16 @@ class _ChatState extends State<Chat> {
 
         setState(() {
           imageUrl = downloadUrl;
+          DatabaseServices.updatechat(
+              email,
+              widget.iddokter,
+              count.toString(),
+              imageUrl!,
+              countt,
+              'pasien',
+              true);
+          DatabaseServices.updatecountchataccount(
+              email, widget.iddokter);
         });
       } else {
         print('No Path Received');
@@ -449,13 +531,15 @@ class _ChatState extends State<Chat> {
 }
 
 class Balloonchat extends StatelessWidget {
-  const Balloonchat(this.text, this.id, this.countchattime, this.status,
+  const Balloonchat(
+      this.text, this.id, this.countchattime, this.status, this.foto,
       {Key? key})
       : super(key: key);
   final String text;
   final String id;
   final int countchattime;
   final String status;
+  final bool foto;
 
   @override
   Widget build(BuildContext context) {
@@ -471,16 +555,43 @@ class Balloonchat extends StatelessWidget {
               ),
               color:
                   (status == 'pasien') ? Colors.teal.shade900 : Colors.black87,
-              child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                      maxWidth: MediaQuery.of(context).size.width * 0.7),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Text(
-                      text,
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                  )),
+              child: (foto == true)
+                  ? InkWell(
+                      child: Hero(
+                        tag: 'fotochat',
+                        child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                              maxWidth: MediaQuery.of(context).size.width * 0.5,
+                              maxHeight:
+                                  MediaQuery.of(context).size.height * 0.3,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: Image(
+                                image: NetworkImage(text),
+                                height: MediaQuery.of(context).size.width,
+                                width: MediaQuery.of(context).size.width,
+                                fit: BoxFit.cover,
+                              ),
+                            )),
+                      ),
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return LihatFoto(foto: text);
+                        }));
+                      },
+                    )
+                  : ConstrainedBox(
+                      constraints: BoxConstraints(
+                          maxWidth: MediaQuery.of(context).size.width * 0.7),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Text(
+                          text,
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      )),
             )));
   }
 }
@@ -505,23 +616,23 @@ class _InfoDokternyaState extends State<InfoDokternya> {
       body: Container(
         color: Colors.teal.shade900,
         child: Container(
-            decoration: BoxDecoration(
-              color: Colors.grey.shade200,
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20)),
-            ),
-            child: ListView(
-              children: [
-                infodokternya(widget.iddokter),
-                edukasidokternya(widget.iddokter),
-                klinikdokternya(widget.iddokter),
-                komentarnya(widget.iddokter),
-                const SizedBox(
-                  height: 12,
-                ),
-              ],
-            ),),
+          decoration: BoxDecoration(
+            color: Colors.grey.shade200,
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+          ),
+          child: ListView(
+            children: [
+              infodokternya(widget.iddokter),
+              edukasidokternya(widget.iddokter),
+              klinikdokternya(widget.iddokter),
+              komentarnya(widget.iddokter),
+              const SizedBox(
+                height: 12,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -551,47 +662,44 @@ class _ChatMenuState extends State<ChatMenu> {
       body: Container(
         color: Colors.teal.shade900,
         child: Container(
-          decoration: BoxDecoration(
-            color: Colors.grey.shade50,
-            borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20)),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8),
-            child: ListView(
-              children: [
-                StreamBuilder<QuerySnapshot>(
-                  stream: pasien.doc(email).collection('chat').snapshots(),
-                  builder: (_, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData) {
-                      return Column(
-                          children: snapshot.data.docs
-                              .map<Widget>((e) => ListChat(
-                            e.data()['iddokter'],
-                          ))
-                              .toList());
-                    } else {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: const [
-                          Center(
-                            child: Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                          ),
-                        ],
-                      );
-                    }
-                  },
-                ),
-              ],
+            decoration: BoxDecoration(
+              color: Colors.grey.shade50,
+              borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20), topRight: Radius.circular(20)),
             ),
-          )),
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: ListView(
+                children: [
+                  StreamBuilder<QuerySnapshot>(
+                    stream: pasien.doc(email).collection('chat').snapshots(),
+                    builder: (_, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        return Column(
+                            children: snapshot.data.docs
+                                .map<Widget>((e) => ListChat(
+                                      e.data()['iddokter'],
+                                    ))
+                                .toList());
+                      } else {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: const [
+                            Center(
+                              child: Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                            ),
+                          ],
+                        );
+                      }
+                    },
+                  ),
+                ],
+              ),
+            )),
       ),
-
-
     );
   }
 }
@@ -603,6 +711,12 @@ class ListChat extends StatelessWidget {
   Widget build(BuildContext context) {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference dokter = firestore.collection('doktergigi');
+
+    CollectionReference pasien = firestore.collection('user');
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? user = auth.currentUser;
+    final email = user?.email;
+
     return StreamBuilder<DocumentSnapshot>(
       stream: dokter.doc(iddokter).snapshots(),
       builder: (context, AsyncSnapshot snapshot) {
@@ -613,6 +727,7 @@ class ListChat extends StatelessWidget {
           String nama = data['nama'];
           String gelar = data['gelar'];
           String gambar = data['urlgambar'];
+          String id = data['id'];
 
           return Container(
             color: Colors.grey.shade50,
@@ -620,8 +735,9 @@ class ListChat extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 2),
                 child: Column(
                   children: [
-
-                    const Divider(height: 2,),
+                    const Divider(
+                      height: 2,
+                    ),
                     InkWell(
                       child: Container(
                         color: Colors.grey.shade50,
@@ -674,15 +790,112 @@ class ListChat extends StatelessWidget {
                                 ),
                               ],
                             ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                IconButton(
+                                  onPressed: () {
+                                    showDialog<String>(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            AlertDialog(
+                                              title: const Text('Hapus Chat'),
+                                              content: const Text(
+                                                  'Yakin ingin menghapus chat anda ?'),
+                                              actions: <Widget>[
+                                                StreamBuilder<DocumentSnapshot>(
+                                                  stream: pasien
+                                                      .doc(email)
+                                                      .collection('chat')
+                                                      .doc(iddokter)
+                                                      .snapshots(),
+                                                  builder: (context,
+                                                      AsyncSnapshot snapshot) {
+                                                    if (snapshot.hasData) {
+                                                      Map<String, dynamic>
+                                                          data =
+                                                          snapshot.data!.data()
+                                                              as Map<String,
+                                                                  dynamic>;
+
+                                                      int banyakchatpasien =
+                                                          data['count'];
+
+                                                      return StreamBuilder<
+                                                          DocumentSnapshot>(
+                                                        stream: dokter
+                                                            .doc(iddokter)
+                                                            .collection('chat')
+                                                            .doc(email)
+                                                            .snapshots(),
+                                                        builder: (context,
+                                                            AsyncSnapshot
+                                                                snapshot) {
+                                                          if (snapshot
+                                                              .hasData) {
+                                                            Map<String, dynamic>
+                                                                data = snapshot
+                                                                        .data!
+                                                                        .data()
+                                                                    as Map<
+                                                                        String,
+                                                                        dynamic>;
+
+                                                            int banyakchatdokter =
+                                                                data['count'];
+
+                                                            return TextButton(
+                                                              onPressed: () {
+                                                                DatabaseServices
+                                                                    .deletechatdokter(
+                                                                        email!,
+                                                                        id,
+                                                                        banyakchatpasien,
+                                                                        banyakchatdokter);
+                                                                Navigator.pop(context);
+                                                              },
+                                                              child: const Text(
+                                                                  'ya'),
+                                                            );
+                                                          }
+                                                          return const Center(
+                                                            child:
+                                                                CircularProgressIndicator(),
+                                                          );
+                                                        },
+                                                      );
+                                                    }
+                                                    return const Center(
+                                                      child:
+                                                          CircularProgressIndicator(),
+                                                    );
+                                                  },
+                                                ),
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(context),
+                                                  child: const Text('tidak'),
+                                                ),
+                                              ],
+                                            ));
+                                  },
+                                  icon: const Icon(Icons.delete),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       ),
                       onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Chat(iddokter)));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Chat(iddokter)));
                       },
                     ),
-                    const Divider(height: 2,),
+                    const Divider(
+                      height: 2,
+                    ),
                   ],
                 )),
           );
@@ -692,5 +905,36 @@ class ListChat extends StatelessWidget {
         );
       },
     );
+  }
+}
+
+class LihatFoto extends StatelessWidget {
+  const LihatFoto({
+    Key? key,
+    required this.foto,
+  }) : super(key: key);
+  final String? foto;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        height: MediaQuery.of(context).size.width,
+        width: MediaQuery.of(context).size.width,
+        child: Hero(
+            tag: 'fotochat',
+            child: Container(
+              child: (foto == null)
+                  ? Image(
+                      image: const NetworkImage(
+                          'https://firebasestorage.googleapis.com/v0/b/teledentistry-70122.appspot.com/o/foto_blog%2Fkosong.png?alt=media&token=652482ea-7fa4-451f-913a-912c83d3ebd1'),
+                      height: MediaQuery.of(context).size.width * 0.7,
+                      width: MediaQuery.of(context).size.width * 0.7,
+                    )
+                  : Image(
+                      image: NetworkImage(foto!),
+                      height: MediaQuery.of(context).size.width * 0.7,
+                      width: MediaQuery.of(context).size.width * 0.7,
+                    ),
+            )));
   }
 }

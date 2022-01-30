@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, camel_case_types
 
+import 'package:cekgigi/app/HomePage.dart';
 import 'package:cekgigi/app/konsultasi/keterangan%20dokter/sisidokternya.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -665,15 +666,20 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                           text: 'konsultasi',
                           onSubmit: () {
                             DatabaseServices.setcountchataccount(
-                                emaila!, widget.iddokter);
+                                emaila!, widget.iddokter,widget.idpasien.toString());
                             DatabaseServices.setchatdokter(
-                                emaila, widget.iddokter);
+                                emaila, widget.iddokter,widget.idpasien.toString());
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const HalamanRumah()),
+                            );
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => Chat(
-                                        widget.iddokter,
-                                      )),
+                                    widget.iddokter,
+                                  )),
                             );
 
                             DatabaseServices
