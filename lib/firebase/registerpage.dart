@@ -74,7 +74,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         await _register();
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const Registrasi()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const IsiData()));
                       }
                     },
                     text: 'Register',

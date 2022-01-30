@@ -30,7 +30,7 @@ class _SelectBlog2State extends State<SelectBlog2> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text('Artikel terpopuler : ',
-                    style: GoogleFonts.pathwayGothicOne(
+                    style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w500,
                       fontSize: 20,
                     )),
@@ -50,11 +50,11 @@ class _SelectBlog2State extends State<SelectBlog2> {
                       child: Row(
                           children: snapshot.data.docs
                               .map<Widget>((e) => BlogPopulerCard(
-                                    e.data()['id'],
-                                    e.data()['urlgambar1'],
-                                    e.data()['bab'],
-                                    e.data()['posting'],
-                                  ))
+                            e.data()['id'],
+                            e.data()['urlgambar1'],
+                            e.data()['bab'],
+                            e.data()['posting'],
+                          ))
                               .toList()),
                     );
                   } else {
@@ -75,10 +75,11 @@ class _SelectBlog2State extends State<SelectBlog2> {
               SizedBox(
                 height: 8,
               ),
-              FutureBuilder(
-                future: blog.get(),
+              StreamBuilder(
+                stream: blog.snapshots(),
                 builder: (_, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {
+                    hitungterbaca = 0;
                     final docs = snapshot.data.docs;
                     for (int i = 0; i <= 20; i++) {
                       final countblogterbaca = docs[i].data()!;
@@ -89,9 +90,9 @@ class _SelectBlog2State extends State<SelectBlog2> {
 
                     return Text(
                         'Total Artikel yang Sudah Dibaca Sebanyak : ' +
-                            (hitungterbaca!).truncate().toString(),
-                        style: GoogleFonts.pathwayGothicOne(
-                            fontWeight: FontWeight.normal, fontSize: 20));
+                            (hitungterbaca!).toString(),
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.normal, fontSize: 18));
                   }
 
                   return Text("loading");
@@ -113,7 +114,7 @@ class _SelectBlog2State extends State<SelectBlog2> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text('Artikel terbaru : ',
-                    style: GoogleFonts.pathwayGothicOne(
+                    style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w500,
                       fontSize: 20,
                     )),
@@ -125,14 +126,14 @@ class _SelectBlog2State extends State<SelectBlog2> {
                     return Column(
                       children: snapshot.data.docs
                           .map<Widget>((e) => BlogCard(
-                                e.data()['id'],
-                                e.data()['bab'],
-                                e.data()['judul'],
-                                e.data()['penulis'],
-                                e.data()['urlgambar1'],
-                                e.data()['terbaca'],
-                                e.data()['posting'],
-                              ))
+                        e.data()['id'],
+                        e.data()['bab'],
+                        e.data()['judul'],
+                        e.data()['penulis'],
+                        e.data()['urlgambar1'],
+                        e.data()['terbaca'],
+                        e.data()['posting'],
+                      ))
                           .toList(),
                     );
                   } else {
@@ -166,12 +167,12 @@ class BlogPopulerCard extends StatelessWidget {
 
   // ignore: prefer_const_constructors_in_immutables
   BlogPopulerCard(
-    this.id,
-    this.urlgambar1,
-    this.bab,
-    this.posting, {
-    Key? key,
-  }) : super(key: key);
+      this.id,
+      this.urlgambar1,
+      this.bab,
+      this.posting, {
+        Key? key,
+      }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -179,42 +180,42 @@ class BlogPopulerCard extends StatelessWidget {
       children: [
         (posting == true)
             ? Padding(
-                padding: EdgeInsets.only(
-                  left: 2,
-                  right: 2,
-                ),
-                child: SizedBox(
-                    height: MediaQuery.of(context).size.width * 0.6,
-                    width: MediaQuery.of(context).size.width * 0.6,
-                    child: Card(
-                        clipBehavior: Clip.antiAlias,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        elevation: 4,
-                        child: InkWell(
-                            child: Stack(
-                              alignment: Alignment.topCenter,
-                              children: [
-                                SizedBox(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: MediaQuery.of(context).size.width,
-                                  child: Ink.image(
-                                    image: NetworkImage(
-                                      '$urlgambar1',
-                                    ),
-                                    colorFilter: ColorFilter.mode(
-                                        Colors.grey, BlendMode.softLight),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ],
+          padding: EdgeInsets.only(
+            left: 2,
+            right: 2,
+          ),
+          child: SizedBox(
+              height: MediaQuery.of(context).size.width * 0.6,
+              width: MediaQuery.of(context).size.width * 0.6,
+              child: Card(
+                  clipBehavior: Clip.antiAlias,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  elevation: 4,
+                  child: InkWell(
+                      child: Stack(
+                        alignment: Alignment.topCenter,
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.width,
+                            child: Ink.image(
+                              image: NetworkImage(
+                                '$urlgambar1',
+                              ),
+                              colorFilter: ColorFilter.mode(
+                                  Colors.grey, BlendMode.softLight),
+                              fit: BoxFit.cover,
                             ),
-                            onTap: () {
-                              DatabaseServices.terbacaBlog(id);
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => tampilanblog(id,bab,urlgambar1)));
-                            }))),
-              )
+                          ),
+                        ],
+                      ),
+                      onTap: () {
+                        DatabaseServices.terbacaBlog(id);
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => tampilanblog(id,bab,urlgambar1)));
+                      }))),
+        )
             : Container(),
       ],
     );
@@ -231,15 +232,15 @@ class BlogCard extends StatelessWidget {
   final bool posting;
 
   BlogCard(
-    this.id,
-    this.bab,
-    this.judul,
-    this.penulis,
-    this.urlgambar1,
-    this.terbaca,
-    this.posting, {
-    Key? key,
-  }) : super(key: key);
+      this.id,
+      this.bab,
+      this.judul,
+      this.penulis,
+      this.urlgambar1,
+      this.terbaca,
+      this.posting, {
+        Key? key,
+      }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -248,29 +249,31 @@ class BlogCard extends StatelessWidget {
         children: [
           (posting == true)
               ? Padding(
-                  padding: EdgeInsets.only(
-                    left: 8,
-                    right: 8,
+            padding: EdgeInsets.only(
+              left: 8,
+              right: 8,
+              top: 12,
+              bottom: 12,
+            ),
+            child: SizedBox(
+                height: MediaQuery.of(context).size.width * 0.3,
+                width: MediaQuery.of(context).size.width * 0.3,
+                child: Card(
+                  clipBehavior: Clip.antiAlias,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  child: SizedBox(
-                      height: MediaQuery.of(context).size.width * 0.3,
-                      width: MediaQuery.of(context).size.width * 0.3,
-                      child: Card(
-                        clipBehavior: Clip.antiAlias,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        elevation: 10,
-                        child: Ink.image(
-                          image: NetworkImage(
-                            '$urlgambar1',
-                          ),
-                          height: 120,
-                          width: 200,
-                          fit: BoxFit.cover,
-                        ),
-                      )),
-                )
+                  elevation: 10,
+                  child: Ink.image(
+                    image: NetworkImage(
+                      '$urlgambar1',
+                    ),
+                    height: 120,
+                    width: 200,
+                    fit: BoxFit.cover,
+                  ),
+                )),
+          )
               : Container(),
           SizedBox(
             child: Column(
@@ -281,33 +284,27 @@ class BlogCard extends StatelessWidget {
                   width: MediaQuery.of(context).size.width * 0.6,
                   child: Text(
                     bab!,
-                    style: GoogleFonts.pathwayGothicOne(
+                    style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500,
-                        fontSize: 20,
+                        fontSize: 18,
                         color: Colors.black),
                   ),
-                ),
-                SizedBox(
-                  height: 8,
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.6,
                   child: Text(
                     judul!,
-                    style: GoogleFonts.pathwayGothicOne(
-                        fontWeight: FontWeight.w500, fontSize: 18),
+                    style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w500, fontSize: 16),
                   ),
-                ),
-                SizedBox(
-                  height: 8,
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.6,
                   child: Text(
                     'sudah terbaca : ' + terbaca.toString(),
-                    style: GoogleFonts.pathwayGothicOne(
+                    style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500,
-                        fontSize: 16,
+                        fontSize: 12,
                         color: Colors.grey),
                   ),
                 ),
@@ -324,3 +321,4 @@ class BlogCard extends StatelessWidget {
     );
   }
 }
+

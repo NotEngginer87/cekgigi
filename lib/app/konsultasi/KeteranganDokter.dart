@@ -75,7 +75,7 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Padding(
-                      padding: EdgeInsets.all(4),
+                      padding: const EdgeInsets.all(4),
                       child: InkWell(
                         child: SizedBox(
                           child: Card(
@@ -109,7 +109,7 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(4),
+                      padding: const EdgeInsets.all(4),
                       child: InkWell(
                         child: SizedBox(
                           child: Card(

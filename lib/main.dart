@@ -59,15 +59,15 @@ class ControllerAuth extends StatelessWidget {
   }
 }
 
-class Registrasi extends StatefulWidget {
-  const Registrasi({Key? key}) : super(key: key);
+class IsiData extends StatefulWidget {
+  const IsiData({Key? key}) : super(key: key);
 
   @override
-  _RegistrasiState createState() => _RegistrasiState();
+  _IsiDataState createState() => _IsiDataState();
 }
 
-class _RegistrasiState extends State<Registrasi> {
-  int currentstep = 1;
+class _IsiDataState extends State<IsiData> {
+  int currentstep = 0;
 
   TextEditingController nama = TextEditingController();
   TextEditingController noHP = TextEditingController();
@@ -109,23 +109,16 @@ class _RegistrasiState extends State<Registrasi> {
 
     List<Step> getSteps() => [
           Step(
-            state: currentstep > 0 ? StepState.complete : StepState.indexed,
-            isActive: currentstep >= 0,
-            title: Text('Email'),
-            content: Text(email!),
-            subtitle: Text('isi alamat email kamu'),
-          ),
-          Step(
-              state: currentstep > 1 ? StepState.complete : StepState.indexed,
-              isActive: currentstep >= 1,
+              state: currentstep > 0 ? StepState.complete : StepState.indexed,
+              isActive: currentstep >= 0,
               title: Text('Nama'),
               content: TextFormField(
                 controller: nama,
               ),
               subtitle: Text('nama lengkapmu')),
           Step(
-              state: currentstep > 2 ? StepState.complete : StepState.indexed,
-              isActive: currentstep >= 2,
+              state: currentstep > 1 ? StepState.complete : StepState.indexed,
+              isActive: currentstep >= 1,
               title: Text('Jenis Kelamin'),
               content: GenderPickerWithImage(
                 showOtherGender: false,
@@ -138,15 +131,11 @@ class _RegistrasiState extends State<Registrasi> {
                 onChanged: (gender) async {
                   print(gender);
                   print(gender?.index);
-                  if (gender?.index == 0)
-                    {
-                      genderr = 'Laki-Laki';
-
-                    }
-                  else
-                    {
-                      genderr = 'perempuan';
-                    }
+                  if (gender?.index == 0) {
+                    genderr = 'Laki-Laki';
+                  } else {
+                    genderr = 'perempuan';
+                  }
                 },
                 equallyAligned: true,
                 animationDuration: Duration(milliseconds: 300),
@@ -160,8 +149,8 @@ class _RegistrasiState extends State<Registrasi> {
               ),
               subtitle: Text('jenis kelaminmu')),
           Step(
-            state: currentstep > 3 ? StepState.complete : StepState.indexed,
-            isActive: currentstep >= 3,
+            state: currentstep > 2 ? StepState.complete : StepState.indexed,
+            isActive: currentstep >= 2,
             title: Text('Upload Foto'),
             content: Column(
               children: <Widget>[
@@ -226,15 +215,15 @@ class _RegistrasiState extends State<Registrasi> {
             ),
           ),
           Step(
-              state: currentstep > 4 ? StepState.complete : StepState.indexed,
-              isActive: currentstep >= 4,
+              state: currentstep > 3 ? StepState.complete : StepState.indexed,
+              isActive: currentstep >= 3,
               title: Text('Date'),
               content: DateTimePicker(
                 type: DateTimePickerType.date,
                 dateMask: 'd MMM, yyyy',
                 initialValue: DateTime.now().toString(),
-                firstDate: DateTime(2000),
-                lastDate: DateTime(2100),
+                firstDate: DateTime(1900),
+                lastDate: DateTime.now(),
                 icon: Icon(Icons.event),
                 dateLabelText: 'Date',
                 selectableDayPredicate: (date) {
@@ -254,8 +243,8 @@ class _RegistrasiState extends State<Registrasi> {
                 onSaved: (val) => print(val),
               )),
           Step(
-            state: currentstep > 5 ? StepState.complete : StepState.indexed,
-            isActive: currentstep >= 5,
+            state: currentstep > 4 ? StepState.complete : StepState.indexed,
+            isActive: currentstep >= 4,
             title: Text('Nomor HP'),
             content: TextFormField(
               controller: noHP,
@@ -263,8 +252,8 @@ class _RegistrasiState extends State<Registrasi> {
             ),
           ),
           Step(
-              state: currentstep > 6 ? StepState.complete : StepState.indexed,
-              isActive: currentstep >= 6,
+              state: currentstep > 5 ? StepState.complete : StepState.indexed,
+              isActive: currentstep >= 5,
               title: Text('Alamat'),
               content: TextFormField(
                 controller: alamat,
@@ -274,88 +263,95 @@ class _RegistrasiState extends State<Registrasi> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pendaftaran'),
+        title: Text('Isi Data'),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.teal.shade900,
       ),
-      body: Stepper(
-          type: StepperType.vertical,
-          currentStep: currentstep,
-          steps: getSteps(),
-          onStepContinue: () {
-            final isLastStep = currentstep == getSteps().length - 1;
-            if (isLastStep) {
-              isCompleted = true;
-              print(isCompleted);
-            } else {
-              setState(() {
-                currentstep += 1;
-              });
-            }
-          },
-          onStepTapped: (step) => setState(() {
-                currentstep = step;
-              }),
-          onStepCancel: currentstep == 0
-              ? null
-              : () {
-                  setState(() {
-                    currentstep -= 1;
-                  });
-                },
-          controlsBuilder: (context, details) {
-            final isLastStep = currentstep == getSteps().length - 1;
-            return Container(
-              margin: EdgeInsets.only(top: 50),
-              child: Row(
-                children: [
-                  isLastStep
-                      ? Expanded(
-                          child: ElevatedButton(
-                            onPressed: () {
-                              DatabaseServices.updateakun(
-                                email,
-                                nama.text,
-                                genderr!,
-                                tanggal,
-                                bulan,
-                                tahun,
-                                alamat.text,
-                                noHP.text,
-                                imageUrl,
-                              );
-                              for (int i = 1; i <= 3; i++){
+      body: Theme(
+        data: ThemeData(
+            colorScheme: ColorScheme.fromSwatch()
+                .copyWith(primary: Colors.teal.shade900)),
+        child: Stepper(
+            type: StepperType.vertical,
+            currentStep: currentstep,
+            steps: getSteps(),
+            onStepContinue: () {
+              final isLastStep = currentstep == getSteps().length - 1;
+              if (isLastStep) {
+                isCompleted = true;
+                print(isCompleted);
+              } else {
+                setState(() {
+                  currentstep += 1;
+                });
+              }
+            },
+            onStepTapped: (step) => setState(() {
+                  currentstep = step;
+                }),
+            onStepCancel: currentstep == 0
+                ? null
+                : () {
+                    setState(() {
+                      currentstep -= 1;
+                    });
+                  },
+            controlsBuilder: (context, details) {
+              final isLastStep = currentstep == getSteps().length - 1;
+              return Container(
+                margin: EdgeInsets.only(top: 50),
+                child: Row(
+                  children: [
+                    isLastStep
+                        ? Expanded(
+                            child: ElevatedButton(
+                              onPressed: () {
+                                DatabaseServices.updateakun(
+                                  email,
+                                  nama.text,
+                                  genderr!,
+                                  tanggal,
+                                  bulan,
+                                  tahun,
+                                  alamat.text,
+                                  noHP.text,
+                                  imageUrl,
+                                );
+                                for (int i = 1; i <= 3; i++) {
+                                  DatabaseServices.setFAQ(email!, i);
+                                }
 
-                                DatabaseServices.setFAQ(email!, i);
-                              }
-
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => HalamanRumah()),
-                              );
-                            },
-                            child: Text('Konfirmasi'),
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => HalamanRumah()),
+                                );
+                              },
+                              child: Text('Konfirmasi'),
+                            ),
+                          )
+                        : Expanded(
+                            child: ElevatedButton(
+                              onPressed: details.onStepContinue,
+                              child: Text('lanjut'),
+                            ),
                           ),
-                        )
-                      : Expanded(
-                          child: ElevatedButton(
-                            onPressed: details.onStepContinue,
-                            child: Text('lanjut'),
-                          ),
-                        ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  if (currentstep != 0)
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: details.onStepCancel,
-                        child: Text('balik'),
-                      ),
+                    SizedBox(
+                      width: 20,
                     ),
-                ],
-              ),
-            );
-          }),
+                    if (currentstep != 0)
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: details.onStepCancel,
+                          child: Text('balik'),
+                        ),
+                      ),
+                  ],
+                ),
+              );
+            }),
+      ),
     );
   }
 

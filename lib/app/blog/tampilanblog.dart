@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class tampilanblog extends StatefulWidget {
-  tampilanblog(this.id,
-      this.bab,
-      this.urlgambar,{
+  tampilanblog(
+    this.id,
+    this.bab,
+    this.urlgambar, {
     Key? key,
-
   }) : super(key: key);
 
   final String? id;
@@ -25,11 +25,8 @@ class _tampilanblogState extends State<tampilanblog> {
   int k2 = 0;
   int k3 = 0;
 
-
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       body: Hero(
         tag: 'blog',
@@ -65,7 +62,6 @@ class _tampilanblogState extends State<tampilanblog> {
                   fit: BoxFit.fitWidth,
                 ),
                 collapseMode: CollapseMode.parallax,
-
               ),
             ),
             SliverList(
@@ -90,7 +86,7 @@ class _tampilanblogState extends State<tampilanblog> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             Map<String, dynamic> data =
-            snapshot.data!.data() as Map<String, dynamic>;
+                snapshot.data!.data() as Map<String, dynamic>;
 
             String id = data['id'];
             String bab = data['bab'];
@@ -113,11 +109,6 @@ class _tampilanblogState extends State<tampilanblog> {
             String text8 = data['text8'];
             String text9 = data['text9'];
             String text10 = data['text10'];
-
-
-
-
-
 
             if (text1 != '') {
               k1 += 1;
@@ -159,15 +150,8 @@ class _tampilanblogState extends State<tampilanblog> {
               k3 += 1;
             }
 
-
-
-
-
-
-
-            return  Column(
+            return Column(
               children: [
-
                 SizedBox(
                   height: 20,
                 ),
@@ -214,296 +198,299 @@ class _tampilanblogState extends State<tampilanblog> {
                 ),
                 (k1 > 0)
                     ? Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(8),
-                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          (text1 != '')
-                              ? Column(
-                            children: [
-                              Text(
-                                text1,
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16,
-                                    color: Colors.black),
-                                textAlign: TextAlign.justify,
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                            ],
+                          Padding(
+                            padding: EdgeInsets.all(8),
+                            child: Column(
+                              children: [
+                                (text1 != '')
+                                    ? Column(
+                                        children: [
+                                          Text(
+                                            text1,
+                                            style: GoogleFonts.poppins(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 16,
+                                                color: Colors.black),
+                                            textAlign: TextAlign.justify,
+                                          ),
+                                          SizedBox(
+                                            height: 8,
+                                          ),
+                                        ],
+                                      )
+                                    : Container(),
+                                (text2 != '')
+                                    ? Column(
+                                        children: [
+                                          Text(
+                                            text2,
+                                            style: GoogleFonts.poppins(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 16,
+                                                color: Colors.black),
+                                            textAlign: TextAlign.left,
+                                          ),
+                                          SizedBox(
+                                            height: 8,
+                                          ),
+                                        ],
+                                      )
+                                    : Container(),
+                                (text3 != '')
+                                    ? Column(
+                                        children: [
+                                          Text(
+                                            text3,
+                                            style: GoogleFonts.poppins(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 16,
+                                                color: Colors.black),
+                                            textAlign: TextAlign.left,
+                                          ),
+                                          SizedBox(
+                                            height: 8,
+                                          ),
+                                        ],
+                                      )
+                                    : Container(),
+                                (text4 != '')
+                                    ? Column(
+                                        children: [
+                                          Text(
+                                            text4,
+                                            style: GoogleFonts.poppins(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 16,
+                                                color: Colors.black),
+                                            textAlign: TextAlign.left,
+                                          ),
+                                          SizedBox(
+                                            height: 8,
+                                          ),
+                                        ],
+                                      )
+                                    : Container(),
+                                (text5 != '')
+                                    ? Column(
+                                        children: [
+                                          Text(
+                                            text5,
+                                            style: GoogleFonts.poppins(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 16,
+                                                color: Colors.black),
+                                            textAlign: TextAlign.left,
+                                          ),
+                                          SizedBox(
+                                            height: 8,
+                                          ),
+                                        ],
+                                      )
+                                    : Container(),
+                                (text6 != '')
+                                    ? Column(
+                                        children: [
+                                          Text(
+                                            text6,
+                                            style: GoogleFonts.poppins(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 16,
+                                                color: Colors.black),
+                                            textAlign: TextAlign.left,
+                                          ),
+                                          SizedBox(
+                                            height: 8,
+                                          ),
+                                        ],
+                                      )
+                                    : Container(),
+                              ],
+                            ),
                           )
-                              : Container(),
-                          (text2 != '')
-                              ? Column(
-                            children: [
-                              Text(
-                                text2,
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16,
-                                    color: Colors.black),
-                                textAlign: TextAlign.left,
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                            ],
-                          )
-                              : Container(),
-                          (text3 != '')
-                              ? Column(
-                            children: [
-                              Text(
-                                text3,
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16,
-                                    color: Colors.black),
-                                textAlign: TextAlign.left,
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                            ],
-                          )
-                              : Container(),
-                          (text4 != '')
-                              ? Column(
-                            children: [
-                              Text(
-                                text4,
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16,
-                                    color: Colors.black),
-                                textAlign: TextAlign.left,
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                            ],
-                          )
-                              : Container(),
-                          (text5 != '')
-                              ? Column(
-                            children: [
-                              Text(
-                                text5,
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16,
-                                    color: Colors.black),
-                                textAlign: TextAlign.left,
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                            ],
-                          )
-                              : Container(),
-                          (text6 != '')
-                              ? Column(
-                            children: [
-                              Text(
-                                text6,
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16,
-                                    color: Colors.black),
-                                textAlign: TextAlign.left,
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                            ],
-                          )
-                              : Container(),
                         ],
-                      ),
-                    )
-                  ],
-                )
+                      )
                     : Container(),
                 SizedBox(
                   height: 8,
                 ),
                 (urlgambar2 != '')
                     ? Card(
-                  clipBehavior: Clip.antiAlias,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  elevation: 10,
-                  child: Image.network(
-                    urlgambar2,
-                    height: MediaQuery.of(context).size.width - 60,
-                    width: MediaQuery.of(context).size.width - 20,
-                    fit: BoxFit.fitWidth,
-                  ),
-                )
+                        clipBehavior: Clip.antiAlias,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        elevation: 10,
+                        child: Image.network(
+                          urlgambar2,
+                          height: MediaQuery.of(context).size.width - 60,
+                          width: MediaQuery.of(context).size.width - 20,
+                          fit: BoxFit.fitWidth,
+                        ),
+                      )
                     : Container(),
                 SizedBox(
                   height: 10,
                 ),
                 (k2 > 0)
                     ? Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(8),
-                      child: Column(
                         children: [
-                          (text7 != '')
-                              ? Column(
-                            children: [
-                              Text(
-                                text7,
-                                textDirection: TextDirection.ltr,
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16,
-                                    color: Colors.black),
-                                textAlign: TextAlign.left,
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                            ],
+                          Padding(
+                            padding: EdgeInsets.all(8),
+                            child: Column(
+                              children: [
+                                (text7 != '')
+                                    ? Column(
+                                        children: [
+                                          Text(
+                                            text7,
+                                            textDirection: TextDirection.ltr,
+                                            style: GoogleFonts.poppins(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 16,
+                                                color: Colors.black),
+                                            textAlign: TextAlign.left,
+                                          ),
+                                          SizedBox(
+                                            height: 8,
+                                          ),
+                                        ],
+                                      )
+                                    : Container(),
+                                (text8 != '')
+                                    ? Column(
+                                        children: [
+                                          Text(
+                                            text8,
+                                            style: GoogleFonts.poppins(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 16,
+                                                color: Colors.black),
+                                            textAlign: TextAlign.left,
+                                          ),
+                                          SizedBox(
+                                            height: 8,
+                                          ),
+                                        ],
+                                      )
+                                    : Container(),
+                                (text9 != '')
+                                    ? Column(
+                                        children: [
+                                          Text(
+                                            text9,
+                                            style: GoogleFonts.poppins(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 16,
+                                                color: Colors.black),
+                                            textAlign: TextAlign.left,
+                                          ),
+                                          SizedBox(
+                                            height: 8,
+                                          ),
+                                        ],
+                                      )
+                                    : Container(),
+                                (text10 != '')
+                                    ? Column(
+                                        children: [
+                                          Text(
+                                            text10,
+                                            style: GoogleFonts.poppins(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 16,
+                                                color: Colors.black),
+                                            textAlign: TextAlign.left,
+                                          ),
+                                          SizedBox(
+                                            height: 8,
+                                          ),
+                                        ],
+                                      )
+                                    : Container(),
+                              ],
+                            ),
                           )
-                              : Container(),
-                          (text8 != '')
-                              ? Column(
-                            children: [
-                              Text(
-                                text8,
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16,
-                                    color: Colors.black),
-                                textAlign: TextAlign.left,
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                            ],
-                          )
-                              : Container(),
-                          (text9 != '')
-                              ? Column(
-                            children: [
-                              Text(
-                                text9,
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16,
-                                    color: Colors.black),
-                                textAlign: TextAlign.left,
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                            ],
-                          )
-                              : Container(),
-                          (text10 != '')
-                              ? Column(
-                            children: [
-                              Text(
-                                text10,
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16,
-                                    color: Colors.black),
-                                textAlign: TextAlign.left,
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                            ],
-                          )
-                              : Container(),
                         ],
-                      ),
-                    )
-                  ],
-                )
+                      )
                     : Container(),
                 SizedBox(
                   height: 8,
                 ),
                 (k3 > 0)
                     ? Padding(
-                  padding: EdgeInsets.all(8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'sumber :',
-                        textAlign: TextAlign.left,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      (sumber1 != '')
-                          ? Column(
-                        children: [
-                          Text(
-                            sumber1,
-                            style: GoogleFonts.poppins(
-                                decoration: TextDecoration.underline,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12,
-                                color: Colors.teal.shade900),
-                            textAlign: TextAlign.left,
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                        ],
+                        padding: EdgeInsets.all(8),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'sumber :',
+                              textAlign: TextAlign.left,
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            (sumber1 != '')
+                                ? Column(
+                                    children: [
+                                      Text(
+                                        sumber1,
+                                        style: GoogleFonts.poppins(
+                                            decoration:
+                                                TextDecoration.underline,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 12,
+                                            color: Colors.teal.shade900),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                    ],
+                                  )
+                                : Container(),
+                            (sumber2 != '')
+                                ? Column(
+                                    children: [
+                                      Text(
+                                        sumber2,
+                                        style: GoogleFonts.poppins(
+                                            decoration:
+                                                TextDecoration.underline,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 12,
+                                            color: Colors.teal.shade900),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                    ],
+                                  )
+                                : Container(),
+                            (sumber3 != '')
+                                ? Column(
+                                    children: [
+                                      Text(
+                                        sumber3,
+                                        style: GoogleFonts.poppins(
+                                            decoration:
+                                                TextDecoration.underline,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 12,
+                                            color: Colors.teal.shade900),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                    ],
+                                  )
+                                : Container(),
+                          ],
+                        ),
                       )
-                          : Container(),
-                      (sumber2 != '')
-                          ? Column(
-                        children: [
-                          Text(
-                            sumber2,
-                            style: GoogleFonts.poppins(
-                                decoration: TextDecoration.underline,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12,
-                                color: Colors.teal.shade900),
-                            textAlign: TextAlign.left,
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                        ],
-                      )
-                          : Container(),
-                      (sumber3 != '')
-                          ? Column(
-                        children: [
-                          Text(
-                            sumber3,
-                            style: GoogleFonts.poppins(
-                                decoration: TextDecoration.underline,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12,
-                                color: Colors.teal.shade900),
-                            textAlign: TextAlign.left,
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                        ],
-                      )
-                          : Container(),
-                    ],
-                  ),
-                )
                     : Container(),
                 SizedBox(
                   height: 8,
@@ -516,13 +503,8 @@ class _tampilanblogState extends State<tampilanblog> {
           );
         },
       ),
-
-
     ));
 
     return listItems;
   }
-
-
 }
-

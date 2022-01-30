@@ -229,7 +229,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   AuthServices.signInWithGoogle(),
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) {
-                    return Registrasi();
+                    return IsiData();
                   }))
                 },
                 child: Center(

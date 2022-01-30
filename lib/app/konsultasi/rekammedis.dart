@@ -508,6 +508,7 @@ class _RekamMedisState extends State<RekamMedis> {
                       if (switchfoto == true) {
                         setState(() {
                           isLastStep2 = true;
+                          isLastStep2 = true;
                         });
                       }
                     }

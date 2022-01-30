@@ -1,12 +1,11 @@
 // ignore_for_file: prefer_const_constructors, non_constant_identifier_names
 
-import 'package:cekgigi/app/home/tab3/test.dart';
 import 'package:cekgigi/main.dart';
+import 'package:cekgigi/onboard2.0/RegisEmailScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 
 class Tab3 extends StatefulWidget {
   const Tab3({Key? key}) : super(key: key);
@@ -25,17 +24,16 @@ class _Tab3State extends State<Tab3> {
     final User? user = auth.currentUser;
     final emaila = user!.email;
 
-
-
     return Padding(
-        padding: EdgeInsets.only(top: 8, bottom: 8, left: 16, right: 16),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Color(0xFFFEF1E6),
-            borderRadius: BorderRadius.all(Radius.circular(12)),
+        padding: EdgeInsets.only(top: 8, bottom: 8, left: 12, right: 12),
+        child: Card(
+          elevation: 4,
+          clipBehavior: Clip.antiAlias,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
           ),
           child: Padding(
-            padding: EdgeInsets.only(left: 16, right: 16),
+            padding: EdgeInsets.all(12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -66,7 +64,7 @@ class _Tab3State extends State<Tab3> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Registrasi()),
+                                builder: (context) => IsiData()),
                           );
                         },
                         child: Text('Edit')),
@@ -160,12 +158,18 @@ class _Tab3State extends State<Tab3> {
                 SizedBox(
                   height: 16,
                 ),
-                ElevatedButton(onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage()));
-                }, child: Text('haha'))
+                ElevatedButton(
+                  child: Text('regis'),
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (BuildContext context) {
+                          return RegisEmailScreen();
+                        }));
+                  },
+                ),
               ],
             ),
-          ),
+          )
         ));
   }
 }

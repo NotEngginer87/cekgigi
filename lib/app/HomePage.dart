@@ -4,18 +4,19 @@ import 'package:cekgigi/app/home/fav_blog.dart';
 import 'package:cekgigi/app/home/infopasien.dart';
 import 'package:cekgigi/app/home/keuntungan.dart';
 import 'package:cekgigi/app/home/tab3/FAQ.dart';
+import 'package:cekgigi/app/home/tab3/tab3.dart';
 import 'package:cekgigi/app/home/tombol2.dart';
 import 'package:cekgigi/app/home/tab3/whatsapp.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../api/DatabaseServices.dart';
 import 'blog/BlogDepan.dart';
 import 'home/event.dart';
 import 'home/tab3/kontak.dart';
-import 'home/tab3/tab3.dart';
 
 class HalamanRumah extends StatefulWidget {
   const HalamanRumah({Key? key}) : super(key: key);
@@ -32,7 +33,6 @@ class _HalamanRumahState extends State<HalamanRumah> {
     final ButtonStyle Buttonstyle = ElevatedButton.styleFrom(
       onPrimary: Colors.black,
       primary: Colors.white,
-
       minimumSize: Size(MediaQuery.of(context).size.width, 48),
       padding: EdgeInsets.symmetric(horizontal: 8),
       shape: const RoundedRectangleBorder(
@@ -93,37 +93,48 @@ class _HalamanRumahState extends State<HalamanRumah> {
                               color: Colors.teal.shade900,
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.grey.shade50,
-
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(12),
+                                      topRight: Radius.circular(12)),
                                 ),
                                 child: Column(
-
                                   children: [
                                     Tab3(),
-
                                     Padding(
-                                      padding: EdgeInsets.only(left: 16, right: 16),
+                                      padding:
+                                          EdgeInsets.only(left: 16, right: 16),
                                       child: ElevatedButton(
                                           style: Buttonstyle,
-                                          onPressed: (){
-                                            Navigator.push(context, MaterialPageRoute(builder: (context) => FAQ()));
-                                          }, child: Text('FAQ')),
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        FAQ()));
+                                          },
+                                          child: Text('FAQ')),
                                     ),
-                                    SizedBox(height: 12,),
+                                    SizedBox(
+                                      height: 12,
+                                    ),
                                     Padding(
-                                      padding: EdgeInsets.only(left: 16, right: 16),
+                                      padding:
+                                          EdgeInsets.only(left: 16, right: 16),
                                       child: ElevatedButton(
                                           style: Buttonstyle,
-                                          onPressed: (){
+                                          onPressed: () {
                                             showModalBottomSheet(
                                                 context: context,
                                                 builder: (context) {
                                                   return kontak();
                                                 });
-                                          }, child: Text('kontak iDent')),
+                                          },
+                                          child: Text('kontak iDent')),
                                     ),
-
-                                    SizedBox(height: 12,),
+                                    SizedBox(
+                                      height: 12,
+                                    ),
                                   ],
                                 ),
                               ))
@@ -180,9 +191,6 @@ class _HalamanRumahState extends State<HalamanRumah> {
   }
 }
 
-
-
-
 class BlogPopulerCard extends StatelessWidget {
   final String? urlgambar1;
   final String? id;
@@ -190,11 +198,11 @@ class BlogPopulerCard extends StatelessWidget {
 
   // ignore: prefer_const_constructors_in_immutables
   BlogPopulerCard(
-      this.id,
-      this.urlgambar1,
-      this.posting, {
-        Key? key,
-      }) : super(key: key);
+    this.id,
+    this.urlgambar1,
+    this.posting, {
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -202,41 +210,41 @@ class BlogPopulerCard extends StatelessWidget {
       children: [
         (posting == true)
             ? Padding(
-          padding: EdgeInsets.only(
-            left: 2,
-            right: 2,
-          ),
-          child: SizedBox(
-              height: MediaQuery.of(context).size.width * 0.6,
-              width: MediaQuery.of(context).size.width * 0.6,
-              child: Card(
-                  clipBehavior: Clip.antiAlias,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  elevation: 4,
-                  child: InkWell(
-                      child: Stack(
-                        alignment: Alignment.topCenter,
-                        children: [
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.width,
-                            child: Ink.image(
-                              image: NetworkImage(
-                                '$urlgambar1',
-                              ),
-                              colorFilter: ColorFilter.mode(
-                                  Colors.grey, BlendMode.softLight),
-                              fit: BoxFit.cover,
+                padding: EdgeInsets.only(
+                  left: 2,
+                  right: 2,
+                ),
+                child: SizedBox(
+                    height: MediaQuery.of(context).size.width * 0.6,
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    child: Card(
+                        clipBehavior: Clip.antiAlias,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        elevation: 4,
+                        child: InkWell(
+                            child: Stack(
+                              alignment: Alignment.topCenter,
+                              children: [
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: MediaQuery.of(context).size.width,
+                                  child: Ink.image(
+                                    image: NetworkImage(
+                                      '$urlgambar1',
+                                    ),
+                                    colorFilter: ColorFilter.mode(
+                                        Colors.grey, BlendMode.softLight),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                      onTap: () {
-                        DatabaseServices.terbacaBlog(id);
-                      }))),
-        )
+                            onTap: () {
+                              DatabaseServices.terbacaBlog(id);
+                            }))),
+              )
             : Container(),
       ],
     );
@@ -253,15 +261,15 @@ class BlogCard extends StatelessWidget {
   final bool posting;
 
   const BlogCard(
-      this.id,
-      this.bab,
-      this.judul,
-      this.penulis,
-      this.urlgambar1,
-      this.terbaca,
-      this.posting, {
-        Key? key,
-      }) : super(key: key);
+    this.id,
+    this.bab,
+    this.judul,
+    this.penulis,
+    this.urlgambar1,
+    this.terbaca,
+    this.posting, {
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -270,29 +278,29 @@ class BlogCard extends StatelessWidget {
         children: [
           (posting == true)
               ? Padding(
-            padding: EdgeInsets.only(
-              left: 8,
-              right: 8,
-            ),
-            child: SizedBox(
-                height: MediaQuery.of(context).size.width * 0.3,
-                width: MediaQuery.of(context).size.width * 0.3,
-                child: Card(
-                  clipBehavior: Clip.antiAlias,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+                  padding: EdgeInsets.only(
+                    left: 8,
+                    right: 8,
                   ),
-                  elevation: 10,
-                  child: Ink.image(
-                    image: NetworkImage(
-                      '$urlgambar1',
-                    ),
-                    height: 120,
-                    width: 200,
-                    fit: BoxFit.cover,
-                  ),
-                )),
-          )
+                  child: SizedBox(
+                      height: MediaQuery.of(context).size.width * 0.3,
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      child: Card(
+                        clipBehavior: Clip.antiAlias,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        elevation: 10,
+                        child: Ink.image(
+                          image: NetworkImage(
+                            '$urlgambar1',
+                          ),
+                          height: 120,
+                          width: 200,
+                          fit: BoxFit.cover,
+                        ),
+                      )),
+                )
               : Container(),
           SizedBox(
             child: Column(

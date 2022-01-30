@@ -10,8 +10,8 @@ class DatabaseServices {
   static CollectionReference doktergigi = firestore.collection('doktergigi');
   static CollectionReference FAQ = firestore.collection('FAQ');
   static CollectionReference listpasiencount =
-  firestore.collection('listpasiencount');
-  static CollectionReference blog = firestore.collection('soal');
+      firestore.collection('listpasiencount');
+  static CollectionReference blog = firestore.collection('blog');
 
   static Future<void> updateakun(
       String? email,
@@ -39,21 +39,21 @@ class DatabaseServices {
   }
 
   static Future<void> updateketeranganpasien(
-      int id,
-      String nama,
-      String gender,
-      String umur,
-      String noHP,
-      String alamat,
-      String statusperkawinan,
-      String agama,
-      String suku,
-      String pekerjaan,
-      String keluhan,
-      String gambarkeluhan,
-      String kegiatan,
-      String email,
-      ) async {
+    int id,
+    String nama,
+    String gender,
+    String umur,
+    String noHP,
+    String alamat,
+    String statusperkawinan,
+    String agama,
+    String suku,
+    String pekerjaan,
+    String keluhan,
+    String gambarkeluhan,
+    String kegiatan,
+    String email,
+  ) async {
     await datapasien.doc(id.toString()).set(
       {
         'Aid': id,
@@ -142,8 +142,8 @@ class DatabaseServices {
     );
   }
 
-  static Future<void> updatechatdokter(String email, String iddokter, String idchat,
-      String chat, int countchattime, String status) async {
+  static Future<void> updatechatdokter(String email, String iddokter,
+      String idchat, String chat, int countchattime, String status) async {
     await doktergigi
         .doc(iddokter)
         .collection('chat')
@@ -161,48 +161,54 @@ class DatabaseServices {
   }
 
   static Future<void> setcountchataccount(
-      String email,
-      String iddokter,
-      ) async {
+    String email,
+    String iddokter,
+  ) async {
     await userdata.doc(email).collection('chat').doc(iddokter).set(
       {
         'count': 1,
         'iddokter': iddokter,
-        'requestvideocall' : false,
+        'requestvideocall': false,
       },
     );
   }
 
   static Future<void> setchatdokter(
-      String email,
-      String iddokter,
-      ) async {
+    String email,
+    String iddokter,
+  ) async {
     await doktergigi.doc(iddokter).collection('chat').doc(email).set(
       {
         'count': 1,
         'iddokter': iddokter,
+        'emailpasien': email,
       },
     );
   }
 
-
-  static Future<void> setFAQ(String email,int n) async {
-
-
-      await userdata.doc(email.toString()).collection('FAQ').doc(n.toString()).set(
+  static Future<void> setFAQ(String email, int n) async {
+    await userdata
+        .doc(email.toString())
+        .collection('FAQ')
+        .doc(n.toString())
+        .set(
       {
         'expand': false,
         'id': n,
       },
     );
-
-
   }
 
-
-  static Future<void> expandFAQ(int id, bool expand, String email,) async {
-
-    await userdata.doc(email.toString()).collection('FAQ').doc(id.toString()).update(
+  static Future<void> expandFAQ(
+    int id,
+    bool expand,
+    String email,
+  ) async {
+    await userdata
+        .doc(email.toString())
+        .collection('FAQ')
+        .doc(id.toString())
+        .update(
       {
         'expand': !expand,
       },
@@ -210,19 +216,20 @@ class DatabaseServices {
   }
 
   static Future<void> updatecountchataccount(
-      String email,
-      String iddokter,
-      ) async {
+    String email,
+    String iddokter,
+  ) async {
     await userdata.doc(email).collection('chat').doc(iddokter).update(
       {
         'count': FieldValue.increment(1),
       },
     );
   }
+
   static Future<void> updatecountchataccountdokter(
-      String email,
-      String iddokter,
-      ) async {
+    String email,
+    String iddokter,
+  ) async {
     await doktergigi.doc(iddokter).collection('chat').doc(email).update(
       {
         'count': FieldValue.increment(1),
@@ -249,14 +256,14 @@ class DatabaseServices {
         'agama': (agama == 1)
             ? 'Islam'
             : (agama == 2)
-            ? 'Protestan'
-            : (agama == 3)
-            ? 'Katolik'
-            : (agama == 4)
-            ? 'Budha'
-            : (agama == 5)
-            ? 'Hindu'
-            : ' ',
+                ? 'Protestan'
+                : (agama == 3)
+                    ? 'Katolik'
+                    : (agama == 4)
+                        ? 'Budha'
+                        : (agama == 5)
+                            ? 'Hindu'
+                            : ' ',
         'telepon': telepon,
         'pekerjaan': pekerjaan,
         'suku': suku,
