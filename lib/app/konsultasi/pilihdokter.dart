@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:shimmer/shimmer.dart';
 
 import 'KeteranganDokter.dart';
 
@@ -311,194 +310,191 @@ class dokterShimerCard extends StatelessWidget {
       return SizedBox(
         height: MediaQuery.of(context).size.height / 5,
         width: MediaQuery.of(context).size.width,
-        child: Shimmer.fromColors(
-            child: Card(
-                clipBehavior: Clip.antiAlias,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(24),
-                ),
-                elevation: 4,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 8, bottom: 8),
-                  child: InkWell(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        SizedBox(
-                          child: Card(
-                            clipBehavior: Clip.antiAlias,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(24),
-                            ),
-                            elevation: 4,
-                            child: Ink.image(
-                              image: NetworkImage(
-                                '$urlgambar',
-                              ),
-                              height: 150,
-                              width: 100,
-                              fit: BoxFit.cover,
-                            ),
+        child: Card(
+            clipBehavior: Clip.antiAlias,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
+            elevation: 4,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 8, bottom: 8),
+              child: InkWell(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SizedBox(
+                      child: Card(
+                        clipBehavior: Clip.antiAlias,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(24),
+                        ),
+                        elevation: 4,
+                        child: Ink.image(
+                          image: NetworkImage(
+                            '$urlgambar',
                           ),
                           height: 150,
                           width: 100,
+                          fit: BoxFit.cover,
                         ),
-                        const SizedBox(
-                          width: 12,
-                        ),
+                      ),
+                      height: 150,
+                      width: 100,
+                    ),
+                    const SizedBox(
+                      width: 12,
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
                         Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Column(
-                              children: [
-                                SizedBox(
-                                  width: (MediaQuery.of(context).size.width -
-                                          120) *
-                                      0.8,
-                                  child: Text(nama!,
-                                      style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 18,
-                                          color: Colors.black)),
-                                ),
-                                SizedBox(
-                                  width: (MediaQuery.of(context).size.width -
-                                          120) *
-                                      0.8,
-                                  child: Text(gelar!,
-                                      style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 14,
-                                          color: Colors.grey)),
-                                ),
-                                SizedBox(
-                                  width: (MediaQuery.of(context).size.width -
-                                          120) *
-                                      0.8,
-                                  child: Text(asal!,
-                                      style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 14,
-                                          color: Colors.grey)),
-                                ),
-                              ],
+                          children: [
+                            SizedBox(
+                              width: (MediaQuery.of(context).size.width -
+                                  120) *
+                                  0.8,
+                              child: Text(nama!,
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 18,
+                                      color: Colors.black)),
                             ),
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.5,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Card(
-                                    clipBehavior: Clip.antiAlias,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(24),
-                                    ),
-                                    elevation: 4,
-                                    child: Container(
-                                        color: Colors.greenAccent.shade100,
-                                        width: 120,
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 4, right: 12),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Icon(
-                                                LineIcons.clock,
-                                                size: 24,
-                                                color: Colors.green.shade900,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  SizedBox(
-                                                    child: Text(
-                                                        waktuawal.toString(),
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 12,
-                                                          color: Colors
-                                                              .green.shade900,
-                                                        )),
-                                                  ),
-                                                  Text(' - ',
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontSize: 12,
-                                                        color: Colors
-                                                            .green.shade900,
-                                                      )),
-                                                  SizedBox(
-                                                    child: Text(
-                                                        waktuakhir.toString(),
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 12,
-                                                          color: Colors
-                                                              .green.shade900,
-                                                        )),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
+                              width: (MediaQuery.of(context).size.width -
+                                  120) *
+                                  0.8,
+                              child: Text(gelar!,
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14,
+                                      color: Colors.grey)),
+                            ),
+                            SizedBox(
+                              width: (MediaQuery.of(context).size.width -
+                                  120) *
+                                  0.8,
+                              child: Text(asal!,
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14,
+                                      color: Colors.grey)),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          child: Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment.spaceBetween,
+                            children: [
+                              Card(
+                                clipBehavior: Clip.antiAlias,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(24),
+                                ),
+                                elevation: 4,
+                                child: Container(
+                                    color: Colors.greenAccent.shade100,
+                                    width: 120,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 4, right: 12),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Icon(
+                                            LineIcons.clock,
+                                            size: 24,
+                                            color: Colors.green.shade900,
                                           ),
-                                        )),
-                                  ),
-                                  Card(
-                                    clipBehavior: Clip.antiAlias,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(24),
-                                    ),
-                                    elevation: 4,
-                                    child: Container(
-                                        color: Colors.yellow.shade100,
-                                        width: 52,
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 4, right: 12),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                          Row(
                                             children: [
-                                              Icon(
-                                                LineIcons.star,
-                                                size: 24,
-                                                color: Colors.yellow.shade800,
-                                              ),
                                               SizedBox(
-                                                child: Text('5',
-                                                    style: GoogleFonts.poppins(
+                                                child: Text(
+                                                    waktuawal.toString(),
+                                                    style:
+                                                    GoogleFonts.poppins(
                                                       fontWeight:
-                                                          FontWeight.w500,
+                                                      FontWeight.w500,
                                                       fontSize: 12,
-                                                      color:
-                                                          Colors.green.shade900,
+                                                      color: Colors
+                                                          .green.shade900,
+                                                    )),
+                                              ),
+                                              Text(' - ',
+                                                  style:
+                                                  GoogleFonts.poppins(
+                                                    fontWeight:
+                                                    FontWeight.w500,
+                                                    fontSize: 12,
+                                                    color: Colors
+                                                        .green.shade900,
+                                                  )),
+                                              SizedBox(
+                                                child: Text(
+                                                    waktuakhir.toString(),
+                                                    style:
+                                                    GoogleFonts.poppins(
+                                                      fontWeight:
+                                                      FontWeight.w500,
+                                                      fontSize: 12,
+                                                      color: Colors
+                                                          .green.shade900,
                                                     )),
                                               ),
                                             ],
                                           ),
-                                        )),
-                                  ),
-                                ],
+                                        ],
+                                      ),
+                                    )),
                               ),
-                            ),
-                          ],
+                              Card(
+                                clipBehavior: Clip.antiAlias,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(24),
+                                ),
+                                elevation: 4,
+                                child: Container(
+                                    color: Colors.yellow.shade100,
+                                    width: 52,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 4, right: 12),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Icon(
+                                            LineIcons.star,
+                                            size: 24,
+                                            color: Colors.yellow.shade800,
+                                          ),
+                                          SizedBox(
+                                            child: Text('5',
+                                                style: GoogleFonts.poppins(
+                                                  fontWeight:
+                                                  FontWeight.w500,
+                                                  fontSize: 12,
+                                                  color:
+                                                  Colors.green.shade900,
+                                                )),
+                                          ),
+                                        ],
+                                      ),
+                                    )),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
-                    onTap: () async {},
-                  ),
-                )),
-            baseColor: Colors.red,
-            highlightColor: Colors.yellow),
+                  ],
+                ),
+                onTap: () async {},
+              ),
+            )),
       );
     } else {
       return Container();
