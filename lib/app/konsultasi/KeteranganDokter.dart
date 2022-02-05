@@ -1,18 +1,21 @@
 // ignore_for_file: file_names, camel_case_types
 
+import 'dart:io';
+
 import 'package:cekgigi/app/HomePage.dart';
+import 'package:cekgigi/app/konsultasi/ChatDokter/Chat.dart';
 import 'package:cekgigi/app/konsultasi/keterangan%20dokter/sisidokternya.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:jitsi_meet/jitsi_meet.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 import 'package:cekgigi/style.dart';
 
-import '../../ChatDokter/Chat.dart';
 import '../../api/DatabaseServices.dart';
-import 'konfirmasipembayaran.dart';
 
 class KeteranganDokter extends StatefulWidget {
   const KeteranganDokter(
@@ -31,6 +34,16 @@ class KeteranganDokter extends StatefulWidget {
 }
 
 class _KeteranganDokterState extends State<KeteranganDokter> {
+  final serverText = TextEditingController();
+  final roomText = TextEditingController(text: "plugintestroom");
+  final subjectText = TextEditingController(text: "My Plugin Test Meeting");
+  final nameText = TextEditingController(text: "Plugin Test User");
+  final emailText = TextEditingController(text: "fake@email.com");
+  final iosAppBarRGBAColor =
+      TextEditingController(text: "#0080FF80"); //transparent blue
+  bool? isAudioOnly = true;
+  bool? isAudioMuted = true;
+  bool? isVideoMuted = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,7 +83,6 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
               ),
               Container(
                 color: Colors.grey.shade100,
-
                 height: 80,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -167,9 +179,12 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
   late bool max = false;
 
   void _onButtonPressedslider() {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference dokter = firestore.collection('doktergigi');
+    CollectionReference pasien = firestore.collection('user');
     final FirebaseAuth auth = FirebaseAuth.instance;
     final User? user = auth.currentUser;
-    final emaila = user?.email;
+    final email = user?.email;
     showModalBottomSheet(
         context: context,
         builder: (context) {
@@ -386,44 +401,73 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                       ),
                     ),
                   ),
-                  Builder(
-                    builder: (context) {
-                      final GlobalKey<SlideActionState> _key = GlobalKey();
-                      return Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: SlideAction(
-                          innerColor: Colors.teal.shade900,
-                          outerColor: Colors.white,
-                          key: _key,
-                          text: 'konsultasi',
-                          onSubmit: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => konfirmasipembayaran(
-                                        imageurl: widget.image,
-                                        idpasien: widget.idpasien,
-                                        iddokter: widget.iddokter,
-                                      )),
-                            );
+                  StreamBuilder<DocumentSnapshot>(
+                    stream: dokter.doc(widget.iddokter).snapshots(),
+                    builder: (context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        Map<String, dynamic> data =
+                            snapshot.data!.data() as Map<String, dynamic>;
 
-                            DatabaseServices
-                                .masukkanpasienkedatabasedokterigigi(
-                                    widget.iddokter,
-                                    widget.idpasien,
-                                    widget.kegiatan);
-                            DatabaseServices
-                                .masukkandatakonsultasikedoktergigikeriwayat(
-                                    emaila!,
-                                    widget.iddokter,
-                                    widget.idpasien,
-                                    widget.kegiatan);
-                            Future.delayed(
-                              const Duration(seconds: 1),
-                              () => _key.currentState?.reset(),
+
+                        String username = data['username'];
+
+                        return StreamBuilder<DocumentSnapshot>(
+                          stream: pasien.doc(email).snapshots(),
+                          builder: (context, AsyncSnapshot snapshot) {
+                            if (snapshot.hasData) {
+                              Map<String, dynamic> data =
+                                  snapshot.data!.data() as Map<String, dynamic>;
+
+                              String namapasien = data['nama'];
+
+                              return Builder(
+                                builder: (context) {
+                                  final GlobalKey<SlideActionState> _key =
+                                      GlobalKey();
+                                  return Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: SlideAction(
+                                      innerColor: Colors.teal.shade900,
+                                      outerColor: Colors.white,
+                                      key: _key,
+                                      text: 'konsultasi',
+                                      onSubmit: () {
+                                        serverText.text = '';
+                                        roomText.text = username;
+                                        subjectText.text = username;
+                                        nameText.text = namapasien;
+                                        emailText.text = email!;
+                                        _joinMeeting();
+
+                                        DatabaseServices
+                                            .masukkanpasienkedatabasedokterigigi(
+                                                widget.iddokter,
+                                                widget.idpasien,
+                                                widget.kegiatan);
+                                        DatabaseServices
+                                            .masukkandatakonsultasikedoktergigikeriwayat(
+                                                email,
+                                                widget.iddokter,
+                                                widget.idpasien,
+                                                widget.kegiatan);
+                                        Future.delayed(
+                                          const Duration(seconds: 1),
+                                          () => _key.currentState?.reset(),
+                                        );
+                                      },
+                                    ),
+                                  );
+                                },
+                              );
+                            }
+                            return const Center(
+                              child: CircularProgressIndicator(),
                             );
                           },
-                        ),
+                        );
+                      }
+                      return const Center(
+                        child: CircularProgressIndicator(),
                       );
                     },
                   ),
@@ -433,6 +477,71 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
           );
         });
   }
+
+
+  _joinMeeting() async {
+    String? serverUrl = serverText.text.trim().isEmpty ? null : serverText.text;
+
+    // Enable or disable any feature flag here
+    // If feature flag are not provided, default values will be used
+    // Full list of feature flags (and defaults) available in the README
+    Map<FeatureFlagEnum, bool> featureFlags = {
+      FeatureFlagEnum.WELCOME_PAGE_ENABLED: false,
+
+    };
+    if (!kIsWeb) {
+      // Here is an example, disabling features for each platform
+      if (Platform.isAndroid) {
+        // Disable ConnectionService usage on Android to avoid issues (see README)
+        featureFlags[FeatureFlagEnum.CALL_INTEGRATION_ENABLED] = false;
+      } else if (Platform.isIOS) {
+        // Disable PIP on iOS as it looks weird
+        featureFlags[FeatureFlagEnum.PIP_ENABLED] = false;
+      }
+    }
+    // Define meetings options here
+    var options = JitsiMeetingOptions(room: roomText.text)
+      ..serverURL = serverUrl
+      ..subject = subjectText.text
+      ..userDisplayName = nameText.text
+      ..userEmail = emailText.text
+      ..iosAppBarRGBAColor = iosAppBarRGBAColor.text
+      ..audioOnly = isAudioOnly
+      ..audioMuted = isAudioMuted
+      ..videoMuted = isVideoMuted
+      ..featureFlags.addAll(featureFlags)
+      ..webOptions = {
+        "roomName": roomText.text,
+        "width": "100%",
+        "height": "100%",
+        "enableWelcomePage": false,
+        "chromeExtensionBanner": null,
+        "userInfo": {"displayName": nameText.text}
+      };
+
+    debugPrint("JitsiMeetingOptions: $options");
+    await JitsiMeet.joinMeeting(
+      options,
+      listener: JitsiMeetingListener(
+          onConferenceWillJoin: (message) {
+            debugPrint("${options.room} will join with message: $message");
+          },
+          onConferenceJoined: (message) {
+            debugPrint("${options.room} joined with message: $message");
+          },
+          onConferenceTerminated: (message) {
+            debugPrint("${options.room} terminated with message: $message");
+          },
+          genericListeners: [
+            JitsiGenericListener(
+                eventName: 'readyToClose',
+                callback: (dynamic message) {
+                  debugPrint("readyToClose callback");
+                }),
+          ]),
+    );
+  }
+
 
   void _onButtonPressedchat() {
     final FirebaseAuth auth = FirebaseAuth.instance;
@@ -665,10 +774,10 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                           key: _key,
                           text: 'konsultasi',
                           onSubmit: () {
-                            DatabaseServices.setcountchataccount(
-                                emaila!, widget.iddokter,widget.idpasien.toString());
-                            DatabaseServices.setchatdokter(
-                                emaila, widget.iddokter,widget.idpasien.toString());
+                            DatabaseServices.setcountchataccount(emaila!,
+                                widget.iddokter, widget.idpasien.toString());
+                            DatabaseServices.setchatdokter(emaila,
+                                widget.iddokter, widget.idpasien.toString());
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -678,8 +787,8 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => Chat(
-                                    widget.iddokter,
-                                  )),
+                                        widget.iddokter,
+                                      )),
                             );
 
                             DatabaseServices

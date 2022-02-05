@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:cekgigi/api/AuthServices.dart';
-import 'package:cekgigi/app/HomePage.dart';
+import 'package:cekgigi/main.dart';
 import 'package:flutter/material.dart';
 
 class RegisEmailScreen extends StatefulWidget {
@@ -44,7 +44,7 @@ class _RegisEmailScreenState extends State<RegisEmailScreen> {
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (BuildContext context) {
-                    return const HalamanRumah();
+                    return const IsiData();
                   }));
                 },
                 child: const Text('Lanjut ke aplikasi'),

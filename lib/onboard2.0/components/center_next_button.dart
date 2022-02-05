@@ -1,6 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:cekgigi/api/AuthServices.dart';
-import 'package:cekgigi/main.dart';
+import 'package:cekgigi/onboard2.0/RegisEmailScreen.dart';
 import 'package:flutter/material.dart';
 
 
@@ -103,7 +103,7 @@ class CenterNextButton extends StatelessWidget {
 
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
-                                    return const IsiData();
+                                    return const RegisEmailScreen();
                                   }));
                             },
                             child: const Padding(

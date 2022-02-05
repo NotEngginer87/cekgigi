@@ -1,18 +1,19 @@
 // ignore_for_file: file_names, non_constant_identifier_names, avoid_print, unnecessary_null_comparison, deprecated_member_use
 
 import 'package:cekgigi/api/DatabaseServices.dart';
+import 'package:cekgigi/app/konsultasi/ChatDokter/ListDokteryangakandichat.dart';
+import 'package:cekgigi/app/konsultasi/ChatDokter/infodokternya.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:jitsi_meet/jitsi_meet.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:permission_handler/permission_handler.dart';
-
-import '../app/konsultasi/KeteranganDokter.dart';
-import '../app/konsultasi/keterangan dokter/sisidokternya.dart';
 
 import 'dart:io';
 import 'package:path/path.dart';
@@ -32,6 +33,34 @@ class _ChatState extends State<Chat> {
   bool opendialogbox = false;
 
   String? imageUrl;
+
+  final serverText = TextEditingController();
+  final roomText = TextEditingController(text: "plugintestroom");
+  final subjectText = TextEditingController(text: "My Plugin Test Meeting");
+  final nameText = TextEditingController(text: "Plugin Test User");
+  final emailText = TextEditingController(text: "fake@email.com");
+  final iosAppBarRGBAColor =
+      TextEditingController(text: "#0080FF80"); //transparent blue
+  bool? isAudioOnly = true;
+  bool? isAudioMuted = false;
+  bool? isVideoMuted = false;
+
+  @override
+  void initState() {
+    super.initState();
+    JitsiMeet.addListener(JitsiMeetingListener(
+        onConferenceWillJoin: _onConferenceWillJoin,
+        onConferenceJoined: _onConferenceJoined,
+        onConferenceTerminated: _onConferenceTerminated,
+        onError: _onError));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    JitsiMeet.removeAllListeners();
+  }
+
   @override
   Widget build(BuildContext context) {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -57,90 +86,117 @@ class _ChatState extends State<Chat> {
                 String nama = data['nama'];
                 String gelar = data['gelar'];
                 String gambar = data['urlgambar'];
+                String username = data['username'];
 
-                return Padding(
-                    padding: const EdgeInsets.only(bottom: 2),
-                    child: InkWell(
-                      child: Container(
-                        color: Colors.teal.shade900,
-                        height: 70,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                IconButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    icon: const Icon(
-                                      Icons.arrow_back,
-                                      color: Colors.white,
-                                    )),
-                                Card(
-                                  clipBehavior: Clip.antiAlias,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(100),
+                return StreamBuilder<DocumentSnapshot>(
+                  stream: pasien.doc(email).snapshots(),
+                  builder: (context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData) {
+                      Map<String, dynamic> data =
+                          snapshot.data!.data() as Map<String, dynamic>;
+
+                      String namapasien = data['nama'];
+
+                      return Padding(
+                          padding: const EdgeInsets.only(bottom: 2),
+                          child: InkWell(
+                            child: Container(
+                              color: Colors.teal.shade900,
+                              height: 70,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      IconButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          icon: const Icon(
+                                            Icons.arrow_back,
+                                            color: Colors.white,
+                                          )),
+                                      Card(
+                                        clipBehavior: Clip.antiAlias,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                        ),
+                                        elevation: 4,
+                                        child: Ink.image(
+                                          image: NetworkImage(gambar),
+                                          height: 50,
+                                          width: 50,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 12,
+                                      ),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            nama,
+                                            style: GoogleFonts.poppins(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 20,
+                                                color: Colors.white),
+                                          ),
+                                          Text(
+                                            gelar,
+                                            style: GoogleFonts.poppins(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 14,
+                                                color: Colors.white),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
-                                  elevation: 4,
-                                  child: Ink.image(
-                                    image: NetworkImage(gambar),
-                                    height: 50,
-                                    width: 50,
-                                    fit: BoxFit.cover,
+                                  Row(
+                                    children: [
+                                      IconButton(
+                                        onPressed: () {
+                                          serverText.text = '';
+                                          roomText.text = username + namapasien;
+                                          subjectText.text = username;
+                                          nameText.text = namapasien;
+                                          emailText.text = email!;
+                                          _joinMeeting();
+                                        },
+                                        icon: const Icon(LineIcons.video),
+                                        color: Colors.white,
+                                        iconSize: 24,
+                                      ),
+                                      const SizedBox(
+                                        width: 18,
+                                      ),
+                                    ],
                                   ),
-                                ),
-                                const SizedBox(
-                                  width: 12,
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      nama,
-                                      style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 20,
-                                          color: Colors.white),
-                                    ),
-                                    Text(
-                                      gelar,
-                                      style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14,
-                                          color: Colors.white),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                            Row(
-                              children: [
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(LineIcons.video),
-                                  color: Colors.white,
-                                  iconSize: 24,
-                                ),
-                                const SizedBox(
-                                  width: 18,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    InfoDokternya(widget.iddokter)));
-                      },
-                    ));
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          InfoDokternya(widget.iddokter)));
+                            },
+                          ));
+                    }
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                );
               }
               return const Center(
                 child: CircularProgressIndicator(),
@@ -268,8 +324,8 @@ class _ChatState extends State<Chat> {
 
                                               return IconButton(
                                                   onPressed: () {
-                                                    uploadImage(email!,count,countt);
-
+                                                    uploadImage(
+                                                        email!, count, countt);
                                                   },
                                                   icon: const Icon(
                                                     LineIcons.camera,
@@ -479,6 +535,98 @@ class _ChatState extends State<Chat> {
     ));
   }
 
+  _joinMeeting() async {
+    String? serverUrl = serverText.text.trim().isEmpty ? null : serverText.text;
+
+    // Enable or disable any feature flag here
+    // If feature flag are not provided, default values will be used
+    // Full list of feature flags (and defaults) available in the README
+    Map<FeatureFlagEnum, bool> featureFlags = {
+      FeatureFlagEnum.WELCOME_PAGE_ENABLED: false,
+      FeatureFlagEnum.CHAT_ENABLED: false,
+      FeatureFlagEnum.CALENDAR_ENABLED: false,
+      FeatureFlagEnum.ADD_PEOPLE_ENABLED: false,
+      FeatureFlagEnum.INVITE_ENABLED: false,
+      FeatureFlagEnum.IOS_RECORDING_ENABLED: false,
+      FeatureFlagEnum.LIVE_STREAMING_ENABLED: false,
+      FeatureFlagEnum.PIP_ENABLED: false,
+      FeatureFlagEnum.RAISE_HAND_ENABLED: false,
+      FeatureFlagEnum.RECORDING_ENABLED: false,
+      FeatureFlagEnum.TILE_VIEW_ENABLED: false,
+      FeatureFlagEnum.TOOLBOX_ALWAYS_VISIBLE: false,
+      FeatureFlagEnum.MEETING_PASSWORD_ENABLED: false,
+      FeatureFlagEnum.CLOSE_CAPTIONS_ENABLED: false,
+      FeatureFlagEnum.CALL_INTEGRATION_ENABLED: false,
+    };
+    if (!kIsWeb) {
+      // Here is an example, disabling features for each platform
+      if (Platform.isAndroid) {
+        // Disable ConnectionService usage on Android to avoid issues (see README)
+        featureFlags[FeatureFlagEnum.CALL_INTEGRATION_ENABLED] = false;
+      } else if (Platform.isIOS) {
+        // Disable PIP on iOS as it looks weird
+        featureFlags[FeatureFlagEnum.PIP_ENABLED] = false;
+      }
+    }
+    // Define meetings options here
+    var options = JitsiMeetingOptions(room: roomText.text)
+      ..serverURL = serverUrl
+      ..subject = subjectText.text
+      ..userDisplayName = nameText.text
+      ..userEmail = emailText.text
+      ..iosAppBarRGBAColor = iosAppBarRGBAColor.text
+      ..audioOnly = isAudioOnly
+      ..audioMuted = isAudioMuted
+      ..videoMuted = isVideoMuted
+      ..featureFlags.addAll(featureFlags)
+      ..webOptions = {
+        "roomName": roomText.text,
+        "width": "100%",
+        "height": "100%",
+        "enableWelcomePage": false,
+        "chromeExtensionBanner": null,
+        "userInfo": {"displayName": nameText.text}
+      };
+
+    debugPrint("JitsiMeetingOptions: $options");
+    await JitsiMeet.joinMeeting(
+      options,
+      listener: JitsiMeetingListener(
+          onConferenceWillJoin: (message) {
+            debugPrint("${options.room} will join with message: $message");
+          },
+          onConferenceJoined: (message) {
+            debugPrint("${options.room} joined with message: $message");
+          },
+          onConferenceTerminated: (message) {
+            debugPrint("${options.room} terminated with message: $message");
+          },
+          genericListeners: [
+            JitsiGenericListener(
+                eventName: 'readyToClose',
+                callback: (dynamic message) {
+                  debugPrint("readyToClose callback");
+                }),
+          ]),
+    );
+  }
+
+  void _onConferenceWillJoin(message) {
+    debugPrint("_onConferenceWillJoin broadcasted with message: $message");
+  }
+
+  void _onConferenceJoined(message) {
+    debugPrint("_onConferenceJoined broadcasted with message: $message");
+  }
+
+  void _onConferenceTerminated(message) {
+    debugPrint("_onConferenceTerminated broadcasted with message: $message");
+  }
+
+  _onError(error) {
+    debugPrint("_onError broadcasted: $error");
+  }
+
   uploadImage(String email, int count, int countt) async {
     final _storage = FirebaseStorage.instance;
     final _picker = ImagePicker();
@@ -510,16 +658,9 @@ class _ChatState extends State<Chat> {
 
         setState(() {
           imageUrl = downloadUrl;
-          DatabaseServices.updatechat(
-              email,
-              widget.iddokter,
-              count.toString(),
-              imageUrl!,
-              countt,
-              'pasien',
-              true);
-          DatabaseServices.updatecountchataccount(
-              email, widget.iddokter);
+          DatabaseServices.updatechat(email, widget.iddokter, count.toString(),
+              imageUrl!, countt, 'pasien', true);
+          DatabaseServices.updatecountchataccount(email, widget.iddokter);
         });
       } else {
         print('No Path Received');
@@ -592,349 +733,6 @@ class Balloonchat extends StatelessWidget {
                           style: const TextStyle(color: Colors.white),
                         ),
                       )),
-            )));
-  }
-}
-
-class InfoDokternya extends StatefulWidget {
-  const InfoDokternya(this.iddokter, {Key? key}) : super(key: key);
-  final String iddokter;
-  @override
-  _InfoDokternyaState createState() => _InfoDokternyaState();
-}
-
-class _InfoDokternyaState extends State<InfoDokternya> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('info dokter'),
-        backgroundColor: Colors.teal.shade900,
-        elevation: 0,
-        centerTitle: true,
-      ),
-      body: Container(
-        color: Colors.teal.shade900,
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.grey.shade200,
-            borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-          ),
-          child: ListView(
-            children: [
-              infodokternya(widget.iddokter),
-              edukasidokternya(widget.iddokter),
-              klinikdokternya(widget.iddokter),
-              komentarnya(widget.iddokter),
-              const SizedBox(
-                height: 12,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class ChatMenu extends StatefulWidget {
-  const ChatMenu({Key? key}) : super(key: key);
-
-  @override
-  _ChatMenuState createState() => _ChatMenuState();
-}
-
-class _ChatMenuState extends State<ChatMenu> {
-  @override
-  Widget build(BuildContext context) {
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
-    CollectionReference pasien = firestore.collection('user');
-    final FirebaseAuth auth = FirebaseAuth.instance;
-    final User? user = auth.currentUser;
-    final email = user?.email;
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('chat'),
-        backgroundColor: Colors.teal.shade900,
-      ),
-      body: Container(
-        color: Colors.teal.shade900,
-        child: Container(
-            decoration: BoxDecoration(
-              color: Colors.grey.shade50,
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: ListView(
-                children: [
-                  StreamBuilder<QuerySnapshot>(
-                    stream: pasien.doc(email).collection('chat').snapshots(),
-                    builder: (_, AsyncSnapshot snapshot) {
-                      if (snapshot.hasData) {
-                        return Column(
-                            children: snapshot.data.docs
-                                .map<Widget>((e) => ListChat(
-                                      e.data()['iddokter'],
-                                    ))
-                                .toList());
-                      } else {
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: const [
-                            Center(
-                              child: Center(
-                                child: CircularProgressIndicator(),
-                              ),
-                            ),
-                          ],
-                        );
-                      }
-                    },
-                  ),
-                ],
-              ),
-            )),
-      ),
-    );
-  }
-}
-
-class ListChat extends StatelessWidget {
-  const ListChat(this.iddokter, {Key? key}) : super(key: key);
-  final String iddokter;
-  @override
-  Widget build(BuildContext context) {
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
-    CollectionReference dokter = firestore.collection('doktergigi');
-
-    CollectionReference pasien = firestore.collection('user');
-    final FirebaseAuth auth = FirebaseAuth.instance;
-    final User? user = auth.currentUser;
-    final email = user?.email;
-
-    return StreamBuilder<DocumentSnapshot>(
-      stream: dokter.doc(iddokter).snapshots(),
-      builder: (context, AsyncSnapshot snapshot) {
-        if (snapshot.hasData) {
-          Map<String, dynamic> data =
-              snapshot.data!.data() as Map<String, dynamic>;
-
-          String nama = data['nama'];
-          String gelar = data['gelar'];
-          String gambar = data['urlgambar'];
-          String id = data['id'];
-
-          return Container(
-            color: Colors.grey.shade50,
-            child: Padding(
-                padding: const EdgeInsets.only(bottom: 2),
-                child: Column(
-                  children: [
-                    const Divider(
-                      height: 2,
-                    ),
-                    InkWell(
-                      child: Container(
-                        color: Colors.grey.shade50,
-                        height: 100,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                const SizedBox(
-                                  width: 12,
-                                ),
-                                Card(
-                                  clipBehavior: Clip.antiAlias,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(100),
-                                  ),
-                                  elevation: 4,
-                                  child: Ink.image(
-                                    image: NetworkImage(gambar),
-                                    height: 64,
-                                    width: 64,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 16,
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      nama,
-                                      style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 20,
-                                          color: Colors.black),
-                                    ),
-                                    Text(
-                                      gelar,
-                                      style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14,
-                                          color: Colors.black),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                IconButton(
-                                  onPressed: () {
-                                    showDialog<String>(
-                                        context: context,
-                                        builder: (BuildContext context) =>
-                                            AlertDialog(
-                                              title: const Text('Hapus Chat'),
-                                              content: const Text(
-                                                  'Yakin ingin menghapus chat anda ?'),
-                                              actions: <Widget>[
-                                                StreamBuilder<DocumentSnapshot>(
-                                                  stream: pasien
-                                                      .doc(email)
-                                                      .collection('chat')
-                                                      .doc(iddokter)
-                                                      .snapshots(),
-                                                  builder: (context,
-                                                      AsyncSnapshot snapshot) {
-                                                    if (snapshot.hasData) {
-                                                      Map<String, dynamic>
-                                                          data =
-                                                          snapshot.data!.data()
-                                                              as Map<String,
-                                                                  dynamic>;
-
-                                                      int banyakchatpasien =
-                                                          data['count'];
-
-                                                      return StreamBuilder<
-                                                          DocumentSnapshot>(
-                                                        stream: dokter
-                                                            .doc(iddokter)
-                                                            .collection('chat')
-                                                            .doc(email)
-                                                            .snapshots(),
-                                                        builder: (context,
-                                                            AsyncSnapshot
-                                                                snapshot) {
-                                                          if (snapshot
-                                                              .hasData) {
-                                                            Map<String, dynamic>
-                                                                data = snapshot
-                                                                        .data!
-                                                                        .data()
-                                                                    as Map<
-                                                                        String,
-                                                                        dynamic>;
-
-                                                            int banyakchatdokter =
-                                                                data['count'];
-
-                                                            return TextButton(
-                                                              onPressed: () {
-                                                                DatabaseServices
-                                                                    .deletechatdokter(
-                                                                        email!,
-                                                                        id,
-                                                                        banyakchatpasien,
-                                                                        banyakchatdokter);
-                                                                Navigator.pop(context);
-                                                              },
-                                                              child: const Text(
-                                                                  'ya'),
-                                                            );
-                                                          }
-                                                          return const Center(
-                                                            child:
-                                                                CircularProgressIndicator(),
-                                                          );
-                                                        },
-                                                      );
-                                                    }
-                                                    return const Center(
-                                                      child:
-                                                          CircularProgressIndicator(),
-                                                    );
-                                                  },
-                                                ),
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(context),
-                                                  child: const Text('tidak'),
-                                                ),
-                                              ],
-                                            ));
-                                  },
-                                  icon: const Icon(Icons.delete),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Chat(iddokter)));
-                      },
-                    ),
-                    const Divider(
-                      height: 2,
-                    ),
-                  ],
-                )),
-          );
-        }
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-    );
-  }
-}
-
-class LihatFoto extends StatelessWidget {
-  const LihatFoto({
-    Key? key,
-    required this.foto,
-  }) : super(key: key);
-  final String? foto;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-        height: MediaQuery.of(context).size.width,
-        width: MediaQuery.of(context).size.width,
-        child: Hero(
-            tag: 'fotochat',
-            child: Container(
-              child: (foto == null)
-                  ? Image(
-                      image: const NetworkImage(
-                          'https://firebasestorage.googleapis.com/v0/b/teledentistry-70122.appspot.com/o/foto_blog%2Fkosong.png?alt=media&token=652482ea-7fa4-451f-913a-912c83d3ebd1'),
-                      height: MediaQuery.of(context).size.width * 0.7,
-                      width: MediaQuery.of(context).size.width * 0.7,
-                    )
-                  : Image(
-                      image: NetworkImage(foto!),
-                      height: MediaQuery.of(context).size.width * 0.7,
-                      width: MediaQuery.of(context).size.width * 0.7,
-                    ),
             )));
   }
 }
