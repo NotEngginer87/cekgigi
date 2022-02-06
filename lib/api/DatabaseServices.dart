@@ -82,6 +82,112 @@ class DatabaseServices {
     );
   }
 
+  static Future<void> setawaldatabookorder(String iddokter, bool senin, selasa,
+      rabu, kamis, jumat, sabtu, minggu) async {
+    await doktergigi.doc(iddokter).collection('booking').doc('ketentuan').set(
+      {
+        'senin': senin,
+        'selasa': selasa,
+        'rabu': rabu,
+        'kamis': kamis,
+        'jumat': jumat,
+        'sabtu': sabtu,
+        'minggu': minggu,
+      },
+    );
+    await doktergigi
+        .doc(iddokter)
+        .collection('booking')
+        .doc('ketentuan')
+        .collection('senin')
+        .doc('waktu')
+        .set(
+      {
+        '1': '08.00',
+        '2': '10.00',
+        '3': '13.00',
+      },
+    );
+    await doktergigi
+        .doc(iddokter)
+        .collection('booking')
+        .doc('ketentuan')
+        .collection('selasa')
+        .doc('waktu')
+        .set(
+      {
+        '1': '08.00',
+        '2': '10.00',
+        '3': '13.00',
+      },
+    );
+    await doktergigi
+        .doc(iddokter)
+        .collection('booking')
+        .doc('ketentuan')
+        .collection('rabu')
+        .doc('waktu')
+        .set(
+      {
+        '1': '08.00',
+        '2': '10.00',
+        '3': '13.00',
+      },
+    );
+    await doktergigi
+        .doc(iddokter)
+        .collection('booking')
+        .doc('ketentuan')
+        .collection('kamis')
+        .doc('waktu')
+        .set(
+      {
+        '1': '08.00',
+        '2': '10.00',
+        '3': '13.00',
+      },
+    );
+    await doktergigi
+        .doc(iddokter)
+        .collection('booking')
+        .doc('ketentuan')
+        .collection('jumat')
+        .doc('waktu')
+        .set(
+      {
+        '1': '08.00',
+        '2': '10.00',
+        '3': '13.00',
+      },
+    );
+    await doktergigi
+        .doc(iddokter)
+        .collection('booking')
+        .doc('ketentuan')
+        .collection('sabtu')
+        .doc('waktu')
+        .set(
+      {
+        '1': '08.00',
+        '2': '10.00',
+        '3': '13.00',
+      },
+    );
+    await doktergigi
+        .doc(iddokter)
+        .collection('booking')
+        .doc('ketentuan')
+        .collection('minggu')
+        .doc('waktu')
+        .set(
+      {
+        '1': '08.00',
+        '2': '10.00',
+        '3': '13.00',
+      },
+    );
+  }
+
   static Future<void> masukkanpasienkedatabasedokterigigi(
       String iddokter, int idpasien, String kegiatan) async {
     await doktergigi
@@ -143,8 +249,14 @@ class DatabaseServices {
     );
   }
 
-  static Future<void> updatechatdokter(String email, String iddokter,
-      String idchat, String chat, int countchattime, String status, bool foto) async {
+  static Future<void> updatechatdokter(
+      String email,
+      String iddokter,
+      String idchat,
+      String chat,
+      int countchattime,
+      String status,
+      bool foto) async {
     await doktergigi
         .doc(iddokter)
         .collection('chat')
@@ -157,7 +269,7 @@ class DatabaseServices {
         'chat': chat,
         'countchattime': countchattime,
         'status': status,
-        'foto' : false,
+        'foto': false,
       },
     );
   }
@@ -165,7 +277,7 @@ class DatabaseServices {
   static Future<void> setcountchataccount(
     String email,
     String iddokter,
-      String idpasien,
+    String idpasien,
   ) async {
     await userdata.doc(email).collection('chat').doc(iddokter).set(
       {
@@ -173,7 +285,6 @@ class DatabaseServices {
         'iddokter': iddokter,
         'requestvideocall': false,
         'idpasien': idpasien,
-
       },
     );
   }
@@ -204,17 +315,13 @@ class DatabaseServices {
           .doc(k.toString())
           .delete();
     }
-    await userdata
-        .doc(email)
-        .collection('chat')
-        .doc(iddokter)
-        .delete();
+    await userdata.doc(email).collection('chat').doc(iddokter).delete();
   }
 
   static Future<void> setchatdokter(
     String email,
     String iddokter,
-      String idpasien,
+    String idpasien,
   ) async {
     await doktergigi.doc(iddokter).collection('chat').doc(email).set(
       {

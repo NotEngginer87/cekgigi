@@ -65,6 +65,7 @@ dependencies:
   whatsapp_unilink: ^2.0.1+1
   flutter_phone_direct_caller: ^2.1.0
   jitsi_meet: ^4.0.0
+  date_picker_timeline: ^1.2.3
 
 dev_dependencies:
   flutter_test:
