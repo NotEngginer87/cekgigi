@@ -188,6 +188,25 @@ class DatabaseServices {
     );
   }
 
+  static Future<void> aturjadwalbooking(
+    String iddokter,
+    String hari,
+    int sesi,
+    tanda,
+  ) async {
+    await doktergigi
+        .doc(iddokter)
+        .collection('booking')
+        .doc('ketentuan')
+        .collection(hari)
+        .doc('waktu')
+        .update(
+      {
+        tanda: false,
+      },
+    );
+  }
+
   static Future<void> masukkanpasienkedatabasedokterigigi(
       String iddokter, int idpasien, String kegiatan) async {
     await doktergigi
