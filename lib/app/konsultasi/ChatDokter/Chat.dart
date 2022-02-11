@@ -364,36 +364,6 @@ class _ChatState extends State<Chat> {
                                       child: IconButton(
                                           onPressed: () {},
                                           icon: const Icon(
-                                            LineIcons.medicalNotes,
-                                            size: 24,
-                                            color: Colors.black,
-                                          )),
-                                    ),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    const Text('riwayat'),
-                                  ],
-                                )),
-                                Expanded(
-                                    child: Column(
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(50),
-                                        color: Colors.white,
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            blurRadius: 1,
-                                            blurStyle: BlurStyle.outer,
-                                          )
-                                        ],
-                                      ),
-                                      height:
-                                          MediaQuery.of(context).size.width / 9,
-                                      child: IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(
                                             LineIcons.calendarAlt,
                                             size: 24,
                                             color: Colors.black,
@@ -661,6 +631,10 @@ class _ChatState extends State<Chat> {
           DatabaseServices.updatechat(email, widget.iddokter, count.toString(),
               imageUrl!, countt, 'pasien', true);
           DatabaseServices.updatecountchataccount(email, widget.iddokter);
+
+          DatabaseServices.updatechatdokter(email, widget.iddokter, count.toString(),
+              imageUrl!, countt, 'pasien', true);
+          DatabaseServices.updatecountchataccountdokter(email, widget.iddokter);
         });
       } else {
         print('No Path Received');

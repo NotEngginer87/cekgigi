@@ -23,6 +23,9 @@ void main() async {
   await Firebase.initializeApp();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
       overlays: [SystemUiOverlay.bottom]);
+  SystemChrome.setEnabledSystemUIOverlays([
+    SystemUiOverlay.bottom, //This line is used for showing the bottom bar
+  ]);
   runApp(MaterialApp(
     home: MyApp(),
   ));

@@ -810,7 +810,7 @@ class _JanjitemuState extends State<Janjitemu> {
                                             Navigator.push(context,
                                                 MaterialPageRoute(builder:
                                                     (BuildContext context) {
-                                              return WebViewExample();
+                                              return const WebViewExample();
                                             }));
                                           },
                                         ))),

@@ -241,16 +241,17 @@ class _eventState extends State<event> {
                                             ),
                                           ],
                                         ),
+
                                         Builder(
                                           builder: (context) {
                                             final GlobalKey<SlideActionState>
-                                                _key = GlobalKey();
+                                            _key = GlobalKey();
                                             return Padding(
                                               padding:
-                                                  const EdgeInsets.all(12.0),
+                                              const EdgeInsets.all(12.0),
                                               child: SlideAction(
                                                 outerColor:
-                                                    Colors.teal.shade900,
+                                                Colors.teal.shade900,
                                                 innerColor: Colors.white,
                                                 key: _key,
                                                 text: 'Ikuti ' + slider,
@@ -266,7 +267,7 @@ class _eventState extends State<event> {
                                                                   'sekmit')));
                                                   Future.delayed(
                                                     const Duration(seconds: 1),
-                                                    () => _key.currentState
+                                                        () => _key.currentState
                                                         ?.reset(),
                                                   );
                                                 },

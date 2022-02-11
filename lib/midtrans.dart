@@ -9,11 +9,12 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-void main() => runApp(MaterialApp(home: WebViewExample()));
+void main() => runApp(const MaterialApp(home: WebViewExample()));
 
 const String kNavigationExamplePage = '''
 <!DOCTYPE html><html>
@@ -71,6 +72,8 @@ const String kTransparentBackgroundPage = '''
 ''';
 
 class WebViewExample extends StatefulWidget {
+  const WebViewExample({Key? key}) : super(key: key);
+
   @override
   _WebViewExampleState createState() => _WebViewExampleState();
 }
@@ -109,24 +112,34 @@ class _WebViewExampleState extends State<WebViewExample> {
             _controller.complete(webViewController);
           },
           onProgress: (int progress) {
-            print('WebView is loading (progress : $progress%)');
+            if (kDebugMode) {
+              print('WebView is loading (progress : $progress%)');
+            }
           },
           javascriptChannels: <JavascriptChannel>{
             _toasterJavascriptChannel(context),
           },
           navigationDelegate: (NavigationRequest request) {
             if (request.url.startsWith('https://www.youtube.com/')) {
-              print('blocking navigation to $request}');
+              if (kDebugMode) {
+                print('blocking navigation to $request}');
+              }
               return NavigationDecision.prevent;
             }
-            print('allowing navigation to $request');
+            if (kDebugMode) {
+              print('allowing navigation to $request');
+            }
             return NavigationDecision.navigate;
           },
           onPageStarted: (String url) {
-            print('Page started loading: $url');
+            if (kDebugMode) {
+              print('Page started loading: $url');
+            }
           },
           onPageFinished: (String url) {
-            print('Page finished loading: $url');
+            if (kDebugMode) {
+              print('Page finished loading: $url');
+            }
           },
           gestureNavigationEnabled: true,
           backgroundColor: const Color(0x00000000),
@@ -186,7 +199,7 @@ enum MenuOptions {
 }
 
 class SampleMenu extends StatelessWidget {
-  SampleMenu(this.controller);
+  SampleMenu(this.controller, {Key? key}) : super(key: key);
 
   final Future<WebViewController> controller;
   final CookieManager cookieManager = CookieManager();
@@ -416,7 +429,7 @@ class SampleMenu extends StatelessWidget {
   }
 
   Widget _getCookieList(String cookies) {
-    if (cookies == null || cookies == '""') {
+    if (cookies == '""') {
       return Container();
     }
     final List<String> cookieList = cookies.split(';');
@@ -442,8 +455,7 @@ class SampleMenu extends StatelessWidget {
 }
 
 class NavigationControls extends StatelessWidget {
-  const NavigationControls(this._webViewControllerFuture)
-      : assert(_webViewControllerFuture != null);
+   const NavigationControls(this._webViewControllerFuture, {Key? key}) : super(key: key);
 
   final Future<WebViewController> _webViewControllerFuture;
 

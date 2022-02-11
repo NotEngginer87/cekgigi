@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, non_constant_identifier_names
 
 import 'package:cekgigi/main.dart';
-import 'package:cekgigi/onboard2.0/RegisEmailScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -37,9 +36,6 @@ class _Tab3State extends State<Tab3> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: 8,
-                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -157,15 +153,6 @@ class _Tab3State extends State<Tab3> {
                 ),
                 SizedBox(
                   height: 16,
-                ),
-                ElevatedButton(
-                  child: Text('regis'),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (BuildContext context) {
-                          return RegisEmailScreen();
-                        }));
-                  },
                 ),
               ],
             ),

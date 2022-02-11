@@ -25,7 +25,9 @@ class _ChatMenuState extends State<ChatMenu> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('chat'),
+        title: const Text('Chat',textAlign: TextAlign.center,),
+        centerTitle: true,
+        elevation: 0,
         backgroundColor: Colors.teal.shade900,
       ),
       body: Container(
