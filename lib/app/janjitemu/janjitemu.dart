@@ -379,6 +379,7 @@ class _JanjitemuState extends State<Janjitemu> {
   int selectedvalue = 0;
   late String jam;
   late int set = DateTime.now().weekday;
+
   @override
   Widget build(BuildContext context) {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -412,356 +413,223 @@ class _JanjitemuState extends State<Janjitemu> {
                           children: [
                             Column(
                               children: [
-                                StreamBuilder<DocumentSnapshot>(
-                                  stream: dokter
-                                      .doc(widget.iddokter)
-                                      .collection('booking')
-                                      .doc('ketentuan')
-                                      .snapshots(),
-                                  builder: (context, AsyncSnapshot snapshot) {
-                                    if (snapshot.hasData) {
-                                      Map<String, dynamic> data = snapshot.data!
-                                          .data() as Map<String, dynamic>;
-
-                                      bool senin = data['senin'];
-                                      bool selasa = data['selasa'];
-                                      bool rabu = data['rabu'];
-                                      bool kamis = data['kamis'];
-                                      bool jumat = data['jumat'];
-                                      bool sabtu = data['sabtu'];
-                                      bool minggu = data['minggu'];
-
-                                      return Card(
-                                        clipBehavior: Clip.antiAlias,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                        ),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: <Widget>[
-                                            const Text(
-                                              "Atur Tanggal",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 16),
-                                            ),
-                                            ElevatedButton(
-                                              child: const Text('print'),
-                                              onPressed: () {
-                                                print(namahari);
-                                                print(hari);
-                                                print(tanggal);
-                                                print(bulan);
-                                                print(tahun);
-                                                print(set);
-                                              },
-                                            ),
-                                            const Padding(
-                                              padding: EdgeInsets.all(10),
-                                            ),
-                                            //Text(_selectedValue.toString()),
-                                            Padding(
-                                              padding: const EdgeInsets.all(8),
-                                              child: DatePicker(
-                                                DateTime.now(),
-                                                width: 60,
-                                                height: 80,
-                                                controller: _controller,
-                                                initialSelectedDate:
-                                                    DateTime.now(),
-                                                daysCount: 7,
-                                                selectionColor:
-                                                    Colors.teal.shade900,
-                                                selectedTextColor: Colors.white,
-                                                activeDates: [
-                                                  if (senin == true)
-                                                    if (DateTime.monday - set <
-                                                        0)
-                                                      DateTime.now().add(
-                                                          Duration(
-                                                              days: DateTime
-                                                                      .monday -
-                                                                  set))
-                                                    else
-                                                      DateTime.now().add(
-                                                          Duration(
-                                                              days: DateTime
-                                                                      .monday -
-                                                                  set +
-                                                                  7)),
-                                                  if (selasa == true)
-                                                    DateTime.now().add(Duration(
-                                                        days: DateTime.tuesday -
-                                                            set)),
-                                                  if (rabu == true)
-                                                    DateTime.now().add(Duration(
-                                                        days:
-                                                            DateTime.wednesday -
-                                                                set)),
-                                                  if (kamis == true)
-                                                    DateTime.now().add(Duration(
-                                                        days:
-                                                            DateTime.thursday -
-                                                                set)),
-                                                  if (jumat == true)
-                                                    DateTime.now().add(Duration(
-                                                        days: DateTime.friday -
-                                                            set)),
-                                                  if (sabtu == true)
-                                                    DateTime.now().add(Duration(
-                                                        days:
-                                                            DateTime.saturday -
-                                                                set)),
-                                                  if (minggu == true)
-                                                    DateTime.now().add(Duration(
-                                                        days: DateTime.sunday -
-                                                            set)),
-                                                ],
-                                                onDateChange: (date) {
-                                                  // New date selected
-                                                  setState(() {
-                                                    tanggal =
-                                                        date.day.toString();
-                                                    hari = date.weekday;
-
-                                                    if (hari == 1) {
-
-                                                        namahari = 'senin';
-
-                                                    }
-                                                    if (hari == 2) {
-                                                      namahari = 'selasa';
-                                                    }
-                                                    if (hari == 3) {
-                                                      namahari = 'rabu';
-                                                    }
-                                                    if (hari == 4) {
-                                                      namahari = 'kamis';
-                                                    }
-                                                    if (hari == 5) {
-                                                      namahari = 'jumat';
-                                                    }
-                                                    if (hari == 6) {
-                                                      namahari = 'sabtu';
-                                                    }
-                                                    if (hari == 7) {
-                                                      namahari = 'minggu';
-                                                    }
-
-                                                    tanggal =
-                                                        date.day.toString();
-                                                    bulan =
-                                                        date.month.toString();
-                                                    tahun =
-                                                        date.year.toString();
-                                                  });
-                                                },
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    }
-                                    return const Center(
-                                      child: CircularProgressIndicator(),
-                                    );
-                                  },
-                                ),
+                                buildaturjadwal(),
                                 const SizedBox(height: 24),
-                                (namahari == null) ? Container() : StreamBuilder(
-                                  stream: dokter
-                                      .doc(widget.iddokter)
-                                      .collection('booking')
-                                      .doc('ketentuan')
-                                      .collection(namahari!)
-                                      .doc('waktu')
-                                      .snapshots(),
-                                  builder: (context, AsyncSnapshot snapshot) {
-                                    if (snapshot.hasData) {
-                                      Map<String, dynamic> data = snapshot.data!
-                                          .data() as Map<String, dynamic>;
+                                (namahari == null)
+                                    ? Container()
+                                    : StreamBuilder(
+                                        stream: dokter
+                                            .doc(widget.iddokter)
+                                            .collection('booking')
+                                            .doc('ketentuan')
+                                            .collection(namahari!)
+                                            .doc('waktu')
+                                            .snapshots(),
+                                        builder:
+                                            (context, AsyncSnapshot snapshot) {
+                                          if (snapshot.hasData) {
+                                            Map<String, dynamic> data =
+                                                snapshot.data!.data()
+                                                    as Map<String, dynamic>;
 
-                                      String waktu1 = data['1'];
-                                      String waktu2 = data['2'];
-                                      String waktu3 = data['3'];
+                                            String waktu1 = data['1'];
+                                            String waktu2 = data['2'];
+                                            String waktu3 = data['3'];
 
-                                      bool boolwaktu1 = data['b1'];
-                                      bool boolwaktu2 = data['b2'];
-                                      bool boolwaktu3 = data['b3'];
+                                            bool boolwaktu1 = data['b1'];
+                                            bool boolwaktu2 = data['b2'];
+                                            bool boolwaktu3 = data['b3'];
 
-                                      return Card(
-                                        clipBehavior: Clip.antiAlias,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                          BorderRadius.circular(12),
-                                        ),
-                                        child: Column(
-                                          children: [
-                                            const SizedBox(
-                                              height: 12,
-                                            ),
-                                            const Text(
-                                              'Waktu',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 16),
-                                            ),
-                                            const SizedBox(
-                                              height: 12,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                InkWell(
-                                                  child: Card(
-                                                      clipBehavior:
-                                                      Clip.antiAlias,
-                                                      shape:
-                                                      RoundedRectangleBorder(
-                                                        borderRadius:
-                                                        BorderRadius
-                                                            .circular(8),
-                                                      ),
-                                                      color: (boolwaktu1 ==
-                                                          false)
-                                                          ? Colors.grey
-                                                          : (selectedvalue == 1)
-                                                          ? Colors
-                                                          .teal.shade900
-                                                          : Colors.white,
-                                                      child: Padding(
-                                                        padding:
-                                                        const EdgeInsets
-                                                            .all(12),
-                                                        child: Text(waktu1,
-                                                            style: TextStyle(
-                                                              color: (boolwaktu1 ==
-                                                                  false)
-                                                                  ? Colors.white
-                                                                  : (selectedvalue ==
-                                                                  1)
-                                                                  ? Colors
-                                                                  .white
-                                                                  : Colors
-                                                                  .grey,
+                                            return Card(
+                                              clipBehavior: Clip.antiAlias,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                              ),
+                                              child: Column(
+                                                children: [
+                                                  const SizedBox(
+                                                    height: 12,
+                                                  ),
+                                                  const Text(
+                                                    'Waktu',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 16),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 12,
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
+                                                    children: [
+                                                      InkWell(
+                                                        child: Card(
+                                                            clipBehavior:
+                                                                Clip.antiAlias,
+                                                            shape:
+                                                                RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8),
+                                                            ),
+                                                            color: (boolwaktu1 ==
+                                                                    false)
+                                                                ? Colors.grey
+                                                                : (selectedvalue ==
+                                                                        1)
+                                                                    ? Colors
+                                                                        .teal
+                                                                        .shade900
+                                                                    : Colors
+                                                                        .white,
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(12),
+                                                              child: Text(
+                                                                  waktu1,
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: (boolwaktu1 ==
+                                                                            false)
+                                                                        ? Colors
+                                                                            .white
+                                                                        : (selectedvalue ==
+                                                                                1)
+                                                                            ? Colors.white
+                                                                            : Colors.grey,
+                                                                  )),
                                                             )),
-                                                      )),
-                                                  onTap: () {
-                                                    setState(() {
-                                                      (boolwaktu1 == true)
-                                                          ? selectedvalue = 1
-                                                          : selectedvalue =
-                                                          selectedvalue;
-                                                    });
-                                                  },
-                                                ),
-                                                InkWell(
-                                                  child: Card(
-                                                      clipBehavior:
-                                                      Clip.antiAlias,
-                                                      shape:
-                                                      RoundedRectangleBorder(
-                                                        borderRadius:
-                                                        BorderRadius
-                                                            .circular(8),
+                                                        onTap: () {
+                                                          setState(() {
+                                                            (boolwaktu1 == true)
+                                                                ? selectedvalue =
+                                                                    1
+                                                                : selectedvalue =
+                                                                    selectedvalue;
+                                                          });
+                                                        },
                                                       ),
-                                                      color: (boolwaktu2 ==
-                                                          false)
-                                                          ? Colors.grey
-                                                          : (selectedvalue == 2)
-                                                          ? Colors
-                                                          .teal.shade900
-                                                          : Colors.white,
-                                                      child: Padding(
-                                                        padding:
-                                                        const EdgeInsets
-                                                            .all(12),
-                                                        child: Text(waktu2,
-                                                            style: TextStyle(
-                                                              color: (boolwaktu2 ==
-                                                                  false)
-                                                                  ? Colors.white
-                                                                  : (selectedvalue ==
-                                                                  2)
-                                                                  ? Colors
-                                                                  .white
-                                                                  : Colors
-                                                                  .grey,
+                                                      InkWell(
+                                                        child: Card(
+                                                            clipBehavior:
+                                                                Clip.antiAlias,
+                                                            shape:
+                                                                RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8),
+                                                            ),
+                                                            color: (boolwaktu2 ==
+                                                                    false)
+                                                                ? Colors.grey
+                                                                : (selectedvalue ==
+                                                                        2)
+                                                                    ? Colors
+                                                                        .teal
+                                                                        .shade900
+                                                                    : Colors
+                                                                        .white,
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(12),
+                                                              child: Text(
+                                                                  waktu2,
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: (boolwaktu2 ==
+                                                                            false)
+                                                                        ? Colors
+                                                                            .white
+                                                                        : (selectedvalue ==
+                                                                                2)
+                                                                            ? Colors.white
+                                                                            : Colors.grey,
+                                                                  )),
                                                             )),
-                                                      )),
-                                                  onTap: () {
-                                                    setState(() {
-                                                      (boolwaktu2 == true)
-                                                          ? selectedvalue = 2
-                                                          : selectedvalue =
-                                                          selectedvalue;
-                                                    });
-                                                  },
-                                                ),
-                                                InkWell(
-                                                  child: Card(
-                                                      clipBehavior:
-                                                      Clip.antiAlias,
-                                                      shape:
-                                                      RoundedRectangleBorder(
-                                                        borderRadius:
-                                                        BorderRadius
-                                                            .circular(8),
+                                                        onTap: () {
+                                                          setState(() {
+                                                            (boolwaktu2 == true)
+                                                                ? selectedvalue =
+                                                                    2
+                                                                : selectedvalue =
+                                                                    selectedvalue;
+                                                          });
+                                                        },
                                                       ),
-                                                      color: (boolwaktu3 ==
-                                                          false)
-                                                          ? Colors.grey
-                                                          : (selectedvalue == 3)
-                                                          ? Colors
-                                                          .teal.shade900
-                                                          : Colors.white,
-                                                      child: Padding(
-                                                        padding:
-                                                        const EdgeInsets
-                                                            .all(12),
-                                                        child: Text(waktu3,
-                                                            style: TextStyle(
-                                                              color: (boolwaktu3 ==
-                                                                  false)
-                                                                  ? Colors.white
-                                                                  : (selectedvalue ==
-                                                                  3)
-                                                                  ? Colors
-                                                                  .white
-                                                                  : Colors
-                                                                  .grey,
+                                                      InkWell(
+                                                        child: Card(
+                                                            clipBehavior:
+                                                                Clip.antiAlias,
+                                                            shape:
+                                                                RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8),
+                                                            ),
+                                                            color: (boolwaktu3 ==
+                                                                    false)
+                                                                ? Colors.grey
+                                                                : (selectedvalue ==
+                                                                        3)
+                                                                    ? Colors
+                                                                        .teal
+                                                                        .shade900
+                                                                    : Colors
+                                                                        .white,
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(12),
+                                                              child: Text(
+                                                                  waktu3,
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: (boolwaktu3 ==
+                                                                            false)
+                                                                        ? Colors
+                                                                            .white
+                                                                        : (selectedvalue ==
+                                                                                3)
+                                                                            ? Colors.white
+                                                                            : Colors.grey,
+                                                                  )),
                                                             )),
-                                                      )),
-                                                  onTap: () {
-                                                    setState(() {
-                                                      (boolwaktu3 == true)
-                                                          ? selectedvalue = 3
-                                                          : selectedvalue =
-                                                          selectedvalue;
-                                                    });
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(
-                                              height: 12,
-                                            ),
-
-                                            const SizedBox(
-                                              height: 12,
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    }
-                                    return const Center(
-                                      child: CircularProgressIndicator(),
-                                    );
-                                  },
-                                ),
+                                                        onTap: () {
+                                                          setState(() {
+                                                            (boolwaktu3 == true)
+                                                                ? selectedvalue =
+                                                                    3
+                                                                : selectedvalue =
+                                                                    selectedvalue;
+                                                          });
+                                                        },
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 12,
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 12,
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          }
+                                          return const Center(
+                                            child: CircularProgressIndicator(),
+                                          );
+                                        },
+                                      ),
                               ],
                             ),
                             Column(
@@ -800,6 +668,7 @@ class _JanjitemuState extends State<Janjitemu> {
                                                 tanggal! +
                                                 bulan.toString() +
                                                 tahun.toString());
+                                            print(set);
                                             print(namahari);
                                             print(selectedvalue);
                                             DatabaseServices.aturjadwalbooking(
@@ -807,11 +676,6 @@ class _JanjitemuState extends State<Janjitemu> {
                                                 namahari!,
                                                 selectedvalue,
                                                 'b' + selectedvalue.toString());
-                                            Navigator.push(context,
-                                                MaterialPageRoute(builder:
-                                                    (BuildContext context) {
-                                              return const WebViewExample();
-                                            }));
                                           },
                                         ))),
                               ],
@@ -819,6 +683,163 @@ class _JanjitemuState extends State<Janjitemu> {
                           ],
                         ))))),
       ),
+    );
+  }
+
+  Widget buildaturjadwal() {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference dokter = firestore.collection('doktergigi');
+    return StreamBuilder<DocumentSnapshot>(
+      stream: dokter
+          .doc(widget.iddokter)
+          .collection('booking')
+          .doc('ketentuan')
+          .snapshots(),
+      builder: (context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
+
+          bool senin = data['senin'];
+          bool selasa = data['selasa'];
+          bool rabu = data['rabu'];
+          bool kamis = data['kamis'];
+          bool jumat = data['jumat'];
+          bool sabtu = data['sabtu'];
+          bool minggu = data['minggu'];
+
+          return Card(
+            clipBehavior: Clip.antiAlias,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const Text(
+                  "Atur Tanggal",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+                ElevatedButton(
+                  child: const Text('print'),
+                  onPressed: () {
+                    print(namahari);
+                    print(hari);
+                    print(tanggal);
+                    print(bulan);
+                    print(tahun);
+                    print(set);
+                  },
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(10),
+                ),
+                //Text(_selectedValue.toString()),
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: DatePicker(
+                    DateTime.now(),
+                    width: 60,
+                    height: 80,
+                    controller: _controller,
+                    initialSelectedDate: DateTime.now(),
+                    daysCount: 7,
+                    selectionColor: Colors.teal.shade900,
+                    selectedTextColor: Colors.white,
+                    activeDates: [
+                      if (senin == true)
+                        if (DateTime.monday - set <= 0)
+                          DateTime.now()
+                              .add(Duration(days: DateTime.monday - set + 7))
+                        else
+                          DateTime.now()
+                              .add(Duration(days: DateTime.monday - set)),
+                      if (selasa == true)
+                        if (DateTime.tuesday - set <= 0)
+                          DateTime.now()
+                              .add(Duration(days: DateTime.tuesday - set + 7))
+                        else
+                          DateTime.now()
+                              .add(Duration(days: DateTime.tuesday - set)),
+                      if (rabu == true)
+                        if (DateTime.wednesday - set <= 0)
+                          DateTime.now()
+                              .add(Duration(days: DateTime.wednesday - set + 7))
+                        else
+                          DateTime.now()
+                              .add(Duration(days: DateTime.wednesday - set)),
+                      if (kamis == true)
+                        if (DateTime.thursday - set <= 0)
+                          DateTime.now()
+                              .add(Duration(days: DateTime.thursday - set + 7))
+                        else
+                          DateTime.now()
+                              .add(Duration(days: DateTime.thursday - set)),
+                      if (jumat == true)
+                        if (DateTime.friday - set <= 0)
+                          DateTime.now()
+                              .add(Duration(days: DateTime.friday - set + 7))
+                        else
+                          DateTime.now()
+                              .add(Duration(days: DateTime.friday - set)),
+                      if (sabtu == true)
+                        if (DateTime.saturday - set <= 0)
+                          DateTime.now()
+                              .add(Duration(days: DateTime.saturday - set + 7))
+                        else
+                          DateTime.now()
+                              .add(Duration(days: DateTime.saturday - set)),
+                      if (minggu == true)
+                        if (DateTime.sunday - set <= 0)
+                          DateTime.now()
+                              .add(Duration(days: DateTime.sunday - set + 7))
+                        else
+                          DateTime.now()
+                              .add(Duration(days: DateTime.sunday - set)),
+                    ],
+                    onDateChange: (date) {
+                      // New date selected
+                      setState(() {
+                        tanggal = date.day.toString();
+                        hari = date.weekday;
+
+                        if (hari == 1) {
+                          namahari = 'senin';
+                        }
+                        if (hari == 2) {
+                          namahari = 'selasa';
+                        }
+                        if (hari == 3) {
+                          namahari = 'rabu';
+                        }
+                        if (hari == 4) {
+                          namahari = 'kamis';
+                        }
+                        if (hari == 5) {
+                          namahari = 'jumat';
+                        }
+                        if (hari == 6) {
+                          namahari = 'sabtu';
+                        }
+                        if (hari == 7) {
+                          namahari = 'minggu';
+                        }
+
+                        tanggal = date.day.toString();
+                        bulan = date.month.toString();
+                        tahun = date.year.toString();
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
     );
   }
 }
@@ -868,23 +889,17 @@ class _InfoDokternyajanjitemuState extends State<InfoDokternyajanjitemu> {
                     padding: const EdgeInsets.only(
                         left: 24, right: 24, bottom: 4, top: 4),
                     child: SizedBox(
-                        width: MediaQuery.of(context).size.width - 80,
+                        width: MediaQuery.of(context).size.width,
                         child: InkWell(
-                          child: Card(
-                            clipBehavior: Clip.antiAlias,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: TextButton(
-                              style: untukKonsultasiButton,
-                              onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(
-                                    builder: (BuildContext context) {
-                                  return Janjitemu(widget.iddokter);
-                                }));
-                              },
-                              child: const Text('Atur Janji Temu'),
-                            ),
+                          child: TextButton(
+                            style: untukKonsultasiButton,
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                return Janjitemu(widget.iddokter);
+                              }));
+                            },
+                            child: const Text('Atur Janji Temu'),
                           ),
                           onTap: () {
                             Navigator.push(context, MaterialPageRoute(

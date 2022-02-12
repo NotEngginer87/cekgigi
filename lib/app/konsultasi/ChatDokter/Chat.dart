@@ -681,7 +681,7 @@ class Balloonchat extends StatelessWidget {
                                   MediaQuery.of(context).size.height * 0.3,
                             ),
                             child: Padding(
-                              padding: const EdgeInsets.all(12),
+                              padding: const EdgeInsets.all(4),
                               child: Image(
                                 image: NetworkImage(text),
                                 height: MediaQuery.of(context).size.width,

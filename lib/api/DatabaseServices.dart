@@ -288,7 +288,7 @@ class DatabaseServices {
         'chat': chat,
         'countchattime': countchattime,
         'status': status,
-        'foto': false,
+        'foto': foto,
       },
     );
   }
