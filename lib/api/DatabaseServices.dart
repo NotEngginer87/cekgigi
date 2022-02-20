@@ -9,6 +9,7 @@ class DatabaseServices {
   static CollectionReference datapasien = firestore.collection('listpasien');
   static CollectionReference doktergigi = firestore.collection('doktergigi');
   static CollectionReference FAQ = firestore.collection('FAQ');
+  static CollectionReference kuesioner = firestore.collection('kuesioner');
   static CollectionReference listpasiencount =
       firestore.collection('listpasiencount');
   static CollectionReference blog = firestore.collection('blog');
@@ -238,7 +239,7 @@ class DatabaseServices {
         'sesi': sesi,
         'status': 'pending',
         'iddokter': iddokter,
-        'waktubooking': tahun*10000+bulan*100+tanggal,
+        'waktubooking': tahun * 10000 + bulan * 100 + tanggal,
       },
     );
   }
@@ -268,7 +269,7 @@ class DatabaseServices {
         'sesi': sesi,
         'status': 'pending',
         'iddokter': iddokter,
-        'waktubooking': tahun*10000+bulan*100+tanggal,
+        'waktubooking': tahun * 10000 + bulan * 100 + tanggal,
       },
     );
   }
@@ -536,5 +537,56 @@ class DatabaseServices {
 
   static Future<void> deleteuser(String id) async {
     await userdata.doc(id).delete();
+  }
+
+  static Future<void> updatejmlorangkuesioner() async {
+    await kuesioner
+        .doc('kuesionerEUCS')
+        .update(
+      {
+        'orang': FieldValue.increment(1),
+      },
+    );
+  }
+
+  static Future<void> updatekuesioner(
+    int orangke,
+    String nama,
+    String usia,
+    String jeniskelamin,
+    String alamat,
+    String keluhan,
+  ) async {
+    await kuesioner
+        .doc('kuesionerEUCS')
+        .collection('orang')
+        .doc(orangke.toString())
+        .set(
+      {
+        'nama': nama,
+        'usia': usia,
+        'jeniskelamin': jeniskelamin,
+        'alamat': alamat,
+        'keluhan': keluhan,
+      },
+    );
+  }
+
+  static Future<void> updatejawabankuesioner(
+    int orangke,
+    int idpertanyaan,
+    int nilai,
+  ) async {
+    await kuesioner
+        .doc('kuesionerEUCS')
+        .collection('orang')
+        .doc(orangke.toString())
+        .collection('jawabannomor')
+        .doc(idpertanyaan.toString())
+        .set(
+      {
+        'nilai': nilai,
+      },
+    );
   }
 }

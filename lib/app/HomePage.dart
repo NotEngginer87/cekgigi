@@ -8,6 +8,7 @@ import 'package:cekgigi/app/home/tab3/tab3.dart';
 import 'package:cekgigi/app/home/tombol2.dart';
 import 'package:cekgigi/app/home/tab3/whatsapp.dart';
 import 'package:cekgigi/app/janjitemu/janjitemuhome.dart';
+import 'package:cekgigi/penelitian/kuesioner.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -70,82 +71,95 @@ class _HalamanRumahState extends State<HalamanRumah> {
                   )
                 : (_selectedIndex == 1)
                     ? Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           infopasien(),
                           JanjiTemuHome(),
                         ],
-                      ) : (_selectedIndex == 2)
-            ? ListView(
-          children: [
-            infopasien(),
-            Container(
-                color: Colors.teal.shade900,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(12),
-                        topRight: Radius.circular(12)),
-                  ),
-                  child: SelectBlog2(),
-                ))
-          ],
-        )
-                    : ListView(
-                        children: [
-                          infopasien(),
-                          Container(
-                              color: Colors.teal.shade900,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(12),
-                                      topRight: Radius.circular(12)),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Tab3(),
-                                    Padding(
-                                      padding:
-                                          EdgeInsets.only(left: 16, right: 16),
-                                      child: ElevatedButton(
-                                          style: Buttonstyle,
-                                          onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        FAQ()));
-                                          },
-                                          child: Text('FAQ')),
+                      )
+                    : (_selectedIndex == 2)
+                        ? ListView(
+                            children: [
+                              infopasien(),
+                              Container(
+                                  color: Colors.teal.shade900,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(12),
+                                          topRight: Radius.circular(12)),
                                     ),
-                                    SizedBox(
-                                      height: 12,
+                                    child: SelectBlog2(),
+                                  ))
+                            ],
+                          )
+                        : ListView(
+                            children: [
+                              infopasien(),
+                              Container(
+                                  color: Colors.teal.shade900,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(12),
+                                          topRight: Radius.circular(12)),
                                     ),
-                                    Padding(
-                                      padding:
-                                          EdgeInsets.only(left: 16, right: 16),
-                                      child: ElevatedButton(
-                                          style: Buttonstyle,
-                                          onPressed: () {
-                                            showModalBottomSheet(
-                                                context: context,
-                                                builder: (context) {
-                                                  return kontak();
-                                                });
-                                          },
-                                          child: Text('kontak iDent')),
+                                    child: Column(
+                                      children: [
+                                        Tab3(),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 16, right: 16),
+                                          child: ElevatedButton(
+                                              style: Buttonstyle,
+                                              onPressed: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            FAQ()));
+                                              },
+                                              child: Text('FAQ')),
+                                        ),
+                                        SizedBox(
+                                          height: 12,
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 16, right: 16),
+                                          child: ElevatedButton(
+                                              style: Buttonstyle,
+                                              onPressed: () {
+                                                showModalBottomSheet(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return kontak();
+                                                    });
+                                              },
+                                              child: Text('kontak iDent')),
+                                        ),
+                                        SizedBox(
+                                          height: 12,
+                                        ),
+
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 16, right: 16),
+                                          child: ElevatedButton(
+                                              style: Buttonstyle,
+                                              onPressed: () {
+                                                Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                                                    DataResponden()));
+                                              },
+                                              child: Text('Isi Kuesioner')),
+                                        ),
+                                      ],
                                     ),
-                                    SizedBox(
-                                      height: 12,
-                                    ),
-                                  ],
-                                ),
-                              ))
-                        ],
-                      )),
+                                  ))
+                            ],
+                          )),
       ),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(12),
@@ -177,7 +191,6 @@ class _HalamanRumahState extends State<HalamanRumah> {
                     icon: LineIcons.stethoscope,
                     text: 'Dokter',
                   ),
-
                   GButton(
                     icon: LineIcons.book,
                     text: 'Blog',
