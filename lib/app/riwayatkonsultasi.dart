@@ -33,56 +33,52 @@ class _RiwayatKonsultasiState extends State<RiwayatKonsultasi> {
         backgroundColor: Colors.teal.shade900,
       ),
       body: Container(
-        color: Colors.grey.shade50,
-        child: Container(
-            color: Colors.teal.shade900,
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(12),
-                    topRight: Radius.circular(12)),
-              ),
-              child:
-
-              ListView(
-                children: [
-                  StreamBuilder<QuerySnapshot>(
-                    stream: riwayatkonsultasi
-                        .doc(email)
-                        .collection('riwayatkonsultasi')
-                        .doc('datapasien')
-                        .collection('datapasien')
-                        .snapshots(),
-                    builder: (_, AsyncSnapshot snapshot) {
-                      if (snapshot.hasData) {
-                        return Column(
-                            children: snapshot.data.docs
-                                .map<Widget>((e) => RiwayatCard(
-                              e.data()['idpasien'],
-                              e.data()['iddokter'],
-                              e.data()['kegiatan'],
-                            ))
-                                .toList());
-                      } else {
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: const [
-                            Center(
-                              child: Center(
-                                child: CircularProgressIndicator(),
-                              ),
-                            ),
-                          ],
-                        );
-                      }
-                    },
+          color: Colors.grey.shade50,
+          child: Container(
+              color: Colors.teal.shade900,
+              child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(12),
+                        topRight: Radius.circular(12)),
                   ),
-                ],
-              )))
-
-      ),
+                  child: ListView(
+                    children: [
+                      StreamBuilder<QuerySnapshot>(
+                        stream: riwayatkonsultasi
+                            .doc(email)
+                            .collection('riwayatkonsultasi')
+                            .doc('datapasien')
+                            .collection('datapasien')
+                            .snapshots(),
+                        builder: (_, AsyncSnapshot snapshot) {
+                          if (snapshot.hasData) {
+                            return Column(
+                                children: snapshot.data.docs
+                                    .map<Widget>((e) => RiwayatCard(
+                                          e.data()['idpasien'],
+                                          e.data()['iddokter'],
+                                          e.data()['kegiatan'],
+                                        ))
+                                    .toList());
+                          } else {
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: const [
+                                Center(
+                                  child: Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                ),
+                              ],
+                            );
+                          }
+                        },
+                      ),
+                    ],
+                  )))),
     );
   }
 
@@ -191,10 +187,9 @@ class DetailKasus extends StatefulWidget {
 }
 
 class _DetailKasusState extends State<DetailKasus> {
-  int _selectedIndex = 0;
+  int _selectedIndex1 = 0;
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Riwayat Konsultasi'),
@@ -213,8 +208,7 @@ class _DetailKasusState extends State<DetailKasus> {
                       topLeft: Radius.circular(12),
                       topRight: Radius.circular(12)),
                 ),
-                child:
-                Padding(
+                child: Padding(
                   padding: const EdgeInsets.all(12),
                   child: Container(
                     decoration: BoxDecoration(
@@ -223,8 +217,8 @@ class _DetailKasusState extends State<DetailKasus> {
                     ),
                     child: SafeArea(
                       child: Padding(
-                        padding:
-                        const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12.0, vertical: 8),
                         child: GNav(
                           rippleColor: Colors.grey[300]!,
                           hoverColor: Colors.grey[100]!,
@@ -250,20 +244,19 @@ class _DetailKasusState extends State<DetailKasus> {
                               text: 'Data Dokter',
                             ),
                           ],
-                          selectedIndex: _selectedIndex,
+                          selectedIndex: _selectedIndex1,
                           onTabChange: (index) {
                             setState(() {
-                              _selectedIndex = index;
+                              _selectedIndex1 = index;
                             });
                           },
                         ),
                       ),
                     ),
                   ),
-                ),)),
-
-
-          (_selectedIndex == 0)
+                ),
+              )),
+          (_selectedIndex1 == 0)
               ? Expanded(
                   child: ListView(
                   children: [
@@ -464,7 +457,7 @@ class _DetailKasusState extends State<DetailKasus> {
                     ),
                   ],
                 ))
-              : (_selectedIndex == 1)
+              : (_selectedIndex1 == 1)
                   ? Expanded(
                       child: ListView(
                       children: [

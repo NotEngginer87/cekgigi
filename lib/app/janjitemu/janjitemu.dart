@@ -6,6 +6,7 @@ import 'package:cekgigi/midtrans.dart';
 import 'package:cekgigi/style.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_picker_timeline/date_picker_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
@@ -380,6 +381,97 @@ class _JanjitemuState extends State<Janjitemu> {
   late String jam;
   late int set = DateTime.now().weekday;
 
+  Widget buildbookingdokter() {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference dokter = firestore.collection('doktergigi');
+
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? user = auth.currentUser;
+    final email = user?.email;
+
+    return StreamBuilder(
+      stream: dokter.doc(widget.iddokter).snapshots(),
+      builder: (context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
+
+          int idbooking = data['booking'];
+
+          return Padding(
+              padding:
+                  const EdgeInsets.only(left: 24, right: 24, bottom: 4, top: 4),
+              child: SizedBox(
+                  width: MediaQuery.of(context).size.width - 80,
+                  child: InkWell(
+                    child: Card(
+                      color: Colors.teal.shade900,
+                      clipBehavior: Clip.antiAlias,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.all(12),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Booking dokter',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    ),
+                    onTap: () {
+                      print(hari.toString() +
+                          tanggal! +
+                          bulan.toString() +
+                          tahun.toString());
+                      print(set);
+                      print(namahari);
+                      print(selectedvalue);
+                      DatabaseServices.naikkanidbooking(
+                          idbooking, widget.iddokter);
+                      DatabaseServices.aturjadwalbookinguntukdiacc(
+                        email!,
+                        idbooking,
+                        widget.iddokter,
+                        int.tryParse(tahun.toString())!,
+                        int.tryParse(bulan.toString())!,
+                        int.tryParse(tanggal.toString())!,
+                        namahari!,
+                        selectedvalue,
+                      );
+                      DatabaseServices.setjadwalbookinguntukdiaccolehpasien(
+                        email,
+                        idbooking,
+                        widget.iddokter,
+                        int.tryParse(tahun.toString())!,
+                        int.tryParse(bulan.toString())!,
+                        int.tryParse(tanggal.toString())!,
+                        namahari!,
+                        selectedvalue,
+                      );
+                      DatabaseServices.aturjadwalbooking(
+                          idbooking,
+                          widget.iddokter,
+                          int.tryParse(tahun.toString())!,
+                          int.tryParse(bulan.toString())!,
+                          int.tryParse(tanggal.toString())!,
+                          namahari!,
+                          selectedvalue,
+                          'b' + selectedvalue.toString());
+                    },
+                  )));
+        }
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -632,54 +724,7 @@ class _JanjitemuState extends State<Janjitemu> {
                                       ),
                               ],
                             ),
-                            Column(
-                              children: [
-                                Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 24, right: 24, bottom: 4, top: 4),
-                                    child: SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width -
-                                                80,
-                                        child: InkWell(
-                                          child: Card(
-                                            color: Colors.teal.shade900,
-                                            clipBehavior: Clip.antiAlias,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                            ),
-                                            child: const Padding(
-                                              padding: EdgeInsets.all(12),
-                                              child: Align(
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                  'Booking dokter',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          onTap: () {
-                                            print(hari.toString() +
-                                                tanggal! +
-                                                bulan.toString() +
-                                                tahun.toString());
-                                            print(set);
-                                            print(namahari);
-                                            print(selectedvalue);
-                                            DatabaseServices.aturjadwalbooking(
-                                                widget.iddokter,
-                                                namahari!,
-                                                selectedvalue,
-                                                'b' + selectedvalue.toString());
-                                          },
-                                        ))),
-                              ],
-                            ),
+                            buildbookingdokter(),
                           ],
                         ))))),
       ),
@@ -719,17 +764,6 @@ class _JanjitemuState extends State<Janjitemu> {
                 const Text(
                   "Atur Tanggal",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-                ElevatedButton(
-                  child: const Text('print'),
-                  onPressed: () {
-                    print(namahari);
-                    print(hari);
-                    print(tanggal);
-                    print(bulan);
-                    print(tahun);
-                    print(set);
-                  },
                 ),
                 const Padding(
                   padding: EdgeInsets.all(10),

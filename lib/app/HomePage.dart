@@ -7,6 +7,7 @@ import 'package:cekgigi/app/home/tab3/FAQ.dart';
 import 'package:cekgigi/app/home/tab3/tab3.dart';
 import 'package:cekgigi/app/home/tombol2.dart';
 import 'package:cekgigi/app/home/tab3/whatsapp.dart';
+import 'package:cekgigi/app/janjitemu/janjitemuhome.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -26,7 +27,6 @@ class HalamanRumah extends StatefulWidget {
 
 class _HalamanRumahState extends State<HalamanRumah> {
   int _selectedIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     final ButtonStyle Buttonstyle = ElevatedButton.styleFrom(
@@ -69,22 +69,29 @@ class _HalamanRumahState extends State<HalamanRumah> {
                     ],
                   )
                 : (_selectedIndex == 1)
-                    ? ListView(
+                    ? Column(
+              mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           infopasien(),
-                          Container(
-                              color: Colors.teal.shade900,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(12),
-                                      topRight: Radius.circular(12)),
-                                ),
-                                child: SelectBlog2(),
-                              ))
+                          JanjiTemuHome(),
                         ],
-                      )
+                      ) : (_selectedIndex == 2)
+            ? ListView(
+          children: [
+            infopasien(),
+            Container(
+                color: Colors.teal.shade900,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(12),
+                        topRight: Radius.circular(12)),
+                  ),
+                  child: SelectBlog2(),
+                ))
+          ],
+        )
                     : ListView(
                         children: [
                           infopasien(),
@@ -166,6 +173,11 @@ class _HalamanRumahState extends State<HalamanRumah> {
                     icon: LineIcons.home,
                     text: 'Home',
                   ),
+                  GButton(
+                    icon: LineIcons.stethoscope,
+                    text: 'Dokter',
+                  ),
+
                   GButton(
                     icon: LineIcons.book,
                     text: 'Blog',

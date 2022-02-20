@@ -189,8 +189,12 @@ class DatabaseServices {
   }
 
   static Future<void> aturjadwalbooking(
+    int idbooking,
     String iddokter,
-    String hari,
+    int tahun,
+    int bulan,
+    int tanggal,
+    String namahari,
     int sesi,
     tanda,
   ) async {
@@ -198,11 +202,84 @@ class DatabaseServices {
         .doc(iddokter)
         .collection('booking')
         .doc('ketentuan')
-        .collection(hari)
+        .collection(namahari)
         .doc('waktu')
         .update(
       {
         tanda: false,
+      },
+    );
+  }
+
+  static Future<void> aturjadwalbookinguntukdiacc(
+    String emailpasien,
+    int idbooking,
+    String iddokter,
+    int tahun,
+    int bulan,
+    int tanggal,
+    String namahari,
+    int sesi,
+  ) async {
+    await doktergigi
+        .doc(iddokter)
+        .collection('booking')
+        .doc('booking')
+        .collection('booking')
+        .doc(idbooking.toString())
+        .set(
+      {
+        'emailpasien': emailpasien,
+        'idbooking': idbooking,
+        'namahari': namahari,
+        'tanggal': tanggal,
+        'bulan': bulan,
+        'tahun': tahun,
+        'sesi': sesi,
+        'status': 'pending',
+        'iddokter': iddokter,
+        'waktubooking': tahun*10000+bulan*100+tanggal,
+      },
+    );
+  }
+
+  static Future<void> setjadwalbookinguntukdiaccolehpasien(
+    String emailpasien,
+    int idbooking,
+    String iddokter,
+    int tahun,
+    int bulan,
+    int tanggal,
+    String namahari,
+    int sesi,
+  ) async {
+    await userdata
+        .doc(emailpasien)
+        .collection('booking')
+        .doc(idbooking.toString())
+        .set(
+      {
+        'emailpasien': emailpasien,
+        'idbooking': idbooking,
+        'namahari': namahari,
+        'tanggal': tanggal,
+        'bulan': bulan,
+        'tahun': tahun,
+        'sesi': sesi,
+        'status': 'pending',
+        'iddokter': iddokter,
+        'waktubooking': tahun*10000+bulan*100+tanggal,
+      },
+    );
+  }
+
+  static Future<void> naikkanidbooking(
+    int idbooking,
+    String iddokter,
+  ) async {
+    await doktergigi.doc(iddokter).update(
+      {
+        'booking': FieldValue.increment(1),
       },
     );
   }
