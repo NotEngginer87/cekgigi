@@ -2,7 +2,6 @@
 
 import 'package:cekgigi/app/konsultasi/KeteranganDokter.dart';
 import 'package:cekgigi/app/konsultasi/keterangan%20dokter/sisidokternya.dart';
-import 'package:cekgigi/midtrans.dart';
 import 'package:cekgigi/style.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_picker_timeline/date_picker_widget.dart';

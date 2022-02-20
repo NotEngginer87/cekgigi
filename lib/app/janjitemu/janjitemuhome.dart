@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:cekgigi/app/konsultasi/ChatDokter/Chat.dart';
 import 'package:cekgigi/style.dart';
@@ -369,11 +368,11 @@ class CekBookingDokter extends StatelessWidget {
                             bottomRight: Radius.circular(12)),
                       ),
                       child: Center(
-                        child: Container(
+                        child: SizedBox(
                           width: MediaQuery.of(context).size.width - 80,
                           child: Column(
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 6,
                               ),
                               Row(
@@ -437,13 +436,13 @@ class CekBookingDokter extends StatelessWidget {
                                             : untukKonsultasiButtongrey
                                         : untukKonsultasiButtongrey,
                                     child: (status == 'pending')
-                                        ? Text('Pending')
+                                        ? const Text('Pending')
                                         : (waktubooking <
                                                 DateTime.now().year * 10000 +
                                                     DateTime.now().month * 100 +
                                                     DateTime.now().day)
-                                            ? Text('selesai')
-                                            : Text('chat dokternya'),
+                                            ? const Text('selesai')
+                                            : const Text('chat dokternya'),
                                     onPressed: () {
                                       (status == 'sukses')
                                           ? (DateTime.now().year == tahun)
@@ -471,15 +470,11 @@ class CekBookingDokter extends StatelessWidget {
                                                           Chat(iddokter)))
                                               : null;
 
-                                      print(DateTime.now().year * 10000 +
-                                          DateTime.now().month * 100 +
-                                          DateTime.now().day);
-                                      print(waktubooking);
                                     },
                                   ),
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 6,
                               ),
                             ],
