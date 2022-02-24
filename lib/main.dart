@@ -126,22 +126,26 @@ class _IsiDataState extends State<IsiData> {
               content: GenderPickerWithImage(
                 showOtherGender: false,
                 verticalAlignedText: true,
-                selectedGender: Gender.Male,
-                selectedGenderTextStyle: TextStyle(
+                equallyAligned: true,
+
+                selectedGenderTextStyle: const TextStyle(
                     color: Color(0xFF8b32a8), fontWeight: FontWeight.bold),
-                unSelectedGenderTextStyle: TextStyle(
+                unSelectedGenderTextStyle: const TextStyle(
                     color: Colors.white, fontWeight: FontWeight.normal),
-                onChanged: (gender) async {
-                  print(gender);
-                  print(gender?.index);
-                  if (gender?.index == 0) {
+                selectedGender: (genderr == 'Laki-Laki')
+                    ? Gender.Male
+                    : (genderr == 'Perempuan')
+                        ? Gender.Female
+                        : null,
+                onChanged: (Gender) async {
+                  if (Gender?.index == 0) {
                     genderr = 'Laki-Laki';
                   } else {
-                    genderr = 'perempuan';
+                    genderr = 'Perempuan';
                   }
+                  print(Gender?.index);
                 },
-                equallyAligned: true,
-                animationDuration: Duration(milliseconds: 300),
+                animationDuration: const Duration(milliseconds: 300),
                 isCircular: true,
                 maleText: 'Laki-Laki',
                 femaleText: 'Perempuan',

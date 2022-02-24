@@ -180,29 +180,24 @@ class _RekamMedisState extends State<RekamMedis> {
                 GenderPickerWithImage(
                   showOtherGender: false,
                   verticalAlignedText: true,
+                  equallyAligned: true,
 
-                  selectedGender: (jeniskelamin.text == 'Laki-Laki')
-                      ? Gender.Male
-                      : (jeniskelamin.text == 'Perempuan')
-                          ? Gender.Female
-                          : null,
                   selectedGenderTextStyle: const TextStyle(
                       color: Color(0xFF8b32a8), fontWeight: FontWeight.bold),
                   unSelectedGenderTextStyle: const TextStyle(
                       color: Colors.white, fontWeight: FontWeight.normal),
-                  onChanged: (jeniskelamin) async {
+                  selectedGender:
+                  (genderr == 'Laki-Laki') ? Gender.Male : (genderr == 'Perempuan') ? Gender.Female : null,
+                  onChanged: (Gender) async {
                     switchgender = true;
 
-                    setState(() {
-                      if (jeniskelamin?.index == 0) {
-                        genderr = 'Laki-Laki';
-                      } else {
-                        genderr = 'Perempuan';
-                      }
-                    });
-                    print(jeniskelamin?.index);
+                    if (Gender?.index == 0) {
+                      genderr = 'Laki-Laki';
+                    } else {
+                      genderr = 'Perempuan';
+                    }
+                    print(Gender?.index);
                   },
-                  equallyAligned: true,
                   animationDuration: const Duration(milliseconds: 300),
                   isCircular: true,
                   maleText: 'Laki-Laki',
@@ -459,148 +454,142 @@ class _RekamMedisState extends State<RekamMedis> {
           ),
         ];
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Rekam Medis'),
-          centerTitle: true,
-          elevation: 0,
-          backgroundColor: Colors.teal.shade900,
-        ),
-        body: Theme(
-          data: ThemeData(
-              colorScheme: ColorScheme.fromSwatch()
-                  .copyWith(primary: Colors.teal.shade900)),
-          child: Stepper(
-              type: StepperType.vertical,
-              currentStep: currentstep,
-              steps: getSteps(),
-              onStepContinue: () {
-                setState(() {
-                  if (currentstep == 0) {
-                    if (switchnama == true) {
-                      if (switchgender == true) {
-                        if (switchumur == true) {
-                          if (switchnotelepon == true) {
-                            if (switchalamat == true) {
-                              setState(() {
-                                currentstep = 1;
-                              });
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                  if (currentstep == 1) {
-                    if (switchnikah == true) {
-                      if (switchagama == true) {
-                        if (switchpekerjaan == true) {
-                          if (switchsuku == true) {
+      appBar: AppBar(
+        title: const Text('Rekam Medis'),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.teal.shade900,
+      ),
+      body: Theme(
+        data: ThemeData(
+            colorScheme: ColorScheme.fromSwatch()
+                .copyWith(primary: Colors.teal.shade900)),
+        child: Stepper(
+            type: StepperType.vertical,
+            currentStep: currentstep,
+            steps: getSteps(),
+            onStepContinue: () {
+              setState(() {
+                if (currentstep == 0) {
+                  if (switchnama == true) {
+                    if (switchgender == true) {
+                      if (switchumur == true) {
+                        if (switchnotelepon == true) {
+                          if (switchalamat == true) {
                             setState(() {
-                              currentstep = 2;
+                              currentstep = 1;
                             });
                           }
                         }
                       }
                     }
                   }
-                  if (currentstep == 2) {
-                    if (switchkeluhan == true) {
-                      if (switchfoto == true) {
-                        setState(() {
-                          isLastStep2 = true;
-                          isLastStep2 = true;
-                        });
+                }
+                if (currentstep == 1) {
+                  if (switchnikah == true) {
+                    if (switchagama == true) {
+                      if (switchpekerjaan == true) {
+                        if (switchsuku == true) {
+                          setState(() {
+                            currentstep = 2;
+                          });
+                        }
                       }
                     }
                   }
-                });
-              },
-              onStepTapped: (step) => setState(() {
-                    currentstep = step;
-                  }),
-              onStepCancel: currentstep == 0
-                  ? null
-                  : () {
+                }
+                if (currentstep == 2) {
+                  if (switchkeluhan == true) {
+                    if (switchfoto == true) {
                       setState(() {
-                        currentstep -= 1;
+                        isLastStep2 = true;
+                        isLastStep2 = true;
                       });
-                    },
-              controlsBuilder: (context, details) {
-                return Container(
-                  margin: const EdgeInsets.only(top: 12),
-                  child: Row(
-                    children: [
-                      ((isLastStep2 == true) && (currentstep == 2))
-                          ? Expanded(
-                  child: StreamBuilder<DocumentSnapshot>(
-                    stream:
-                    listpasiencount.doc('count').snapshots(),
-                    builder: (context, AsyncSnapshot snapshot) {
-                      if (snapshot.hasData) {
-                        Map<String, dynamic> data = snapshot.data!
-                            .data() as Map<String, dynamic>;
+                    }
+                  }
+                }
+              });
+            },
+            onStepTapped: (step) => setState(() {
+                  currentstep = step;
+                }),
+            onStepCancel: currentstep == 0
+                ? null
+                : () {
+                    setState(() {
+                      currentstep -= 1;
+                    });
+                  },
+            controlsBuilder: (context, details) {
+              return Container(
+                margin: const EdgeInsets.only(top: 12),
+                child: Row(
+                  children: [
+                    ((isLastStep2 == true) && (currentstep == 2))
+                        ? Expanded(
+                            child: StreamBuilder<DocumentSnapshot>(
+                            stream: listpasiencount.doc('count').snapshots(),
+                            builder: (context, AsyncSnapshot snapshot) {
+                              if (snapshot.hasData) {
+                                Map<String, dynamic> data = snapshot.data!
+                                    .data() as Map<String, dynamic>;
 
-                        int idpasien = data['count'];
+                                int idpasien = data['count'];
 
-                        return ElevatedButton(
-                          onPressed: () {
-
-                            DatabaseServices.updatecountakun();
-                            DatabaseServices
-                                .updateketeranganpasien(
-                                idpasien,
-                                nama.text,
-                                jeniskelamin.text,
-                                umurcontrol.text,
-                                noHP.text,
-                                alamat.text,
-                                _valuenikah.toString(),
-                                _valueagama.toString(),
-                                suku.text,
-                                pekerjaan.text,
-                                keluhan.text,
-                                imageUrl!,
-                                widget.kegiatan,
-                                emaila!);
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        SelectDokter(idpasien,
-                                            widget.kegiatan)));
-                          },
-                          child: const Text('Konfirmasi'),
-                        );
-                      }
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    },
-                  )
-                )
-                          : Expanded(
-                              child: ElevatedButton(
-                                onPressed: details.onStepContinue,
-                                child: const Text('lanjut'),
-                              ),
+                                return ElevatedButton(
+                                  onPressed: () {
+                                    DatabaseServices.updatecountakun();
+                                    DatabaseServices.updateketeranganpasien(
+                                        idpasien,
+                                        nama.text,
+                                        jeniskelamin.text,
+                                        umurcontrol.text,
+                                        noHP.text,
+                                        alamat.text,
+                                        _valuenikah.toString(),
+                                        _valueagama.toString(),
+                                        suku.text,
+                                        pekerjaan.text,
+                                        keluhan.text,
+                                        imageUrl!,
+                                        widget.kegiatan,
+                                        emaila!);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => SelectDokter(
+                                                idpasien, widget.kegiatan)));
+                                  },
+                                  child: const Text('Konfirmasi'),
+                                );
+                              }
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            },
+                          ))
+                        : Expanded(
+                            child: ElevatedButton(
+                              onPressed: details.onStepContinue,
+                              child: const Text('lanjut'),
                             ),
-
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      if (currentstep != 0)
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: details.onStepCancel,
-                            child: const Text('balik'),
                           ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    if (currentstep != 0)
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: details.onStepCancel,
+                          child: const Text('balik'),
                         ),
-                    ],
-                  ),
-                );
-              }),
-        ),
-      );
+                      ),
+                  ],
+                ),
+              );
+            }),
+      ),
+    );
   }
 
   uploadImage() async {
