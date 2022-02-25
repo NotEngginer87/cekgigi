@@ -1,4 +1,3 @@
-
 import 'package:cekgigi/api/DatabaseServices.dart';
 import 'package:cekgigi/style.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -68,176 +67,171 @@ class _DataRespondenState extends State<DataResponden> {
                           topLeft: Radius.circular(12),
                           topRight: Radius.circular(12)),
                     ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: ListView(
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.all(24),
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 12,
-                            bottom: 12,
-                            left: 24,
-                            right: 24,
-                          ),
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints(
-                              maxWidth: MediaQuery.of(context).size.width,
-                              maxHeight:
-                                  MediaQuery.of(context).size.height - 200,
-                            ),
-                            child: ListView(
-                              children: [
-                                const Text(
-                                  'nama : ',
-                                  textAlign: TextAlign.left,
-                                ),
-                                TextFormField(
-                                  controller: nama,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      switchnama = true;
-                                    });
-                                  },
-                                ),
-                                const SizedBox(
-                                  height: 24,
-                                ),
-                                const Text(
-                                  'Jenis Kelamin : ',
-                                  textAlign: TextAlign.left,
-                                ),
-                                GenderPickerWithImage(
-                                  showOtherGender: false,
-                                  verticalAlignedText: true,
-                                  selectedGender: Gender.Male,
-                                  selectedGenderTextStyle: const TextStyle(
-                                      color: Color(0xFF8b32a8),
-                                      fontWeight: FontWeight.bold),
-                                  unSelectedGenderTextStyle: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.normal),
-                                  onChanged: (gender) async {
-                                    if (kDebugMode) {
-                                      print(gender);
-                                    }
-                                    if (kDebugMode) {
-                                      print(gender?.index);
-                                    }
-                                    if (gender?.index == 0) {
-                                      genderr = 'Laki-Laki';
-                                    } else {
-                                      genderr = 'perempuan';
-                                    }
-                                  },
-                                  equallyAligned: true,
-                                  animationDuration:
-                                      const Duration(milliseconds: 300),
-                                  isCircular: true,
-                                  maleText: 'Laki-Laki',
-                                  femaleText: 'Perempuan',
-                                  // default : true,
-                                  opacityOfGradient: 0.4,
-                                  padding: const EdgeInsets.all(3),
-                                  size: 120, //default : 40
-                                ),
-                                const SizedBox(
-                                  height: 24,
-                                ),
-                                const Text(
-                                  'Umur : ',
-                                  textAlign: TextAlign.left,
-                                ),
-                                TextFormField(
-                                  controller: umurcontrol,
-                                  keyboardType: TextInputType.phone,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      switchumur = true;
-                                    });
-                                  },
-                                ),
-                                const SizedBox(
-                                  height: 24,
-                                ),
-                                const Text('Alamat'),
-                                TextFormField(
-                                  controller: alamat,
-                                  keyboardType: TextInputType.streetAddress,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      switchalamat = true;
-                                    });
-                                  },
-                                ),
-                                const SizedBox(
-                                  height: 24,
-                                ),
-                                const Text('Keluhan'),
-                                TextFormField(
-                                  controller: keluhan,
-                                  keyboardType: TextInputType.text,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      switchkeluhan = true;
-                                    });
-                                  },
-                                ),
-                                const SizedBox(
-                                  height: 24,
-                                ),
-                              ],
-                            ),
-                          ),
+                        const Text(
+                          'nama : ',
+                          textAlign: TextAlign.left,
                         ),
-                        Column(
-                          children: [
-                            StreamBuilder<DocumentSnapshot>(
-                              stream:
-                              kuesioner.doc('kuesionerEUCS').snapshots(),
-                              builder: (context, AsyncSnapshot snapshot) {
-                                if (snapshot.hasData) {
-                                  Map<String, dynamic> data = snapshot.data!
-                                      .data() as Map<String, dynamic>;
-
-                                  int orangke = data['orang'];
-
-                                  return ElevatedButton(
-                                    style: untukKonsultasiButton,
-                                    child: const Text('Lanjut'),
-                                    onPressed: () {
-                                      Navigator.push(context, MaterialPageRoute(
-                                          builder: (BuildContext context) {
-                                            return Kuesioner(
-                                                nama.text,
-                                                genderr!,
-                                                umurcontrol.text,
-                                                alamat.text,
-                                                keluhan.text,
-                                                orangke);
-                                          }));
-                                      DatabaseServices.updatekuesioner(
-                                        orangke,
-                                        nama.text,
-                                        umurcontrol.text,
-                                        genderr!,
-                                        alamat.text,
-                                        keluhan.text,
-                                      );
-                                      DatabaseServices
-                                          .updatejmlorangkuesioner();
-                                    },
-                                  );
-                                }
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              },
-                            ),
-                            const SizedBox(
-                              height:12,
-                            ),
-                          ],
+                        TextFormField(
+                          controller: nama,
+                          onChanged: (value) {
+                            setState(() {
+                              switchnama = true;
+                            });
+                          },
                         ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        const Text(
+                          'Jenis Kelamin : ',
+                          textAlign: TextAlign.left,
+                        ),
+                        GenderPickerWithImage(
+                          showOtherGender: false,
+                          verticalAlignedText: true,
+                          selectedGender: Gender.Male,
+                          selectedGenderTextStyle: const TextStyle(
+                              color: Color(0xFF8b32a8),
+                              fontWeight: FontWeight.bold),
+                          unSelectedGenderTextStyle: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.normal),
+                          onChanged: (gender) async {
+                            if (kDebugMode) {
+                              print(gender);
+                            }
+                            if (kDebugMode) {
+                              print(gender?.index);
+                            }
+                            if (gender?.index == 0) {
+                              genderr = 'Laki-Laki';
+                            } else {
+                              genderr = 'perempuan';
+                            }
+                            switchgender = true;
+                          },
+                          equallyAligned: true,
+                          animationDuration: const Duration(milliseconds: 300),
+                          isCircular: true,
+                          maleText: 'Laki-Laki',
+                          femaleText: 'Perempuan',
+                          // default : true,
+                          opacityOfGradient: 0.4,
+                          padding: const EdgeInsets.all(3),
+                          size: 120, //default : 40
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        const Text(
+                          'Umur : ',
+                          textAlign: TextAlign.left,
+                        ),
+                        TextFormField(
+                          controller: umurcontrol,
+                          keyboardType: TextInputType.phone,
+                          onChanged: (value) {
+                            setState(() {
+                              switchumur = true;
+                            });
+                          },
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        const Text('Alamat'),
+                        TextFormField(
+                          controller: alamat,
+                          keyboardType: TextInputType.streetAddress,
+                          onChanged: (value) {
+                            setState(() {
+                              switchalamat = true;
+                            });
+                          },
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        const Text('Keluhan'),
+                        TextFormField(
+                          controller: keluhan,
+                          keyboardType: TextInputType.text,
+                          onChanged: (value) {
+                            setState(() {
+                              switchkeluhan = true;
+                            });
+                          },
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        (switchnama == true)
+                            ? (switchumur = true)
+                                ? (switchgender == true)
+                                    ? (switchalamat == true)
+                                        ? (switchkeluhan == true)
+                                            ? StreamBuilder<DocumentSnapshot>(
+                                                stream: kuesioner
+                                                    .doc('kuesionerEUCS')
+                                                    .snapshots(),
+                                                builder: (context,
+                                                    AsyncSnapshot snapshot) {
+                                                  if (snapshot.hasData) {
+                                                    Map<String, dynamic> data =
+                                                        snapshot.data!.data()
+                                                            as Map<String,
+                                                                dynamic>;
 
+                                                    int orangke = data['orang'];
+
+                                                    return ElevatedButton(
+                                                      style:
+                                                          untukKonsultasiButton,
+                                                      child:
+                                                          const Text('Lanjut'),
+                                                      onPressed: () {
+                                                        Navigator.push(context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (BuildContext
+                                                                        context) {
+                                                          return Kuesioner(
+                                                              nama.text,
+                                                              genderr!,
+                                                              umurcontrol.text,
+                                                              alamat.text,
+                                                              keluhan.text,
+                                                              orangke);
+                                                        }));
+                                                        DatabaseServices
+                                                            .updatekuesioner(
+                                                          orangke,
+                                                          nama.text,
+                                                          umurcontrol.text,
+                                                          genderr!,
+                                                          alamat.text,
+                                                          keluhan.text,
+                                                        );
+                                                        DatabaseServices
+                                                            .updatejmlorangkuesioner();
+                                                      },
+                                                    );
+                                                  }
+                                                  return const Center(
+                                                    child:
+                                                        CircularProgressIndicator(),
+                                                  );
+                                                },
+                                              )
+                                            : Container()
+                                        : Container()
+                                    : Container()
+                                : Container()
+                            : Container()
                       ],
                     )))),
       ),
@@ -331,15 +325,18 @@ class _KuesionerState extends State<Kuesioner> {
                           height: 12,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 24, right: 24,),
+                          padding: const EdgeInsets.only(
+                            left: 24,
+                            right: 24,
+                          ),
                           child: ElevatedButton(
                             style: untukKonsultasiButton,
                             child: const Text('submit'),
-                            onPressed: (){
+                            onPressed: () {
                               Navigator.push(context, MaterialPageRoute(
                                   builder: (BuildContext context) {
-                                    return const HalamanRumah();
-                                  }));
+                                return const HalamanRumah();
+                              }));
                             },
                           ),
                         ),
@@ -519,12 +516,10 @@ class _QuestionCardState extends State<QuestionCard> {
                       ? ElevatedButton(
                           child: const Text('kirim'),
                           onPressed: () {
-
                             DatabaseServices.updatejawabankuesioner(
                                 widget.orangke, widget.idpertanyaan, id);
                             setState(() {
                               kirim = false;
-
                             });
                           },
                         )

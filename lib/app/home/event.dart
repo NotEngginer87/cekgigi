@@ -245,13 +245,13 @@ class _eventState extends State<event> {
                                         Builder(
                                           builder: (context) {
                                             final GlobalKey<SlideActionState>
-                                            _key = GlobalKey();
+                                                _key = GlobalKey();
                                             return Padding(
                                               padding:
-                                              const EdgeInsets.all(12.0),
+                                                  const EdgeInsets.all(12.0),
                                               child: SlideAction(
                                                 outerColor:
-                                                Colors.teal.shade900,
+                                                    Colors.teal.shade900,
                                                 innerColor: Colors.white,
                                                 key: _key,
                                                 text: 'Ikuti ' + slider,
@@ -267,7 +267,7 @@ class _eventState extends State<event> {
                                                                   'sekmit')));
                                                   Future.delayed(
                                                     const Duration(seconds: 1),
-                                                        () => _key.currentState
+                                                    () => _key.currentState
                                                         ?.reset(),
                                                   );
                                                 },
@@ -289,7 +289,7 @@ class _eventState extends State<event> {
             : Container(),
       );
 
-  Widget buildComingSoonCard(
+  Widget buildComingSoonCard2(
     int cbak,
     int calnow,
     String? urlgambar,
@@ -298,104 +298,155 @@ class _eventState extends State<event> {
     String? juduldeskripsi2,
     String? deskripsi,
     String? deskripsi2,
+    int? dbak,
+    String? mbak,
+    int? ybak,
   ) =>
       Card(
-          elevation: 4,
-          clipBehavior: Clip.antiAlias,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Column(
-            children: [
-              Stack(
-                alignment: Alignment.bottomCenter,
+        elevation: 4,
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: (calnow <= cbak)
+            ? Column(
                 children: [
-                  Ink.image(
-                    image: NetworkImage('$urlgambar'),
-                    height: 120,
-                    width: 240,
-                    fit: BoxFit.fitWidth,
-                    child: InkWell(onTap: () {
-                      showModalBottomSheet(
-                          context: context,
-                          builder: (context) {
-                            return Container(
-                              width: MediaQuery.of(context).size.width * 0.8,
-                              height: 150,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(12),
-                                    topRight: Radius.circular(12)),
-                              ),
-                              child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    SizedBox(
-                                      height: 0,
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 8, right: 8, top: 4, bottom: 4),
-                                      child: Card(
-                                        color: Color(0xFF5d1a77),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
+                  Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      Ink.image(
+                        image: NetworkImage('$urlgambar'),
+                        height: 120,
+                        width: 240,
+                        fit: BoxFit.fitWidth,
+                        child: InkWell(onTap: () {
+                          showModalBottomSheet(
+                              context: context,
+                              builder: (context) {
+                                return SizedBox(
+                                  width: MediaQuery.of(context).size.width,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.5,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 12,
+                                        bottom: 12,
+                                        left: 12,
+                                        right: 12),
+                                    child: ListView(
+                                      children: [
+                                        Column(
+                                          children: [
+                                            const SizedBox(
+                                              height: 8,
+                                            ),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                        Radius.circular(12)),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    blurRadius: 10,
+                                                    color: Colors.black
+                                                        .withOpacity(.2),
+                                                  )
+                                                ],
+                                              ),
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 12,
+                                                    bottom: 12,
+                                                    left: 12,
+                                                    right: 12),
+                                                child: Column(
+                                                  children: [
+                                                    Text(
+                                                      '$juduldeskripsi1',
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                    ),
+                                                    Text(
+                                                      juduldeskripsi2!,
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    Text(
+                                                      deskripsi!,
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                    ),
+                                                    Text(
+                                                      deskripsi2!,
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 8,
+                                            ),
+                                          ],
                                         ),
-                                        child: Padding(
-                                          padding: EdgeInsets.all(8),
-                                          child: Column(
-                                            children: [
-                                              Text(
-                                                '$juduldeskripsi1',
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 18,
-                                                    fontWeight:
-                                                        FontWeight.w500),
+                                        Builder(
+                                          builder: (context) {
+                                            final GlobalKey<SlideActionState>
+                                                _key = GlobalKey();
+                                            return Padding(
+                                              padding:
+                                                  const EdgeInsets.all(12.0),
+                                              child: SlideAction(
+                                                outerColor:
+                                                    Colors.teal.shade900,
+                                                innerColor: Colors.white,
+                                                key: _key,
+                                                text: 'Kembali',
+                                                textStyle: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.white),
+                                                onSubmit: () {
+                                                  Navigator.pop(context);
+                                                  Future.delayed(
+                                                    const Duration(seconds: 1),
+                                                    () => _key.currentState
+                                                        ?.reset(),
+                                                  );
+                                                },
                                               ),
-                                              Text(
-                                                juduldeskripsi2!,
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 16,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ),
-                                              SizedBox(
-                                                height: 10,
-                                              ),
-                                              Text(
-                                                deskripsi!,
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ),
-                                              Text(
-                                                deskripsi2!,
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ),
-                                            ],
-                                          ),
+                                            );
+                                          },
                                         ),
-                                      ),
+                                      ],
                                     ),
-                                  ]),
-                            );
-                          });
-                    }),
+                                  ),
+                                );
+                              });
+                        }),
+                      ),
+                    ],
                   ),
                 ],
-              ),
-            ],
-          ));
+              )
+            : Container(),
+      );
 
   final ButtonStyle ButtonWarna = ElevatedButton.styleFrom(
     onPrimary: Colors.white,
@@ -614,7 +665,7 @@ class _eventState extends State<event> {
                       if (mbak == 11) mmbak = 'November';
                       if (mbak == 12) mmbak = 'Desember';
 
-                      return buildComingSoonCard(
+                      return buildComingSoonCard2(
                         cbak!,
                         calnow,
                         urlgambar,
@@ -623,6 +674,9 @@ class _eventState extends State<event> {
                         juduldeskripsi2,
                         deskripsi,
                         deskripsi2,
+                        dbak,
+                        mmbak,
+                        ybak,
                       );
                     }
                     return Center(

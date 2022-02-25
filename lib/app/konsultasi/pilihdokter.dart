@@ -585,9 +585,10 @@ class SelectDokter extends StatelessWidget {
                                 child: SizedBox(
                                     width: MediaQuery.of(context).size.width,
                                     child: const Text(
-                                      'Jika tidak ada dokter yang bisa dipilih, tunggulah paling lama sekitar 20 menit lagi',
+                                      'Dokternya lagi offline, tunggu berberapa saat sampai dokternya online lagi ya',
+
                                       style: TextStyle(fontSize: 16),
-                                      textAlign: TextAlign.justify,
+                                      textAlign: TextAlign.center,
                                     )),
                               )),
                         ],

@@ -435,6 +435,10 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
                                         nameText.text = namapasien;
                                         emailText.text = email!;
 
+
+                                        DatabaseServices.dokternerimapasienvideocall(
+                                          widget.iddokter
+                                        );
                                         DatabaseServices
                                             .masukkanpasienkedatabasedokterigigi(
                                                 widget.iddokter,
@@ -473,7 +477,6 @@ class _KeteranganDokterState extends State<KeteranganDokter> {
           );
         });
   }
-
 
 
   void _onButtonPressedchat() {

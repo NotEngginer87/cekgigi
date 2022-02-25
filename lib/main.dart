@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, avoid_print, deprecated_member_use, unnecessary_null_comparison
+// ignore_for_file: prefer_const_constructors, avoid_print, deprecated_member_use, unnecessary_null_comparison, non_constant_identifier_names, avoid_types_as_parameter_names
 
 import 'dart:io';
 import 'package:gender_picker/source/enums.dart';
@@ -21,11 +21,7 @@ import 'onboard2.0/introduction_animation_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-      overlays: [SystemUiOverlay.bottom]);
-  SystemChrome.setEnabledSystemUIOverlays([
-    SystemUiOverlay.bottom, //This line is used for showing the bottom bar
-  ]);
+  SystemChrome.setEnabledSystemUIOverlays ([]);
   runApp(MaterialApp(
     home: MyApp(),
   ));
@@ -310,7 +306,7 @@ class _IsiDataState extends State<IsiData> {
                 margin: EdgeInsets.only(top: 50),
                 child: Row(
                   children: [
-                    isLastStep
+                    (isLastStep == true)
                         ? Expanded(
                             child: ElevatedButton(
                               onPressed: () {

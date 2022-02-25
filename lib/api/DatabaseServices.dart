@@ -285,6 +285,17 @@ class DatabaseServices {
     );
   }
 
+  static Future<void> dokternerimapasienvideocall(
+      String iddokter,
+      ) async {
+    await doktergigi.doc(iddokter).update(
+      {
+        'indikatoronline': false,
+      },
+    );
+  }
+
+
   static Future<void> masukkanpasienkedatabasedokterigigi(
       String iddokter, int idpasien, String kegiatan) async {
     await doktergigi

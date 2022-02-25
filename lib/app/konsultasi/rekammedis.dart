@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, unnecessary_null_comparison, must_be_immutable, deprecated_member_use
+// ignore_for_file: avoid_print, unnecessary_null_comparison, must_be_immutable, deprecated_member_use, avoid_types_as_parameter_names, non_constant_identifier_names
 
 import 'package:cekgigi/app/konsultasi/pilihdokter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
