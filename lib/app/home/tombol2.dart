@@ -26,7 +26,7 @@ class _tomboltombolState extends State<tomboltombol> {
             color: Colors.white,
             boxShadow: [
               BoxShadow(
-                blurRadius: 1,
+                blurRadius: 2,
                 blurStyle: BlurStyle.outer,
               )
             ],
@@ -42,10 +42,10 @@ class _tomboltombolState extends State<tomboltombol> {
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
-                        color: Colors.white,
+                        color: Colors.teal.shade900,
                         boxShadow: [
                           BoxShadow(
-                            blurRadius: 1,
+                            blurRadius: 2,
                             blurStyle: BlurStyle.outer,
                           )
                         ],
@@ -63,7 +63,7 @@ class _tomboltombolState extends State<tomboltombol> {
                           icon: Icon(
                             LineIcons.stethoscope,
                             size: 24,
-                            color: Colors.black,
+                            color: Colors.white,
                           )),
                     ),
                     SizedBox(
@@ -77,10 +77,10 @@ class _tomboltombolState extends State<tomboltombol> {
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
-                        color: Colors.white,
+                        color: Colors.teal.shade900,
                         boxShadow: [
                           BoxShadow(
-                            blurRadius: 1,
+                            blurRadius: 2,
                             blurStyle: BlurStyle.outer,
                           )
                         ],
@@ -88,6 +88,7 @@ class _tomboltombolState extends State<tomboltombol> {
                       width: 54,
                       height: 54,
                       child: IconButton(
+                        color: Colors.white,
                           onPressed: () {
                             Navigator.push(
                               context,
@@ -98,7 +99,7 @@ class _tomboltombolState extends State<tomboltombol> {
                           icon: Icon(
                             LineIcons.medicalNotes,
                             size: 24,
-                            color: Colors.black,
+                            color: Colors.white,
                           )),
                     ),
                     SizedBox(
@@ -112,10 +113,10 @@ class _tomboltombolState extends State<tomboltombol> {
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
-                        color: Colors.white,
+                        color: Colors.teal.shade900,
                         boxShadow: [
                           BoxShadow(
-                            blurRadius: 1,
+                            blurRadius: 2,
                             blurStyle: BlurStyle.outer,
                           )
                         ],
@@ -133,7 +134,7 @@ class _tomboltombolState extends State<tomboltombol> {
                           icon: Icon(
                             LineIcons.handHolding,
                             size: 24,
-                            color: Colors.black,
+                            color: Colors.white,
                           )),
                     ),
                     SizedBox(
@@ -147,10 +148,10 @@ class _tomboltombolState extends State<tomboltombol> {
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
-                        color: Colors.white,
+                        color: Colors.teal.shade900,
                         boxShadow: [
                           BoxShadow(
-                            blurRadius: 1,
+                            blurRadius: 2,
                             blurStyle: BlurStyle.outer,
                           )
                         ],
@@ -164,7 +165,7 @@ class _tomboltombolState extends State<tomboltombol> {
                           icon: Icon(
                             Icons.message_rounded,
                             size: 24,
-                            color: Colors.black,
+                            color: Colors.white,
                           )),
                     ),
                     SizedBox(

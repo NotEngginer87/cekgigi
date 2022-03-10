@@ -937,7 +937,7 @@ class _InfoDokternyajanjitemuState extends State<InfoDokternyajanjitemu> {
                           onTap: () {
                             Navigator.push(context, MaterialPageRoute(
                                 builder: (BuildContext context) {
-                              return Janjitemu(widget.iddokter);
+                              return ListDokterJanjiTemu();
                             }));
                           },
                         ))),

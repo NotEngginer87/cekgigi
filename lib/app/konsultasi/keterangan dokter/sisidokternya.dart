@@ -25,6 +25,7 @@ class _infodokternyaState extends State<infodokternya> {
               snapshot.data!.data() as Map<String, dynamic>;
 
           String nama = data['nama'];
+          String nip = data['nip'];
           String gelar = data['gelar'];
           String gambar = data['urlgambar'];
           String waktuawal = data['waktuawal'];
@@ -43,7 +44,7 @@ class _infodokternyaState extends State<infodokternya> {
                     Column(
                       children: [
                         const SizedBox(
-                          height: 50,
+                          height: 60,
                         ),
                         Container(
                           height: 160,
@@ -60,6 +61,13 @@ class _infodokternyaState extends State<infodokternya> {
                                 style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 20,
+                                    color: Colors.black),
+                              ),
+                              Text(
+                                nip,
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 12,
                                     color: Colors.black),
                               ),
                               Text(
