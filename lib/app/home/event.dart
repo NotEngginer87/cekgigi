@@ -30,6 +30,7 @@ class _eventState extends State<event> {
     int? ybak,
     String penyelenggara,
     String slider,
+      String lokasi,
   ) =>
       Card(
         elevation: 4,
@@ -116,6 +117,63 @@ class _eventState extends State<event> {
                                                             fontSize: 16,
                                                             fontWeight:
                                                                 FontWeight.w800,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 8,
+                                            ),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(12)),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    blurRadius: 10,
+                                                    color: Colors.black
+                                                        .withOpacity(.2),
+                                                  )
+                                                ],
+                                              ),
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 8,
+                                                    bottom: 8,
+                                                    left: 12,
+                                                    right: 12),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                      children: [
+                                                        const Text(
+                                                          'Lokasi Kegiatan : ',
+                                                          style: TextStyle(
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                              FontWeight
+                                                                  .w800),
+                                                        ),
+                                                        Text(
+                                                          lokasi,
+                                                          style:
+                                                          const TextStyle(
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                            FontWeight.w800,
                                                           ),
                                                         ),
                                                       ],
@@ -533,7 +591,8 @@ class _eventState extends State<event> {
                       if (mbak == 10) mmbak = 'Oktober';
                       if (mbak == 11) mmbak = 'November';
                       if (mbak == 12) mmbak = 'Desember';
-
+                      String lokasi;
+                      lokasi = data['lokasi'];
                       return buildEventCard(
                           cbak!,
                           calnow,
@@ -547,7 +606,8 @@ class _eventState extends State<event> {
                           mmbak,
                           ybak,
                           penyelenggara,
-                          slider);
+                          slider,
+                      lokasi,);
                     }
                     return Center(
                       child: CircularProgressIndicator(),
@@ -587,6 +647,9 @@ class _eventState extends State<event> {
                       dnn = NOW.day;
                       int calnow;
                       calnow = ynn * 365 + mnn * 30 + dnn;
+
+                      String lokasi = data['lokasi'];
+
                       if (mbak == 1) mmbak = 'Januari';
                       if (mbak == 2) mmbak = 'Februari';
                       if (mbak == 3) mmbak = 'Maret';
@@ -614,6 +677,7 @@ class _eventState extends State<event> {
                         ybak,
                         penyelenggara,
                         slider,
+                        lokasi,
                       );
                     }
                     return Center(

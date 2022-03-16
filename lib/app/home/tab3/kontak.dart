@@ -7,6 +7,8 @@ import 'package:line_icons/line_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:whatsapp_unilink/whatsapp_unilink.dart';
 
+const String _url = 'https://www.instagram.com/admin_ident/';
+
 class kontak extends StatelessWidget {
   const kontak({Key? key}) : super(key: key);
 
@@ -34,8 +36,12 @@ class kontak extends StatelessWidget {
       await launch('$link');
     }
 
+    void _launchInstagram() async {
+      if (!await launch(_url)) throw 'Could not launch $_url';
+    }
+
     return SizedBox(
-      height: 240,
+      height: 300,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -63,6 +69,32 @@ class kontak extends StatelessWidget {
                         ),
                         Text(
                           'WhatsApp',
+                          style: GoogleFonts.pathwayGothicOne(
+                              fontWeight: FontWeight.w500, fontSize: 18),
+                          textAlign: TextAlign.left,
+                        ),
+                      ],
+                    )),
+              ),
+              const SizedBox(
+                height: 12,
+              ),
+
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 7 / 8,
+                child: ElevatedButton(
+                    style: KontakButton,
+                    onPressed: () {
+                      _launchInstagram();
+                    },
+                    child: Row(
+                      children: [
+                        const Icon(LineIcons.instagram),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          'Instagram',
                           style: GoogleFonts.pathwayGothicOne(
                               fontWeight: FontWeight.w500, fontSize: 18),
                           textAlign: TextAlign.left,

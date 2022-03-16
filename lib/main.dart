@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, avoid_print, deprecated_member_use, unnecessary_null_comparison, non_constant_identifier_names, avoid_types_as_parameter_names
 
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gender_picker/source/enums.dart';
 import 'package:gender_picker/source/gender_picker.dart';
 import 'package:path/path.dart';
@@ -42,21 +43,103 @@ class MyApp extends StatelessWidget {
 }
 
 class ControllerAuth extends StatelessWidget {
-  const ControllerAuth({Key? key}) : super(key: key);
+  ControllerAuth({Key? key}) : super(key: key);
 
+  late int versiappbawaan = 2;
+  late int versiapp2bawaan = 5;
   @override
   Widget build(BuildContext context) {
+
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference versiaplikasi = firestore.collection('versi aplikasi');
     return StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
-            return HalamanRumah();
+            return
+              StreamBuilder<DocumentSnapshot>(
+                stream: versiaplikasi
+                    .doc('versiapp')
+                    .snapshots(),
+                builder: (context,
+                    AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    Map<String, dynamic> data =
+                    snapshot.data!.data()
+                    as Map<String, dynamic>;
+
+                    int versiapp = data['versiapp'];
+                    int versiapp2 = data['versiapp2'];
+
+                    if (versiapp >= versiappbawaan) {
+                      if (versiapp2 >= versiapp2bawaan) {
+                        return HalamanRumah();
+                      }
+                      else
+                        return Scaffold(
+
+                          appBar: AppBar(
+                            title: Text('update aplikasi'),
+                            backgroundColor: Colors.teal.shade900,
+                            elevation: 0,
+                            centerTitle: true,
+                          ),
+                          body: Center(
+                              child:
+                              Column(
+                                children: [
+                                  Text('aplikasi anda belum update !!!'),
+                                  SizedBox(height: 12,),
+                                  Text('Update aplikasi anda di playstore !!!'),
+                                  Text('aplikasi anda belum update !!!'),
+                                  ElevatedButton(
+                                    child: Text('update'),
+                                    onPressed: (){
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ],
+                              )
+                          ),
+                        );
+                    }
+                  }
+                  return Scaffold(
+
+                    appBar: AppBar(
+                      title: Text('update aplikasi'),
+                      backgroundColor: Colors.teal.shade900,
+                      elevation: 0,
+                      centerTitle: true,
+                    ),
+                    body: Center(
+                        child:
+                        Column(
+                          children: [
+                            Text('aplikasi anda belum update !!!'),
+                            SizedBox(height: 12,),
+                            Text('Update aplikasi anda di playstore !!!'),
+                            Text('aplikasi anda belum update !!!'),
+                            ElevatedButton(
+                              child: Text('update'),
+                              onPressed: (){
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
+                        )
+                    ),
+                  );
+                },
+              );
+
           } else {
             return OnBoardScreen();
           }
         });
   }
 }
+
 
 class IsiData extends StatefulWidget {
   const IsiData({Key? key}) : super(key: key);

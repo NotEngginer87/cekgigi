@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:story_view/controller/story_controller.dart';
 import 'package:story_view/widgets/story_view.dart';
@@ -71,38 +72,55 @@ class _KeuntunganiDentStory extends State<KeuntunganiDentStory> {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference desain = firestore.collection('DesainTampilan');
     return Scaffold(
-      body: StoryView(
-        storyItems: [
-          StoryItem.text(
-            title: "Keuntungan Menggunakan iDent",
-            backgroundColor: Colors.teal.shade900,
-          ),
-          StoryItem.pageImage(
-            url:
-                "https://firebasestorage.googleapis.com/v0/b/teledentistry-70122.appspot.com/o/keuntungan%2FBiaya-Murah%20(1)%20(1).png?alt=media&token=69bf855b-f866-4b0f-9804-ea492f00f606",
+      body: StreamBuilder<DocumentSnapshot>(
+      stream: desain.doc('2022').collection('keuntungan').doc('image').snapshots(),
+      builder: (context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          Map<String, dynamic> data =
+          snapshot.data!.data() as Map<String, dynamic>;
+
+          String url1 = data['url1'];
+          String url2 = data['url2'];
+          String url3 = data['url3'];
+
+          return StoryView(
+            storyItems: [
+              StoryItem.text(
+                title: "Keuntungan Menggunakan iDent",
+                backgroundColor: Colors.teal.shade900,
+              ),
+              StoryItem.pageImage(
+                url:url1,
+                controller: storyController,
+              ),
+              StoryItem.pageImage(
+                  url:url2,
+                  controller: storyController),
+              StoryItem.pageImage(
+                  url: url3,
+                  controller: storyController),
+            ],
+            onStoryShow: (s) {
+              print("Showing a story");
+            },
+            onComplete: () {
+              print("Completed a cycle");
+              Navigator.pop(context);
+            },
+            progressPosition: ProgressPosition.top,
+            repeat: false,
             controller: storyController,
-          ),
-          StoryItem.pageImage(
-              url:
-                  "https://firebasestorage.googleapis.com/v0/b/teledentistry-70122.appspot.com/o/keuntungan%2FUntitled-Artwork%20(1)%20(1).png?alt=media&token=1f2875e7-ee20-4c56-adf5-db4986241615",
-              controller: storyController),
-          StoryItem.pageImage(
-              url:
-                  "https://firebasestorage.googleapis.com/v0/b/teledentistry-70122.appspot.com/o/keuntungan%2FBeach%2C-home%2C-forest%20(1).png?alt=media&token=b73c1fa3-18c1-4a62-9bf1-5d2576ca990d",
-              controller: storyController),
-        ],
-        onStoryShow: (s) {
-          print("Showing a story");
-        },
-        onComplete: () {
-          print("Completed a cycle");
-          Navigator.pop(context);
-        },
-        progressPosition: ProgressPosition.top,
-        repeat: false,
-        controller: storyController,
-      ),
+          );
+        }
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    ),
+
     );
   }
 }

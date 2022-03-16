@@ -30,10 +30,11 @@ class _WhatsappSupportState extends State<WhatsappSupport> {
         ),
         child: Ink.image(
           image: NetworkImage('$urlgambar'),
-          height: 100,
+          height: MediaQuery.of(context).size.width / 4,
           width: MediaQuery.of(context).size.width,
           fit: BoxFit.cover,
           child: InkWell(onTap: () {
+            print(MediaQuery.of(context).size.width);
             launchWhatsApp(telepon!, text!);
           }),
         ),

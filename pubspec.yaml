@@ -64,6 +64,8 @@ dependencies:
   date_picker_timeline: ^1.2.3
   webview_flutter: ^3.0.0
   jitsi_meet: ^4.0.0
+  flutter_signin_button: ^2.0.0
+  animations: ^2.0.2
 
 dev_dependencies:
   flutter_test:

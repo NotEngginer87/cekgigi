@@ -93,28 +93,24 @@ class _DataRespondenState extends State<DataResponden> {
                         GenderPickerWithImage(
                           showOtherGender: false,
                           verticalAlignedText: true,
-                          selectedGender: Gender.Male,
+                          equallyAligned: true,
+
                           selectedGenderTextStyle: const TextStyle(
-                              color: Color(0xFF8b32a8),
-                              fontWeight: FontWeight.bold),
+                              color: Color(0xFF8b32a8), fontWeight: FontWeight.bold),
                           unSelectedGenderTextStyle: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.normal),
-                          onChanged: (gender) async {
-                            if (kDebugMode) {
-                              print(gender);
-                            }
-                            if (kDebugMode) {
-                              print(gender?.index);
-                            }
-                            if (gender?.index == 0) {
+                              color: Colors.white, fontWeight: FontWeight.normal),
+                          selectedGender:
+                          (genderr == 'Laki-Laki') ? Gender.Male : (genderr == 'Perempuan') ? Gender.Female : null,
+                          onChanged: (Gender) async {
+                            switchgender = true;
+
+                            if (Gender?.index == 0) {
                               genderr = 'Laki-Laki';
                             } else {
-                              genderr = 'perempuan';
+                              genderr = 'Perempuan';
                             }
-                            switchgender = true;
+                            print(Gender?.index);
                           },
-                          equallyAligned: true,
                           animationDuration: const Duration(milliseconds: 300),
                           isCircular: true,
                           maleText: 'Laki-Laki',
@@ -419,11 +415,11 @@ class _QuestionCardState extends State<QuestionCard> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: const [
                         Text(
-                          'Sangat tidak setuju',
+                          'Sangat tidak puas',
                           style: TextStyle(fontSize: 12),
                         ),
                         Text(
-                          'Sangat setuju',
+                          'Sangat puas',
                           style: TextStyle(fontSize: 12),
                         ),
                       ],

@@ -11,7 +11,7 @@ class DatabaseServices {
   static CollectionReference FAQ = firestore.collection('FAQ');
   static CollectionReference kuesioner = firestore.collection('kuesioner');
   static CollectionReference listpasiencount =
-      firestore.collection('listpasiencount');
+  firestore.collection('listpasiencount');
   static CollectionReference blog = firestore.collection('blog');
 
   static Future<void> updateakun(
@@ -40,21 +40,21 @@ class DatabaseServices {
   }
 
   static Future<void> updateketeranganpasien(
-    int id,
-    String nama,
-    String gender,
-    String umur,
-    String noHP,
-    String alamat,
-    String statusperkawinan,
-    String agama,
-    String suku,
-    String pekerjaan,
-    String keluhan,
-    String gambarkeluhan,
-    String kegiatan,
-    String email,
-  ) async {
+      int id,
+      String nama,
+      String gender,
+      String umur,
+      String noHP,
+      String alamat,
+      String statusperkawinan,
+      String agama,
+      String suku,
+      String pekerjaan,
+      String keluhan,
+      String gambarkeluhan,
+      String kegiatan,
+      String email,
+      ) async {
     await datapasien.doc(id.toString()).set(
       {
         'Aid': id,
@@ -190,15 +190,15 @@ class DatabaseServices {
   }
 
   static Future<void> aturjadwalbooking(
-    int idbooking,
-    String iddokter,
-    int tahun,
-    int bulan,
-    int tanggal,
-    String namahari,
-    int sesi,
-    tanda,
-  ) async {
+      int idbooking,
+      String iddokter,
+      int tahun,
+      int bulan,
+      int tanggal,
+      String namahari,
+      int sesi,
+      tanda,
+      ) async {
     await doktergigi
         .doc(iddokter)
         .collection('booking')
@@ -213,15 +213,15 @@ class DatabaseServices {
   }
 
   static Future<void> aturjadwalbookinguntukdiacc(
-    String emailpasien,
-    int idbooking,
-    String iddokter,
-    int tahun,
-    int bulan,
-    int tanggal,
-    String namahari,
-    int sesi,
-  ) async {
+      String emailpasien,
+      int idbooking,
+      String iddokter,
+      int tahun,
+      int bulan,
+      int tanggal,
+      String namahari,
+      int sesi,
+      ) async {
     await doktergigi
         .doc(iddokter)
         .collection('booking')
@@ -245,15 +245,15 @@ class DatabaseServices {
   }
 
   static Future<void> setjadwalbookinguntukdiaccolehpasien(
-    String emailpasien,
-    int idbooking,
-    String iddokter,
-    int tahun,
-    int bulan,
-    int tanggal,
-    String namahari,
-    int sesi,
-  ) async {
+      String emailpasien,
+      int idbooking,
+      String iddokter,
+      int tahun,
+      int bulan,
+      int tanggal,
+      String namahari,
+      int sesi,
+      ) async {
     await userdata
         .doc(emailpasien)
         .collection('booking')
@@ -275,9 +275,9 @@ class DatabaseServices {
   }
 
   static Future<void> naikkanidbooking(
-    int idbooking,
-    String iddokter,
-  ) async {
+      int idbooking,
+      String iddokter,
+      ) async {
     await doktergigi.doc(iddokter).update(
       {
         'booking': FieldValue.increment(1),
@@ -291,6 +291,26 @@ class DatabaseServices {
     await doktergigi.doc(iddokter).update(
       {
         'indikatoronline': false,
+      },
+    );
+  }
+
+  static Future<void> doktersetindikatorhidup(
+      String iddokter, bool value,
+      ) async {
+    await doktergigi.doc(iddokter).update(
+      {
+        'indikatorhidup': value,
+      },
+    );
+  }
+
+  static Future<void> doktersetindikatoronline(
+      String iddokter, bool value,
+      ) async {
+    await doktergigi.doc(iddokter).update(
+      {
+        'indikatoronline': value,
       },
     );
   }
@@ -383,10 +403,10 @@ class DatabaseServices {
   }
 
   static Future<void> setcountchataccount(
-    String email,
-    String iddokter,
-    String idpasien,
-  ) async {
+      String email,
+      String iddokter,
+      String idpasien,
+      ) async {
     await userdata.doc(email).collection('chat').doc(iddokter).set(
       {
         'count': 1,
@@ -398,11 +418,11 @@ class DatabaseServices {
   }
 
   static Future<void> deletechatdokter(
-    String email,
-    String iddokter,
-    int banyakchatdokter,
-    int banyakchatpasien,
-  ) async {
+      String email,
+      String iddokter,
+      int banyakchatdokter,
+      int banyakchatpasien,
+      ) async {
     for (int i = 1; i <= banyakchatpasien; i++) {
       int k = i + 5000000;
       await userdata
@@ -427,10 +447,10 @@ class DatabaseServices {
   }
 
   static Future<void> setchatdokter(
-    String email,
-    String iddokter,
-    String idpasien,
-  ) async {
+      String email,
+      String iddokter,
+      String idpasien,
+      ) async {
     await doktergigi.doc(iddokter).collection('chat').doc(email).set(
       {
         'count': 1,
@@ -455,10 +475,10 @@ class DatabaseServices {
   }
 
   static Future<void> expandFAQ(
-    int id,
-    bool expand,
-    String email,
-  ) async {
+      int id,
+      bool expand,
+      String email,
+      ) async {
     await userdata
         .doc(email.toString())
         .collection('FAQ')
@@ -471,9 +491,9 @@ class DatabaseServices {
   }
 
   static Future<void> updatecountchataccount(
-    String email,
-    String iddokter,
-  ) async {
+      String email,
+      String iddokter,
+      ) async {
     await userdata.doc(email).collection('chat').doc(iddokter).update(
       {
         'count': FieldValue.increment(1),
@@ -482,9 +502,9 @@ class DatabaseServices {
   }
 
   static Future<void> updatecountchataccountdokter(
-    String email,
-    String iddokter,
-  ) async {
+      String email,
+      String iddokter,
+      ) async {
     await doktergigi.doc(iddokter).collection('chat').doc(email).update(
       {
         'count': FieldValue.increment(1),
@@ -511,14 +531,14 @@ class DatabaseServices {
         'agama': (agama == 1)
             ? 'Islam'
             : (agama == 2)
-                ? 'Protestan'
-                : (agama == 3)
-                    ? 'Katolik'
-                    : (agama == 4)
-                        ? 'Budha'
-                        : (agama == 5)
-                            ? 'Hindu'
-                            : ' ',
+            ? 'Protestan'
+            : (agama == 3)
+            ? 'Katolik'
+            : (agama == 4)
+            ? 'Budha'
+            : (agama == 5)
+            ? 'Hindu'
+            : ' ',
         'telepon': telepon,
         'pekerjaan': pekerjaan,
         'suku': suku,
@@ -546,6 +566,8 @@ class DatabaseServices {
     );
   }
 
+
+
   static Future<void> deleteuser(String id) async {
     await userdata.doc(id).delete();
   }
@@ -561,13 +583,13 @@ class DatabaseServices {
   }
 
   static Future<void> updatekuesioner(
-    int orangke,
-    String nama,
-    String usia,
-    String jeniskelamin,
-    String alamat,
-    String keluhan,
-  ) async {
+      int orangke,
+      String nama,
+      String usia,
+      String jeniskelamin,
+      String alamat,
+      String keluhan,
+      ) async {
     await kuesioner
         .doc('kuesionerEUCS')
         .collection('orang')
@@ -584,10 +606,10 @@ class DatabaseServices {
   }
 
   static Future<void> updatejawabankuesioner(
-    int orangke,
-    int idpertanyaan,
-    int nilai,
-  ) async {
+      int orangke,
+      int idpertanyaan,
+      int nilai,
+      ) async {
     await kuesioner
         .doc('kuesionerEUCS')
         .collection('orang')
