@@ -1,7 +1,8 @@
+// ignore_for_file: non_constant_identifier_names, avoid_types_as_parameter_names, avoid_print
+
 import 'package:cekgigi/api/DatabaseServices.dart';
 import 'package:cekgigi/style.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gender_picker/source/enums.dart';
 import 'package:gender_picker/source/gender_picker.dart';

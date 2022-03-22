@@ -1,6 +1,5 @@
 // ignore_for_file: camel_case_types, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:cekgigi/app/janjitemu/janjitemu.dart';
 import 'package:cekgigi/app/konsultasi/ChatDokter/ListDokteryangakandichat.dart';
 import 'package:cekgigi/app/konsultasi/rekammedis.dart';
 import 'package:cekgigi/app/riwayatkonsultasi.dart';
@@ -37,6 +36,7 @@ class _tomboltombolState extends State<tomboltombol> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
+
                 Column(
                   children: [
                     Container(
@@ -53,42 +53,7 @@ class _tomboltombolState extends State<tomboltombol> {
                       width: 54,
                       height: 54,
                       child: IconButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => RekamMedis('konsultasibiasa')),
-                            );
-                          },
-                          icon: Icon(
-                            LineIcons.stethoscope,
-                            size: 24,
-                            color: Colors.white,
-                          )),
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text('konsultasi'),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        color: Colors.teal.shade900,
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 2,
-                            blurStyle: BlurStyle.outer,
-                          )
-                        ],
-                      ),
-                      width: 54,
-                      height: 54,
-                      child: IconButton(
-                        color: Colors.white,
+                          color: Colors.white,
                           onPressed: () {
                             Navigator.push(
                               context,
@@ -128,11 +93,11 @@ class _tomboltombolState extends State<tomboltombol> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ListDokterJanjiTemu()),
+                                  builder: (context) => RekamMedis('konsultasibiasa')),
                             );
                           },
                           icon: Icon(
-                            LineIcons.handHolding,
+                            LineIcons.stethoscope,
                             size: 24,
                             color: Colors.white,
                           )),
@@ -140,7 +105,7 @@ class _tomboltombolState extends State<tomboltombol> {
                     SizedBox(
                       height: 8,
                     ),
-                    Text('janji temu'),
+                    Text('konsultasi'),
                   ],
                 ),
                 Column(

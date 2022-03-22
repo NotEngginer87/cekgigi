@@ -139,25 +139,28 @@ class ListChat extends StatelessWidget {
                                 const SizedBox(
                                   width: 16,
                                 ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      nama,
-                                      style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 20,
-                                          color: Colors.black),
-                                    ),
-                                    Text(
-                                      gelar,
-                                      style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14,
-                                          color: Colors.black),
-                                    ),
-                                  ],
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width * 0.5,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        nama,
+                                        style: GoogleFonts.poppins(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 20,
+                                            color: Colors.black),
+                                      ),
+                                      Text(
+                                        gelar,
+                                        style: GoogleFonts.poppins(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14,
+                                            color: Colors.black),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),

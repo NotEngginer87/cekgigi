@@ -114,8 +114,8 @@ class _ChatState extends State<Chat> {
                                         elevation: 4,
                                         child: Ink.image(
                                           image: NetworkImage(gambar),
-                                          height: 50,
-                                          width: 50,
+                                          height: 48,
+                                          width: 48,
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -128,18 +128,19 @@ class _ChatState extends State<Chat> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(
+                                          SizedBox(width : MediaQuery.of(context).size.width -200,child: Text(
                                             nama,
                                             style: GoogleFonts.poppins(
                                                 fontWeight: FontWeight.w500,
-                                                fontSize: 20,
+                                                fontSize: 16,
                                                 color: Colors.white),
-                                          ),
+                                          ),),
+
                                           Text(
                                             gelar,
                                             style: GoogleFonts.poppins(
                                                 fontWeight: FontWeight.w500,
-                                                fontSize: 14,
+                                                fontSize: 12,
                                                 color: Colors.white),
                                           ),
                                         ],
@@ -157,7 +158,7 @@ class _ChatState extends State<Chat> {
                                           emailText.text = email!;
                                           _joinMeeting();
                                         },
-                                        icon: const Icon(LineIcons.clock),
+                                        icon: const Icon(LineIcons.video),
                                         color: Colors.white,
                                         iconSize: 24,
                                       ),
@@ -333,34 +334,103 @@ class _ChatState extends State<Chat> {
                                 )),
                                 Expanded(
                                     child: Column(
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(50),
-                                        color: Colors.white,
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            blurRadius: 1,
-                                            blurStyle: BlurStyle.outer,
-                                          )
-                                        ],
-                                      ),
-                                      height:
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(50),
+                                            color: Colors.white,
+                                            boxShadow: const [
+                                              BoxShadow(
+                                                blurRadius: 1,
+                                                blurStyle: BlurStyle.outer,
+                                              )
+                                            ],
+                                          ),
+                                          height:
                                           MediaQuery.of(context).size.width / 9,
-                                      child: IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(
-                                            LineIcons.calendarAlt,
-                                            size: 24,
-                                            color: Colors.black,
-                                          )),
-                                    ),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    const Text('Atur Jadwal'),
-                                  ],
-                                )),
+                                          child: IconButton(
+                                              onPressed: () {},
+                                              icon: const Icon(
+                                                LineIcons.calendarAlt,
+                                                size: 24,
+                                                color: Colors.black,
+                                              )),
+                                        ),
+                                        const SizedBox(
+                                          height: 8,
+                                        ),
+                                        const Text('Atur Jadwal'),
+                                      ],
+                                    )),
+                                Expanded(
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(50),
+                                            color: Colors.white,
+                                            boxShadow: const [
+                                              BoxShadow(
+                                                blurRadius: 1,
+                                                blurStyle: BlurStyle.outer,
+                                              )
+                                            ],
+                                          ),
+                                          height:
+                                          MediaQuery.of(context).size.width / 9,
+                                          child:
+                                          StreamBuilder<DocumentSnapshot>(
+                                            stream: dokter.doc(widget.iddokter).snapshots(),
+                                            builder: (context, AsyncSnapshot snapshot) {
+                                              if (snapshot.hasData) {
+                                                Map<String, dynamic> data =
+                                                snapshot.data!.data() as Map<String, dynamic>;
+
+                                                String username = data['username'];
+
+                                                return StreamBuilder<DocumentSnapshot>(
+                                                  stream: pasien.doc(email).snapshots(),
+                                                  builder: (context, AsyncSnapshot snapshot) {
+                                                    if (snapshot.hasData) {
+                                                      Map<String, dynamic> data =
+                                                      snapshot.data!.data() as Map<String, dynamic>;
+
+                                                      String namapasien = data['nama'];
+
+                                                      return
+                                                        IconButton(
+                                                          onPressed: () {
+                                                            serverText.text = '';
+                                                            roomText.text = username + namapasien;
+                                                            subjectText.text = username;
+                                                            nameText.text = namapasien;
+                                                            emailText.text = email!;
+                                                            _joinMeeting();
+                                                          },
+                                                          icon: const Icon(LineIcons.video),
+                                                          color: Colors.black,
+                                                          iconSize: 24,
+                                                        );
+                                                    }
+                                                    return const Center(
+                                                      child: CircularProgressIndicator(),
+                                                    );
+                                                  },
+                                                );
+                                              }
+                                              return const Center(
+                                                child: CircularProgressIndicator(),
+                                              );
+                                            },
+                                          ),
+
+                                        ),
+                                        const SizedBox(
+                                          height: 8,
+                                        ),
+                                        const Text('VideoCall'),
+                                      ],
+                                    )),
                               ],
                             ),
                           ))),

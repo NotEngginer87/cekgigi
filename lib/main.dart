@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, avoid_print, deprecated_member_use, unnecessary_null_comparison, non_constant_identifier_names, avoid_types_as_parameter_names
+// ignore_for_file: prefer_const_constructors, avoid_print, deprecated_member_use, unnecessary_null_comparison, non_constant_identifier_names, avoid_types_as_parameter_names, must_be_immutable
 
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -15,14 +15,14 @@ import 'package:flutter/services.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-
 import 'app/HomePage.dart';
 import 'onboard2.0/introduction_animation_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  SystemChrome.setEnabledSystemUIOverlays ([]);
+  SystemChrome.setEnabledSystemUIOverlays(
+      [SystemUiOverlay.top, SystemUiOverlay.bottom]);
   runApp(MaterialApp(
     home: MyApp(),
   ));
@@ -49,90 +49,81 @@ class ControllerAuth extends StatelessWidget {
   late int versiapp2bawaan = 5;
   @override
   Widget build(BuildContext context) {
-
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference versiaplikasi = firestore.collection('versi aplikasi');
     return StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
-            return
-              StreamBuilder<DocumentSnapshot>(
-                stream: versiaplikasi
-                    .doc('versiapp')
-                    .snapshots(),
-                builder: (context,
-                    AsyncSnapshot snapshot) {
-                  if (snapshot.hasData) {
-                    Map<String, dynamic> data =
-                    snapshot.data!.data()
-                    as Map<String, dynamic>;
+            return StreamBuilder<DocumentSnapshot>(
+              stream: versiaplikasi.doc('versiapp').snapshots(),
+              builder: (context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData) {
+                  Map<String, dynamic> data =
+                      snapshot.data!.data() as Map<String, dynamic>;
 
-                    int versiapp = data['versiapp'];
-                    int versiapp2 = data['versiapp2'];
+                  int versiapp = data['versiapp'];
+                  int versiapp2 = data['versiapp2'];
 
-                    if (versiapp >= versiappbawaan) {
-                      if (versiapp2 >= versiapp2bawaan) {
-                        return HalamanRumah();
-                      }
-                      else
-                        return Scaffold(
-
-                          appBar: AppBar(
-                            title: Text('update aplikasi'),
-                            backgroundColor: Colors.teal.shade900,
-                            elevation: 0,
-                            centerTitle: true,
-                          ),
-                          body: Center(
-                              child:
-                              Column(
-                                children: [
-                                  Text('aplikasi anda belum update !!!'),
-                                  SizedBox(height: 12,),
-                                  Text('Update aplikasi anda di playstore !!!'),
-                                  Text('aplikasi anda belum update !!!'),
-                                  ElevatedButton(
-                                    child: Text('update'),
-                                    onPressed: (){
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                ],
-                              )
-                          ),
-                        );
-                    }
-                  }
-                  return Scaffold(
-
-                    appBar: AppBar(
-                      title: Text('update aplikasi'),
-                      backgroundColor: Colors.teal.shade900,
-                      elevation: 0,
-                      centerTitle: true,
-                    ),
-                    body: Center(
-                        child:
-                        Column(
+                  if (versiapp >= versiappbawaan) {
+                    if (versiapp2 >= versiapp2bawaan) {
+                      return HalamanRumah();
+                    } else {
+                      return Scaffold(
+                        appBar: AppBar(
+                          title: Text('update aplikasi'),
+                          backgroundColor: Colors.teal.shade900,
+                          elevation: 0,
+                          centerTitle: true,
+                        ),
+                        body: Center(
+                            child: Column(
                           children: [
                             Text('aplikasi anda belum update !!!'),
-                            SizedBox(height: 12,),
+                            SizedBox(
+                              height: 12,
+                            ),
                             Text('Update aplikasi anda di playstore !!!'),
                             Text('aplikasi anda belum update !!!'),
                             ElevatedButton(
                               child: Text('update'),
-                              onPressed: (){
+                              onPressed: () {
                                 Navigator.pop(context);
                               },
                             ),
                           ],
-                        )
-                    ),
-                  );
-                },
-              );
-
+                        )),
+                      );
+                    }
+                  }
+                }
+                return Scaffold(
+                  appBar: AppBar(
+                    title: Text('update aplikasi'),
+                    backgroundColor: Colors.teal.shade900,
+                    elevation: 0,
+                    centerTitle: true,
+                  ),
+                  body: Center(
+                      child: Column(
+                    children: [
+                      Text('aplikasi anda belum update !!!'),
+                      SizedBox(
+                        height: 12,
+                      ),
+                      Text('Update aplikasi anda di playstore !!!'),
+                      Text('aplikasi anda belum update !!!'),
+                      ElevatedButton(
+                        child: Text('update'),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                  )),
+                );
+              },
+            );
           } else {
             return OnBoardScreen();
           }
